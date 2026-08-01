@@ -4,6 +4,10 @@
 
 # React Native Showcase
 
+[![CI](https://github.com/OrekuD/react-native-showcase/actions/workflows/ci.yml/badge.svg)](https://github.com/OrekuD/react-native-showcase/actions/workflows/ci.yml)
+[![npm version](https://img.shields.io/npm/v/%40rn-showcase%2Fcli?logo=npm)](https://www.npmjs.com/package/@rn-showcase/cli)
+[![npm downloads](https://img.shields.io/npm/dm/%40rn-showcase%2Fcli?logo=npm)](https://www.npmjs.com/package/@rn-showcase/cli)
+
 A source-first library of React Native components, interactions, and visual
 experiments. Each entry is designed to be copied into an application, studied,
 and adapted rather than hidden behind a package API.
@@ -106,6 +110,17 @@ pnpm dev:docs
 | `pnpm build` | Build the workspace |
 | `pnpm check` | Run lint, typecheck, tests, and builds |
 
+## CI/CD
+
+Pull requests and pushes to `main` run the workspace checks in GitHub Actions.
+CLI releases are tag-driven: the `cli-v0.1.1` tag publishes the version in
+`packages/cli/package.json` and creates a matching GitHub Release.
+
+The npm publish workflow uses Trusted Publishing with GitHub's OIDC identity,
+so no npm token is stored in the repository. See
+[CONTRIBUTING.md](./CONTRIBUTING.md) for the one-time npm setup and release
+commands.
+
 ## Project principles
 
 - **Source first:** users own and modify every copied file.
@@ -130,3 +145,10 @@ pnpm dev:docs
 - [Documentation](./apps/docs)
 - [Expo showcase app](./apps/showcase)
 - [GitHub repository](https://github.com/OrekuD/react-native-showcase)
+
+## License
+
+React Native Showcase is released under the [MIT License](./LICENSE). The
+published `@rn-showcase/cli` package includes the same license.
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for development and release guidance.

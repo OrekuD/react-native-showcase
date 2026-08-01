@@ -2,6 +2,11 @@
   "name": "react-native-showcase",
   "version": "0.0.0",
   "private": true,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OrekuD/react-native-showcase.git"
+  },
   "packageManager": "pnpm@11.8.0",
   "engines": {
     "node": ">=22.13.0"

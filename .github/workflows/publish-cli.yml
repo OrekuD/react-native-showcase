@@ -1,0 +1,78 @@
+name: Publish CLI
+
+run-name: Publish @rn-showcase/cli ${{ github.ref_name }}
+
+on:
+  push:
+    tags:
+      - cli-v*
+  workflow_dispatch:
+
+# npm Trusted Publishing uses GitHub's short-lived OIDC token. No npm token is
+# stored in GitHub Actions secrets.
+permissions:
+  contents: write
+  id-token: write
+
+jobs:
+  publish:
+    name: Publish @rn-showcase/cli
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.8.0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+
+      - name: Set up npm Trusted Publishing support
+        run: npm install --global npm@11.5.1
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Check release version
+        id: package
+        shell: bash
+        run: |
+          package_version="$(node -p "require('./packages/cli/package.json').version")"
+
+          if [[ "${GITHUB_REF_TYPE}" == "tag" ]]; then
+            tag_version="${GITHUB_REF_NAME#cli-v}"
+            if [[ "${tag_version}" != "${package_version}" ]]; then
+              echo "Tag cli-v${tag_version} does not match package version ${package_version}."
+              exit 1
+            fi
+          fi
+
+          echo "version=${package_version}" >> "${GITHUB_OUTPUT}"
+
+      - name: Test CLI
+        run: pnpm --filter @rn-showcase/cli test
+
+      - name: Build CLI
+        run: pnpm --filter @rn-showcase/cli build
+
+      - name: Publish to npm
+        working-directory: packages/cli
+        run: npm publish --access public
+
+      - name: Create GitHub release
+        if: github.ref_type == 'tag'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${GITHUB_REF_NAME}" \
+            --title "@rn-showcase/cli ${{ steps.package.outputs.version }}" \
+            --generate-notes

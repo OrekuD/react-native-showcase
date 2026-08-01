@@ -1,0 +1,13 @@
+appId: com.oreku.reactnativeshowcase
+---
+- assertVisible: Showcase
+- tapOn:
+    id: home-interaction-rolling-currency
+- assertVisible: Rolling currency
+- tapOn:
+    id: currency-randomize-button
+    waitToSettleTimeoutMs: 250
+- tapOn:
+    id: currency-back-button
+    waitToSettleTimeoutMs: 250
+- assertVisible: Showcase

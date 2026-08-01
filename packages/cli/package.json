@@ -2,13 +2,26 @@
   "name": "@rn-showcase/cli",
   "version": "0.1.0",
   "description": "Add copyable React Native Showcase components to your project.",
+  "license": "MIT",
+  "author": "OrekuD",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OrekuD/react-native-showcase.git",
+    "directory": "packages/cli"
+  },
+  "bugs": {
+    "url": "https://github.com/OrekuD/react-native-showcase/issues"
+  },
+  "homepage": "https://github.com/OrekuD/react-native-showcase/tree/main/packages/cli",
   "type": "module",
   "bin": {
-    "rn-showcase": "./dist/index.mjs"
+    "rn-showcase": "dist/index.mjs"
   },
   "files": [
     "dist",
-    "README.md"
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
   ],
   "scripts": {
     "build": "node scripts/build.mjs",

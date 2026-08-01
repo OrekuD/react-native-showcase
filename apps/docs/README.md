@@ -1,45 +1,38 @@
-# docs
+# React Native Showcase docs
 
-This is a Next.js application generated with
-[Create Fumadocs](https://github.com/fuma-nama/fumadocs).
+The documentation site is a Fumadocs app. It contains installation guides,
+copyable source, interaction notes, and recorded previews for the showcase.
 
-Run development server:
+Run it from the repository root:
 
 ```bash
-npm run dev
-# or
-pnpm dev
-# or
-yarn dev
+pnpm dev:docs
 ```
 
 Open http://localhost:3000 with your browser to see the result.
 
-## Explore
+## Content
 
-In the project, you can see:
+- `content/docs/components`: source-first component guides
+- `content/docs/interactions`: reusable interaction patterns
+- `content/docs/showcases`: larger visual experiments
+- `public/videos`: recorded previews used at the top of entry pages
+- `src/components`: Fumadocs and registry-powered UI components
 
-- `lib/source.ts`: Code for content source adapter, [`loader()`](https://fumadocs.dev/docs/headless/source-api) provides the interface to access your content.
-- `lib/layout.shared.tsx`: Shared options for layouts, optional but preferred to keep.
+Edit an MDX page, then reload the dev server. Package-manager tabs use a shared
+persisted group so a reader's selection carries across documentation pages.
 
-| Route                     | Description                                            |
-| ------------------------- | ------------------------------------------------------ |
-| `app/(home)`              | The route group for your landing page and other pages. |
-| `app/docs`                | The documentation layout and pages.                    |
-| `app/api/search/route.ts` | The Route Handler for search.                          |
+## Checks
 
-### Fumadocs MDX
+```bash
+pnpm --filter @rn-showcase/docs lint
+pnpm --filter @rn-showcase/docs typecheck
+pnpm --filter @rn-showcase/docs build
+```
 
-Collections are defined with the [Macro API](https://fumadocs.dev/docs/mdx/macro) in `lib/source.ts`.
+The docs build can require permission to create local Turbopack worker
+processes. The root `pnpm check` command runs the docs checks alongside the
+showcase checks.
 
-Read the [Introduction](https://fumadocs.dev/docs/mdx) for further details.
-
-## Learn More
-
-To learn more about Next.js and Fumadocs, take a look at the following
-resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js
-  features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-- [Fumadocs](https://fumadocs.dev) - learn about Fumadocs
+For Fumadocs-specific behavior, see the
+[Fumadocs documentation](https://fumadocs.dev).

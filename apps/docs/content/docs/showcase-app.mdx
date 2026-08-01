@@ -1,0 +1,65 @@
+---
+title: Showcase app
+description: Run the native Expo gallery and find the source behind every preview.
+---
+
+The Showcase app is the native review surface for React Native Showcase. It
+keeps the components and interactions close to the device so their motion,
+haptics, safe areas, and native rendering can be reviewed before they are
+copied into another app.
+
+<DocVideo
+  label="Browse the native gallery and trigger the rolling currency interaction"
+  src="/videos/showcase.mp4"
+/>
+
+## Run locally
+
+The app uses native dependencies, so use a development build rather than Expo
+Go:
+
+```bash
+pnpm install
+pnpm prebuild
+pnpm ios
+```
+
+For Android, replace the last command with `pnpm android`. Once the native app
+is installed, `pnpm dev:showcase` starts Metro for JavaScript and TypeScript
+changes.
+
+## Find the code
+
+The app lives in the [`apps/showcase` directory](https://github.com/OrekuD/react-native-showcase/tree/main/apps/showcase):
+
+- [`App.tsx`](https://github.com/OrekuD/react-native-showcase/blob/main/apps/showcase/App.tsx)
+  defines the navigation container and root stack.
+- [`src/screens`](https://github.com/OrekuD/react-native-showcase/tree/main/apps/showcase/src/screens)
+  contains the gallery screens.
+- [`src/components/ui`](https://github.com/OrekuD/react-native-showcase/tree/main/apps/showcase/src/components/ui)
+  contains the copyable component source.
+- [`src/features`](https://github.com/OrekuD/react-native-showcase/tree/main/apps/showcase/src/features)
+  contains interaction-specific logic and formatting helpers.
+- [`.maestro`](https://github.com/OrekuD/react-native-showcase/tree/main/apps/showcase/.maestro)
+  contains smoke-test and recording flows.
+
+The same component sources are referenced by the private registry, so the app
+preview and the CLI/manual install path stay aligned.
+
+## Record a preview
+
+The docs video is generated from the app itself:
+
+```bash
+pnpm record showcase
+```
+
+The command runs the setup flow, records the named Maestro flow on the booted
+iOS simulator, and writes `apps/docs/public/videos/showcase.mp4`.
+
+## Checks
+
+```bash
+pnpm --filter @rn-showcase/showcase test
+pnpm --filter @rn-showcase/showcase typecheck
+```

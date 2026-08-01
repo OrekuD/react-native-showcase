@@ -1,0 +1,4 @@
+appId: com.oreku.reactnativeshowcase
+---
+- launchApp
+- assertVisible: Showcase

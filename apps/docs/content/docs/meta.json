@@ -2,6 +2,7 @@
   "title": "React Native Showcase",
   "pages": [
     "index",
+    "showcase-app",
     "---Library---",
     "components",
     "interactions",
