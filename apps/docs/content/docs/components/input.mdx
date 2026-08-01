@@ -1,0 +1,57 @@
+---
+title: Input
+description: A focused text field that keeps the native TextInput API available.
+---
+
+Input wraps React Native's `TextInput` with a neutral surface and a visible focus
+ring. Native props still pass through, so keyboard, autofill, security, and
+accessibility options remain available.
+
+## Requirements
+
+No additional package is required.
+
+## Usage
+
+```tsx
+import { useState } from 'react';
+import { Input } from '@/components/ui/Input';
+
+export function EmailField() {
+  const [email, setEmail] = useState('');
+
+  return (
+    <Input
+      autoCapitalize="none"
+      autoComplete="email"
+      keyboardType="email-address"
+      onChangeText={setEmail}
+      placeholder="Email address"
+      value={email}
+    />
+  );
+}
+```
+
+## Invalid state
+
+Use `invalid` when validation fails. Pair the field with an accessible error
+message in your form rather than relying on color alone.
+
+```tsx
+<Input
+  invalid={!isEmailValid}
+  value={email}
+/>
+```
+
+## Props
+
+The component accepts every React Native `TextInputProps` value and adds one
+optional prop:
+
+```ts
+type InputProps = TextInputProps & {
+  invalid?: boolean;
+};
+```

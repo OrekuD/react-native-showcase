@@ -1,11 +1,48 @@
 ---
-title: Hello World
-description: Your first document
+title: Getting started
+description: A source-first library of React Native components, interactions, and visual showcases.
 ---
 
-Welcome to the docs! You can start writing documents in `/content/docs`.
+React Native Showcase is a growing collection of interface work made to be
+copied, understood, and changed. Each entry documents the source, its
+dependencies, and the decisions behind the behavior.
 
-## What is Next?
+<Cards>
+  <Card
+    title="Components"
+    description="Small interface foundations: Button, Input, and Switch."
+    href="/docs/components"
+  />
+  <Card
+    title="Interactions"
+    description="Focused motion patterns, beginning with Rolling currency."
+    href="/docs/interactions"
+  />
+  <Card
+    title="Showcases"
+    description="Larger visual experiments built from multiple techniques."
+    href="/docs/showcases"
+  />
+</Cards>
+
+## Source first
+
+This is not a traditional package that hides its implementation. You copy the
+files you need into your application, then adapt them to your product. The
+component pages currently document manual usage while the registry and CLI are
+being built.
+
+## Requirements
+
+- A React Native or Expo application
+- TypeScript is recommended
+- Entry-specific dependencies are listed on each page
+
+## Current library
+
+The first release is intentionally small. It includes three foundational
+components and one interaction so the API, documentation, and copy workflow can
+settle before the library grows.
 
 <Cards>
   <Card title="Learn more about Next.js" href="https://nextjs.org/docs" />

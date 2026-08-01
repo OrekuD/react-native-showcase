@@ -1,0 +1,55 @@
+---
+title: Button
+description: A compact React Native button with primary, secondary, and ghost treatments.
+---
+
+The Button is built on React Native's `Pressable`. It provides a consistent
+shape, typography, disabled state, and tactile pressed feedback without adding a
+runtime dependency.
+
+## Requirements
+
+No additional package is required.
+
+## Usage
+
+```tsx
+import { Button } from '@/components/ui/Button';
+
+export function Actions() {
+  return (
+    <>
+      <Button label="Save changes" onPress={() => save()} />
+      <Button label="Preview" variant="secondary" onPress={() => preview()} />
+      <Button label="Learn more" variant="ghost" onPress={() => openDocs()} />
+    </>
+  );
+}
+```
+
+## Variants
+
+| Variant | Purpose |
+| --- | --- |
+| `primary` | The main action in a group. |
+| `secondary` | A quieter action that still needs a visible boundary. |
+| `ghost` | A low-emphasis action on an existing surface. |
+
+## Props
+
+`Button` accepts React Native `PressableProps`, except for `children` and
+`style`. Use `label` for the visible text and `variant` for its treatment.
+
+```ts
+type ButtonVariant = 'primary' | 'secondary' | 'ghost';
+
+type ButtonProps = Omit<PressableProps, 'children' | 'style'> & {
+  label: string;
+  variant?: ButtonVariant;
+};
+```
+
+## Behavior
+
+The pressed state scales the control to `0.98` and lowers its opacity. Disabled
+buttons remain visible but do not respond to input.

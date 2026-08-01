@@ -14,6 +14,8 @@
     "start:docs": "pnpm --filter @rn-showcase/docs start",
     "ios": "pnpm --filter @rn-showcase/showcase ios",
     "android": "pnpm --filter @rn-showcase/showcase android",
+    "prebuild": "pnpm --filter @rn-showcase/showcase prebuild",
+    "prebuild:clean": "pnpm --filter @rn-showcase/showcase prebuild:clean",
     "build": "turbo run build",
     "build:docs": "pnpm --filter @rn-showcase/docs build",
     "build:showcase": "pnpm --filter @rn-showcase/showcase build",

@@ -1,14 +1,21 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
-import { NumberFlow } from 'number-flow-react-native';
+import { AnimatedRollingNumber } from 'react-native-animated-rolling-numbers';
 import { useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { Easing } from 'react-native-reanimated';
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  useWindowDimensions,
+  View,
+} from 'react-native';
+import { Easing, ReduceMotion } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import {
-  CURRENCIES,
-  createRandomCurrencyState,
+  CURRENCY_OPTIONS,
+  createRandomCounterState,
+  formatCounterValue,
 } from '../features/currency-formatting/currencyFormatting';
 import type { RootStackParamList } from '../navigation/types';
 
@@ -17,32 +24,35 @@ type CurrencyFormattingScreenProps = NativeStackScreenProps<
   'CurrencyFormatting'
 >;
 
-const TRANSFORM_TIMING = {
-  duration: 280,
+const ROLLING_TIMING = {
+  duration: 260,
   easing: Easing.out(Easing.cubic),
-};
-
-const OPACITY_TIMING = {
-  duration: 180,
-  easing: Easing.out(Easing.cubic),
+  reduceMotion: ReduceMotion.System,
 };
 
 export function CurrencyFormattingScreen({
   navigation,
 }: CurrencyFormattingScreenProps) {
-  const [{ amount, currencyIndex }, setCurrencyState] = useState(
-    createRandomCurrencyState,
+  const { width } = useWindowDimensions();
+  const [{ amount, currencyIndex }, setCounterState] = useState(
+    () => createRandomCounterState(),
   );
-  const currency = CURRENCIES[currencyIndex];
+  const currency = CURRENCY_OPTIONS[currencyIndex];
+  const formattedValue = formatCounterValue(amount, currency);
+  const numberFontSize = Math.min(
+    48,
+    Math.max(32, (width - 80) / (formattedValue.length * 0.56)),
+  );
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <StatusBar style="light" />
+      <StatusBar style="dark" />
+
       <View style={styles.header}>
         <Pressable
           accessibilityLabel="Back to animations"
           accessibilityRole="button"
-          hitSlop={10}
+          hitSlop={8}
           onPress={navigation.goBack}
           style={({ pressed }) => [
             styles.backButton,
@@ -51,44 +61,37 @@ export function CurrencyFormattingScreen({
           testID="currency-back-button"
         >
           <Text accessibilityElementsHidden style={styles.backIcon}>
-            ‹
+            ←
           </Text>
         </Pressable>
-        <Text style={styles.headerTitle}>01 / Currency</Text>
+        <Text style={styles.headerTitle}>Rolling currency</Text>
         <View style={styles.headerSpacer} />
       </View>
 
       <View style={styles.stage}>
-        <View style={styles.label}>
-          <Text style={styles.labelText}>LIVE FORMAT</Text>
-        </View>
-
-        <View style={styles.numberFrame}>
-          <NumberFlow
-            format={{ style: 'currency', currency: currency.code }}
-            locales={currency.locale}
-            opacityTiming={OPACITY_TIMING}
-            spinTiming={TRANSFORM_TIMING}
-            style={styles.number}
-            transformTiming={TRANSFORM_TIMING}
-            value={amount}
-          />
-        </View>
-
-        <Text style={styles.localeLabel}>
-          {currency.label} · {currency.locale}
-        </Text>
+        <AnimatedRollingNumber
+          accessibilityLabel={formattedValue}
+          accessibilityLiveRegion="polite"
+          accessibilityRole="text"
+          accessible
+          formattedText={formattedValue}
+          spinningAnimationConfig={ROLLING_TIMING}
+          textStyle={[
+            styles.number,
+            {
+              fontSize: numberFontSize,
+              lineHeight: Math.round(numberFontSize * 1.18),
+            },
+          ]}
+          value={amount}
+        />
       </View>
 
       <View style={styles.controls}>
-        <Text style={styles.helpText}>
-          Change the value and locale to watch every digit and symbol find its
-          new place.
-        </Text>
         <Pressable
-          accessibilityHint="Generates a new amount and currency"
+          accessibilityHint="Shows a new amount in dollars, euros, or Ghana cedis"
           accessibilityRole="button"
-          onPress={() => setCurrencyState(createRandomCurrencyState())}
+          onPress={() => setCounterState(createRandomCounterState())}
           style={({ pressed }) => [
             styles.randomizeButton,
             pressed && styles.randomizeButtonPressed,
@@ -96,9 +99,11 @@ export function CurrencyFormattingScreen({
           testID="currency-randomize-button"
         >
           <Text style={styles.randomizeText}>Randomize</Text>
-          <Text accessibilityElementsHidden style={styles.randomizeIcon}>
-            ↗
-          </Text>
+          <View style={styles.randomizeIconFrame}>
+            <Text accessibilityElementsHidden style={styles.randomizeIcon}>
+              ↻
+            </Text>
+          </View>
         </Pressable>
       </View>
     </SafeAreaView>
@@ -107,120 +112,98 @@ export function CurrencyFormattingScreen({
 
 const styles = StyleSheet.create({
   safeArea: {
-    backgroundColor: '#121210',
+    backgroundColor: '#EFEEE8',
     flex: 1,
   },
   header: {
     alignItems: 'center',
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 18,
-    paddingTop: 6,
+    justifyContent: 'center',
+    minHeight: 66,
+    paddingHorizontal: 20,
   },
   backButton: {
     alignItems: 'center',
-    backgroundColor: '#292925',
-    borderRadius: 21,
-    height: 42,
+    backgroundColor: '#FFFFFF',
+    borderColor: '#D9D7CF',
+    borderRadius: 24,
+    borderWidth: 1,
+    height: 48,
     justifyContent: 'center',
     transform: [{ scale: 1 }],
-    width: 42,
+    width: 48,
   },
   backButtonPressed: {
-    backgroundColor: '#383832',
+    backgroundColor: '#E3E1D9',
     transform: [{ scale: 0.96 }],
   },
   backIcon: {
-    color: '#F5F3EE',
-    fontSize: 32,
-    lineHeight: 34,
-    marginTop: -2,
+    color: '#1C1C1A',
+    fontSize: 24,
+    lineHeight: 27,
   },
   headerTitle: {
-    color: '#A6A49C',
-    fontSize: 12,
+    color: '#66645E',
+    flex: 1,
+    fontSize: 13,
     fontWeight: '700',
-    letterSpacing: 1,
-    textTransform: 'uppercase',
+    letterSpacing: 0.2,
+    textAlign: 'center',
   },
   headerSpacer: {
-    width: 42,
+    width: 48,
   },
   stage: {
     alignItems: 'center',
     flex: 1,
     justifyContent: 'center',
-    paddingHorizontal: 16,
-  },
-  label: {
-    borderColor: '#4A4943',
-    borderRadius: 999,
-    borderWidth: 1,
-    marginBottom: 34,
-    paddingHorizontal: 11,
-    paddingVertical: 6,
-  },
-  labelText: {
-    color: '#A6A49C',
-    fontSize: 10,
-    fontWeight: '700',
-    letterSpacing: 1.4,
-  },
-  numberFrame: {
-    alignItems: 'center',
-    minHeight: 68,
-    justifyContent: 'center',
-    width: '100%',
-  },
-  number: {
-    color: '#F5F3EE',
-    fontFamily: 'System',
-    fontSize: 50,
-    fontVariant: ['tabular-nums'],
-    fontWeight: '700',
-    letterSpacing: -2,
-    lineHeight: 62,
-  },
-  localeLabel: {
-    color: '#77756E',
-    fontSize: 12,
-    fontWeight: '600',
-    letterSpacing: 0.7,
-    marginTop: 20,
-    textTransform: 'uppercase',
-  },
-  controls: {
-    paddingBottom: 14,
     paddingHorizontal: 20,
   },
-  helpText: {
-    color: '#8E8C84',
-    fontSize: 14,
-    lineHeight: 20,
-    marginBottom: 18,
-    maxWidth: 330,
+  number: {
+    color: '#1C1C1A',
+    fontFamily: 'System',
+    fontVariant: ['tabular-nums'],
+    fontWeight: '800',
+    letterSpacing: -1.6,
+  },
+  controls: {
+    alignItems: 'center',
+    paddingBottom: 22,
+    paddingHorizontal: 20,
+    paddingTop: 12,
   },
   randomizeButton: {
     alignItems: 'center',
-    backgroundColor: '#D7FF72',
-    borderRadius: 18,
+    backgroundColor: '#1C1C1A',
+    borderRadius: 999,
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    minHeight: 58,
-    paddingHorizontal: 20,
+    gap: 10,
+    minHeight: 50,
+    paddingLeft: 18,
+    paddingRight: 6,
     transform: [{ scale: 1 }],
   },
   randomizeButtonPressed: {
-    backgroundColor: '#C9EF68',
+    backgroundColor: '#343430',
     transform: [{ scale: 0.98 }],
   },
   randomizeText: {
-    color: '#161614',
-    fontSize: 16,
+    color: '#FFFFFF',
+    fontSize: 15,
     fontWeight: '700',
+    letterSpacing: -0.2,
+  },
+  randomizeIconFrame: {
+    alignItems: 'center',
+    backgroundColor: '#F8F6ED',
+    borderRadius: 19,
+    height: 38,
+    justifyContent: 'center',
+    width: 38,
   },
   randomizeIcon: {
-    color: '#161614',
-    fontSize: 21,
+    color: '#1C1C1A',
+    fontSize: 20,
+    lineHeight: 23,
   },
 });

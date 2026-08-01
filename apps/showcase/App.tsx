@@ -5,8 +5,11 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import type { RootStackParamList } from './src/navigation/types';
+import { ButtonScreen } from './src/screens/ButtonScreen';
 import { CurrencyFormattingScreen } from './src/screens/CurrencyFormattingScreen';
 import { HomeScreen } from './src/screens/HomeScreen';
+import { InputScreen } from './src/screens/InputScreen';
+import { SwitchScreen } from './src/screens/SwitchScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -23,6 +26,9 @@ export default function App() {
             }}
           >
             <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="Button" component={ButtonScreen} />
+            <Stack.Screen name="Input" component={InputScreen} />
+            <Stack.Screen name="Switch" component={SwitchScreen} />
             <Stack.Screen
               name="CurrencyFormatting"
               component={CurrencyFormattingScreen}

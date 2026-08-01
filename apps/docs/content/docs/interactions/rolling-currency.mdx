@@ -1,0 +1,60 @@
+---
+title: Rolling currency
+description: Animate localized dollar, euro, and Ghana cedi values with rolling digits.
+---
+
+Rolling currency combines locale-aware formatting with a digit reel transition.
+The randomize control supplies a new amount and currency while the number itself
+communicates the change.
+
+## Requirements
+
+```bash
+npx expo install react-native-reanimated
+pnpm add react-native-animated-rolling-numbers
+```
+
+## Usage
+
+```tsx
+import { AnimatedRollingNumber } from 'react-native-animated-rolling-numbers';
+import { Easing, ReduceMotion } from 'react-native-reanimated';
+
+const timing = {
+  duration: 260,
+  easing: Easing.out(Easing.cubic),
+  reduceMotion: ReduceMotion.System,
+};
+
+export function RollingCurrency({ amount, formattedValue }) {
+  return (
+    <AnimatedRollingNumber
+      accessibilityLabel={formattedValue}
+      accessibilityLiveRegion="polite"
+      formattedText={formattedValue}
+      spinningAnimationConfig={timing}
+      value={amount}
+    />
+  );
+}
+```
+
+## Formatting
+
+Format the value separately from the animation. This keeps currency rules out of
+the visual component and makes the supported currencies explicit.
+
+```ts
+const currency = new Intl.NumberFormat(locale, {
+  currency: currencyCode,
+  maximumFractionDigits: 2,
+  minimumFractionDigits: 2,
+  style: 'currency',
+}).format(amount);
+```
+
+## Motion
+
+The transition uses a short cubic ease rather than a bounce so rapidly changing
+values stay readable. `ReduceMotion.System` respects the device accessibility
+preference.

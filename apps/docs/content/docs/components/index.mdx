@@ -1,0 +1,33 @@
+---
+title: Components
+description: Small, reusable interface foundations with clear source and sensible defaults.
+---
+
+Components are the quiet building blocks of the library. They stay focused,
+depend on as little as possible, and are designed to be copied directly into an
+application.
+
+<Cards>
+  <Card
+    title="Button"
+    description="A tactile pill button with primary, secondary, and ghost variants."
+    href="/docs/components/button"
+  />
+  <Card
+    title="Input"
+    description="A focused text field with controlled and uncontrolled support."
+    href="/docs/components/input"
+  />
+  <Card
+    title="Switch"
+    description="A labeled native toggle row with optional supporting copy."
+    href="/docs/components/switch"
+  />
+</Cards>
+
+## Design rules
+
+- Prefer React Native primitives for foundational controls.
+- Keep dependencies optional and visible.
+- Preserve accessibility behavior from the underlying native control.
+- Expose only the variants that have a clear purpose.

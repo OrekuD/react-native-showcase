@@ -1,0 +1,49 @@
+---
+title: Switch
+description: A labeled native switch row for clear on and off settings.
+---
+
+Switch keeps React Native's native toggle and adds a consistent label,
+supporting description, spacing, and disabled treatment.
+
+## Requirements
+
+No additional package is required.
+
+## Usage
+
+```tsx
+import { useState } from 'react';
+import { Switch } from '@/components/ui/Switch';
+
+export function MotionSetting() {
+  const [reduceMotion, setReduceMotion] = useState(false);
+
+  return (
+    <Switch
+      description="Prefer calmer transitions throughout the app."
+      label="Reduce motion"
+      onValueChange={setReduceMotion}
+      value={reduceMotion}
+    />
+  );
+}
+```
+
+## Props
+
+```ts
+type SwitchProps = {
+  description?: string;
+  disabled?: boolean;
+  label: string;
+  onValueChange: (value: boolean) => void;
+  value: boolean;
+};
+```
+
+## Accessibility
+
+The visible label is also passed to the native switch as its accessibility
+label. The native control retains the platform's expected switch role and
+interaction behavior.
