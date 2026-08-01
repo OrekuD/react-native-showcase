@@ -44,17 +44,3 @@ pnpm --filter @rn-showcase/cli build
 
 The package bundles registry source files during `build`, so the published
 tarball is self-contained and does not depend on this repository at runtime.
-
-## Publishing
-
-Publishing requires npm access to the `rn-showcase` organization:
-
-```bash
-npm login
-npm whoami
-cd packages/cli
-npm publish --access public
-```
-
-The package uses the MIT license. Update `CHANGELOG.md` and the package version
-before publishing a subsequent release.
