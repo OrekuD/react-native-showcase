@@ -1,0 +1,17 @@
+appId: host.exp.Exponent
+---
+- openLink: ${METRO_URL}
+- extendedWaitUntil:
+    visible: Motion Lab
+    timeout: 15000
+- assertVisible: Currency formatting
+- tapOn:
+    id: animation-card-currency-formatting
+- assertVisible: LIVE FORMAT
+- assertVisible: Randomize
+- tapOn:
+    id: currency-randomize-button
+- assertVisible: Randomize
+- tapOn:
+    id: currency-back-button
+- assertVisible: Motion Lab

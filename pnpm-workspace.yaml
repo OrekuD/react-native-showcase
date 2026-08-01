@@ -1,0 +1,21 @@
+packages:
+  - 'apps/*'
+  - 'packages/*'
+
+linkWorkspacePackages: true
+preferWorkspacePackages: true
+sharedWorkspaceLockfile: true
+saveWorkspaceProtocol: rolling
+
+overrides:
+  'next>postcss': 8.5.25
+  'next>sharp': 0.35.3
+
+catalog:
+  typescript: ~6.0.3
+
+allowBuilds:
+  '@shopify/react-native-skia': true
+  esbuild: true
+  sharp: true
+  unrs-resolver: true

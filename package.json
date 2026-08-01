@@ -1,0 +1,33 @@
+{
+  "name": "react-native-showcase",
+  "version": "0.0.0",
+  "private": true,
+  "packageManager": "pnpm@11.8.0",
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "scripts": {
+    "dev": "turbo run dev",
+    "dev:docs": "pnpm --filter @rn-showcase/docs dev",
+    "dev:showcase": "pnpm --filter @rn-showcase/showcase dev",
+    "start": "pnpm dev:showcase",
+    "start:docs": "pnpm --filter @rn-showcase/docs start",
+    "ios": "pnpm --filter @rn-showcase/showcase ios",
+    "android": "pnpm --filter @rn-showcase/showcase android",
+    "build": "turbo run build",
+    "build:docs": "pnpm --filter @rn-showcase/docs build",
+    "build:showcase": "pnpm --filter @rn-showcase/showcase build",
+    "lint": "turbo run lint",
+    "lint:docs": "pnpm --filter @rn-showcase/docs lint",
+    "typecheck": "turbo run typecheck",
+    "typecheck:docs": "pnpm --filter @rn-showcase/docs typecheck",
+    "typecheck:showcase": "pnpm --filter @rn-showcase/showcase typecheck",
+    "test": "turbo run test",
+    "test:showcase": "pnpm --filter @rn-showcase/showcase test",
+    "check": "pnpm lint && pnpm typecheck && pnpm test && pnpm build"
+  },
+  "devDependencies": {
+    "turbo": "^2.10.0",
+    "typescript": "catalog:"
+  }
+}
