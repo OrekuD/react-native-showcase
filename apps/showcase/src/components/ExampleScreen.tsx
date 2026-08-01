@@ -1,41 +1,122 @@
-import type { ReactNode } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { BlurTargetView } from 'expo-blur';
+import { useRef, type ReactNode } from 'react';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
+import Animated, {
+  Extrapolation,
+  interpolate,
+  useAnimatedScrollHandler,
+  useAnimatedStyle,
+  useSharedValue,
+} from 'react-native-reanimated';
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from 'react-native-safe-area-context';
+
+import { ProgressiveBlur } from './ProgressiveBlur';
 
 type ExampleScreenProps = {
   children: ReactNode;
   onBack: () => void;
+  progressiveBlurHeader?: boolean;
   title: string;
 };
 
-export function ExampleScreen({ children, onBack, title }: ExampleScreenProps) {
+export function ExampleScreen({
+  children,
+  onBack,
+  progressiveBlurHeader = false,
+  title,
+}: ExampleScreenProps) {
+  const insets = useSafeAreaInsets();
+  const blurTargetRef = useRef<View>(null);
+  const scrollY = useSharedValue(0);
+  const onScroll = useAnimatedScrollHandler({
+    onScroll: (event) => {
+      scrollY.value = event.contentOffset.y;
+    },
+  });
+  const blurStyle = useAnimatedStyle(() => ({
+    opacity: interpolate(
+      scrollY.value,
+      [0, 28],
+      [0, 1],
+      Extrapolation.CLAMP,
+    ),
+  }));
+
+  const header = (
+    <View
+      style={[
+        styles.header,
+        progressiveBlurHeader && {
+          height: insets.top + 66,
+          paddingTop: insets.top,
+        },
+      ]}
+    >
+      <Pressable
+        accessibilityLabel="Back to showcase"
+        accessibilityRole="button"
+        hitSlop={8}
+        onPress={onBack}
+        style={({ pressed }) => [
+          styles.backButton,
+          pressed && styles.backButtonPressed,
+        ]}
+      >
+        <Text accessibilityElementsHidden style={styles.backIcon}>
+          ←
+        </Text>
+      </Pressable>
+      <Text style={styles.title}>{title}</Text>
+      <View style={styles.headerSpacer} />
+    </View>
+  );
+
+  const scrollView = (
+    <Animated.ScrollView
+      contentContainerStyle={[
+        styles.content,
+        progressiveBlurHeader && styles.contentWithOverlayHeader,
+      ]}
+      keyboardShouldPersistTaps="handled"
+      onScroll={onScroll}
+      scrollEventThrottle={16}
+      showsVerticalScrollIndicator={false}
+    >
+      <View style={styles.preview}>{children}</View>
+    </Animated.ScrollView>
+  );
+
   return (
     <SafeAreaView style={styles.safeArea}>
-      <View style={styles.header}>
-        <Pressable
-          accessibilityLabel="Back to showcase"
-          accessibilityRole="button"
-          hitSlop={8}
-          onPress={onBack}
-          style={({ pressed }) => [
-            styles.backButton,
-            pressed && styles.backButtonPressed,
-          ]}
-        >
-          <Text accessibilityElementsHidden style={styles.backIcon}>
-            ←
-          </Text>
-        </Pressable>
-        <Text style={styles.title}>{title}</Text>
-        <View style={styles.headerSpacer} />
-      </View>
+      {progressiveBlurHeader ? (
+        <BlurTargetView ref={blurTargetRef} style={styles.scrollTarget}>
+          {scrollView}
+        </BlurTargetView>
+      ) : (
+        <>
+          {header}
+          {scrollView}
+        </>
+      )}
 
-      <ScrollView
-        contentContainerStyle={styles.content}
-        keyboardShouldPersistTaps="handled"
-      >
-        <View style={styles.preview}>{children}</View>
-      </ScrollView>
+      {progressiveBlurHeader ? (
+        <View
+          pointerEvents="box-none"
+          style={[styles.overlayHeader, { height: insets.top + 104 }]}
+          testID="progressive-blur-header"
+        >
+          <Animated.View style={[StyleSheet.absoluteFill, blurStyle]}>
+            <ProgressiveBlur
+              blurTarget={blurTargetRef}
+              style={StyleSheet.absoluteFill}
+            />
+          </Animated.View>
+          {header}
+        </View>
+      ) : null}
     </SafeAreaView>
   );
 }
@@ -50,6 +131,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     minHeight: 66,
     paddingHorizontal: 20,
+    position: 'relative',
+    zIndex: 2,
+  },
+  overlayHeader: {
+    height: 104,
+    left: 0,
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    zIndex: 10,
   },
   backButton: {
     alignItems: 'center',
@@ -86,6 +177,13 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     justifyContent: 'center',
     padding: 20,
+  },
+  contentWithOverlayHeader: {
+    paddingBottom: 96,
+    paddingTop: 86,
+  },
+  scrollTarget: {
+    flex: 1,
   },
   preview: {
     alignSelf: 'center',

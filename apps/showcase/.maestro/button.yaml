@@ -1,0 +1,31 @@
+appId: com.oreku.reactnativeshowcase
+---
+- launchApp
+- assertVisible: Showcase
+- tapOn:
+    id: home-component-button
+- assertVisible: VARIANTS
+- assertVisible:
+    id: progressive-blur-header
+- tapOn:
+    id: button-toggle-loading
+- assertVisible: Stop loading
+- assertVisible:
+    id: button-loading
+- assertVisible:
+    id: button-icon-loading
+- tapOn:
+    id: button-toggle-loading
+- assertVisible: Start loading
+- scrollUntilVisible:
+    element:
+      text: THEMING
+    direction: DOWN
+- assertVisible: Provider theme
+- assertVisible: Per-button theme
+- swipe:
+    start: 50%, 80%
+    end: 50%, 25%
+    duration: 500
+- assertVisible:
+    id: progressive-blur-header
