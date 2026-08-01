@@ -39,6 +39,8 @@ export type ButtonSizeTheme = {
   height?: number;
   /** Icon frame size in density-independent pixels. */
   iconSize?: number;
+  /** Label font size in density-independent pixels. */
+  labelFontSize?: number;
   /** Horizontal content padding in density-independent pixels. */
   paddingHorizontal?: number;
 };
@@ -92,10 +94,30 @@ export const DEFAULT_BUTTON_THEME = {
     letterSpacing: -0.2,
   },
   sizes: {
-    icon: { height: 48, iconSize: 20, paddingHorizontal: 0 },
-    lg: { height: 60, iconSize: 22, paddingHorizontal: 26 },
-    md: { height: 52, iconSize: 20, paddingHorizontal: 22 },
-    sm: { height: 40, iconSize: 17, paddingHorizontal: 15 },
+    icon: {
+      height: 48,
+      iconSize: 20,
+      labelFontSize: 16,
+      paddingHorizontal: 0,
+    },
+    lg: {
+      height: 60,
+      iconSize: 22,
+      labelFontSize: 18,
+      paddingHorizontal: 26,
+    },
+    md: {
+      height: 52,
+      iconSize: 20,
+      labelFontSize: 16,
+      paddingHorizontal: 22,
+    },
+    sm: {
+      height: 40,
+      iconSize: 17,
+      labelFontSize: 14,
+      paddingHorizontal: 15,
+    },
   },
   variants: {
     destructive: {
@@ -136,6 +158,15 @@ export function mergeButtonTheme(
   baseTheme: ResolvedButtonTheme,
   theme?: ButtonTheme,
 ): ResolvedButtonTheme {
+  const sharedLabelSize = theme?.label?.fontSize;
+  const mergeSize = (size: ButtonSize): ResolvedButtonSizeTheme => ({
+    ...baseTheme.sizes[size],
+    ...(sharedLabelSize === undefined
+      ? undefined
+      : { labelFontSize: sharedLabelSize }),
+    ...theme?.sizes?.[size],
+  });
+
   return {
     cornerSmoothing: theme?.cornerSmoothing ?? baseTheme.cornerSmoothing,
     label: {
@@ -143,10 +174,10 @@ export function mergeButtonTheme(
       ...theme?.label,
     },
     sizes: {
-      icon: { ...baseTheme.sizes.icon, ...theme?.sizes?.icon },
-      lg: { ...baseTheme.sizes.lg, ...theme?.sizes?.lg },
-      md: { ...baseTheme.sizes.md, ...theme?.sizes?.md },
-      sm: { ...baseTheme.sizes.sm, ...theme?.sizes?.sm },
+      icon: mergeSize('icon'),
+      lg: mergeSize('lg'),
+      md: mergeSize('md'),
+      sm: mergeSize('sm'),
     },
     variants: {
       destructive: {
@@ -180,6 +211,10 @@ export function resolveButtonTokens(
     label,
     size: sizeOverride,
   } = override ?? {};
+  const resolvedSize = {
+    ...theme.sizes[size],
+    ...sizeOverride,
+  };
 
   return {
     appearance: {
@@ -193,11 +228,9 @@ export function resolveButtonTokens(
     cornerSmoothing: cornerSmoothing ?? theme.cornerSmoothing,
     label: {
       ...theme.label,
+      fontSize: resolvedSize.labelFontSize,
       ...label,
     },
-    size: {
-      ...theme.sizes[size],
-      ...sizeOverride,
-    },
+    size: resolvedSize,
   };
 }

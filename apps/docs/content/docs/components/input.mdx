@@ -1,17 +1,136 @@
 ---
 title: Input
-description: A focused text field that keeps the native TextInput API available.
+description: A composable React Native text field with multiple visual treatments, validation states, and secure entry.
 ---
 
-Input wraps React Native's `TextInput` with a neutral surface and a visible focus
-ring. Native props still pass through, so keyboard, autofill, security, and
-accessibility options remain available.
+Input is a source-first compound component. Choose an appearance on
+`Input.Root`, then compose labels, controls, trailing actions, and messages for
+the exact field your form needs.
 
-## Requirements
+<DocVideo
+  label="Input appearances, live validation, clear actions, and composed search"
+  src="/videos/components/input.mp4"
+/>
 
-No additional package is required.
+## Installation
+
+<Tabs className="showcase-install-tabs" items={['Command', 'Manual']}>
+  <Tab className="showcase-install-panel" value="Command">
+    <div className="showcase-install-intro">
+      Add Input to your project with the Showcase CLI.
+    </div>
+
+    <CodeBlockTabs
+      className="showcase-package-tabs"
+      defaultValue="npm"
+      groupId="package-manager"
+      persist
+    >
+      <CodeBlockTabsList>
+        <CodeBlockTabsTrigger value="npm">npm</CodeBlockTabsTrigger>
+        <CodeBlockTabsTrigger value="pnpm">pnpm</CodeBlockTabsTrigger>
+        <CodeBlockTabsTrigger value="yarn">yarn</CodeBlockTabsTrigger>
+        <CodeBlockTabsTrigger value="bun">bun</CodeBlockTabsTrigger>
+      </CodeBlockTabsList>
+      <CodeBlockTab value="npm">
+        ```bash
+        npx @rn-showcase/cli add input
+        ```
+      </CodeBlockTab>
+      <CodeBlockTab value="pnpm">
+        ```bash
+        pnpm dlx @rn-showcase/cli add input
+        ```
+      </CodeBlockTab>
+      <CodeBlockTab value="yarn">
+        ```bash
+        yarn dlx @rn-showcase/cli add input
+        ```
+      </CodeBlockTab>
+      <CodeBlockTab value="bun">
+        ```bash
+        bunx @rn-showcase/cli add input
+        ```
+      </CodeBlockTab>
+    </CodeBlockTabs>
+
+    <div className="showcase-install-note">
+      The CLI installs the icon dependencies and copies the Input source files
+      into <code>components/ui</code>. Because the field uses Fast Squircle,
+      run your normal Expo prebuild step after installing it.
+    </div>
+  </Tab>
+
+  <Tab className="showcase-install-panel" value="Manual">
+    <div className="showcase-install-step">
+      <span aria-hidden="true" className="showcase-install-step-marker">
+        1
+      </span>
+      <div className="showcase-install-step-title">Install the dependencies.</div>
+      <div className="showcase-install-step-body">
+        <CodeBlockTabs
+          className="showcase-package-tabs"
+          defaultValue="npm"
+          groupId="package-manager"
+          persist
+        >
+          <CodeBlockTabsList>
+            <CodeBlockTabsTrigger value="npm">npm</CodeBlockTabsTrigger>
+            <CodeBlockTabsTrigger value="pnpm">pnpm</CodeBlockTabsTrigger>
+            <CodeBlockTabsTrigger value="yarn">yarn</CodeBlockTabsTrigger>
+            <CodeBlockTabsTrigger value="bun">bun</CodeBlockTabsTrigger>
+          </CodeBlockTabsList>
+          <CodeBlockTab value="npm">
+        ```bash
+        npx expo install react-native-reanimated react-native-svg
+        npm install lucide-react-native react-native-fast-squircle
+        npx expo prebuild
+        ```
+          </CodeBlockTab>
+          <CodeBlockTab value="pnpm">
+        ```bash
+        pnpm exec expo install react-native-reanimated react-native-svg
+        pnpm add lucide-react-native react-native-fast-squircle
+        pnpm exec expo prebuild
+        ```
+          </CodeBlockTab>
+          <CodeBlockTab value="yarn">
+        ```bash
+        yarn expo install react-native-reanimated react-native-svg
+        yarn add lucide-react-native react-native-fast-squircle
+        yarn expo prebuild
+        ```
+          </CodeBlockTab>
+          <CodeBlockTab value="bun">
+        ```bash
+        bun x expo install react-native-reanimated react-native-svg
+        bun add lucide-react-native react-native-fast-squircle
+        bun x expo prebuild
+        ```
+          </CodeBlockTab>
+        </CodeBlockTabs>
+      </div>
+    </div>
+
+    <div className="showcase-install-step">
+      <span aria-hidden="true" className="showcase-install-step-marker">
+        2
+      </span>
+      <div className="showcase-install-step-title">Copy the component files into your project.</div>
+      <div className="showcase-install-step-body">
+        <RegistryManualInstall name="input" />
+      </div>
+    </div>
+  </Tab>
+</Tabs>
+
+Run a native development build after installing `react-native-fast-squircle`;
+Expo Go cannot load that native module.
 
 ## Usage
+
+Compose the root, label, control, and message. The selected appearance changes
+the shell while the composition stays the same.
 
 ```tsx
 import { useState } from 'react';
@@ -21,37 +140,259 @@ export function EmailField() {
   const [email, setEmail] = useState('');
 
   return (
-    <Input
-      autoCapitalize="none"
-      autoComplete="email"
-      keyboardType="email-address"
-      onChangeText={setEmail}
-      placeholder="Email address"
-      value={email}
-    />
+    <Input.Root appearance="filled">
+      <Input.Control
+        autoCapitalize="none"
+        clearable
+        keyboardType="email-address"
+        onChangeText={setEmail}
+        placeholder="Email address"
+        value={email}
+      />
+      <Input.Message tone="info">
+        We will only use this to contact you about your account.
+      </Input.Message>
+    </Input.Root>
   );
 }
 ```
 
-## Invalid state
+## Appearances
 
-Use `invalid` when validation fails. Pair the field with an accessible error
-message in your form rather than relying on color alone.
+Use the appearance that fits the surrounding form:
+
+| Appearance | Treatment |
+| --- | --- |
+| `filled` | A soft, filled surface for relaxed forms and search fields. |
+| `stacked` | An outlined field with the label stacked inside the top edge. |
+| `notched` | An outlined field with the label cutting into the border. |
+| `external` | A conventional field with the label above the input container. |
 
 ```tsx
-<Input
-  invalid={!isEmailValid}
-  value={email}
-/>
+<Input.Root appearance="stacked">
+  <Input.Label>Last name</Input.Label>
+  <Input.Control value={lastName} onChangeText={setLastName} />
+</Input.Root>
+
+<Input.Root appearance="notched">
+  <Input.Label required>First name</Input.Label>
+  <Input.Control value={firstName} onChangeText={setFirstName} />
+</Input.Root>
+```
+
+## Sizes
+
+`md` is the default. The `sm`, `md`, and `lg` sizes coordinate field height,
+type, spacing, icons, and action targets. At a given size, the field container
+has the same height for every appearance. Labels outside the container add to
+the overall footprint of `notched` and `external` fields.
+
+```tsx
+<Input.Root appearance="filled" size="sm">
+  <Input.Control placeholder="Small" />
+</Input.Root>
+
+<Input.Root appearance="filled" size="md">
+  <Input.Control placeholder="Medium" />
+</Input.Root>
+
+<Input.Root appearance="filled" size="lg">
+  <Input.Control placeholder="Large" />
+</Input.Root>
+```
+
+The same sizes work with `stacked`, `notched`, and `external` without changing
+the composition.
+
+## Messages and validation
+
+Every appearance supports the same status and message composition. `error`
+changes the shell and message color, while `success` provides a positive state.
+
+```tsx
+<Input.Root appearance="external" status="error">
+  <Input.Label required>Email</Input.Label>
+  <Input.Control value={email} onChangeText={setEmail} />
+  <Input.Message tone="error">
+    Enter a valid email address.
+  </Input.Message>
+</Input.Root>
+
+<Input.Root appearance="stacked" status="success">
+  <Input.Label>Username</Input.Label>
+  <Input.Control value={username} onChangeText={setUsername} />
+  <Input.Message tone="success">Username is available.</Input.Message>
+</Input.Root>
+```
+
+Use `invalid` when an error state is needed without rendering a message.
+
+## Adornments and clear actions
+
+Use `Input.Leading` and `Input.Trailing` to position content inside the field.
+`Input.Icon` supplies the current color and size tokens to a render function,
+so custom icons follow the field's size, focus, and validation state.
+
+Set `clearable` on `Input.Control` to show an animated filled clear icon when
+the field contains text. Clearing works with controlled and uncontrolled
+inputs, calls `onChangeText('')`, and returns focus to the control.
+
+```tsx
+import { Search as SearchIcon } from 'lucide-react-native';
+
+<Input.Root appearance="filled">
+  <Input.Leading>
+    <Input.Icon>
+      {({ color, size }) => (
+        <SearchIcon color={color} size={size} />
+      )}
+    </Input.Icon>
+  </Input.Leading>
+  <Input.Control
+    accessibilityLabel="Search components"
+    clearable
+    onChangeText={setQuery}
+    placeholder="Search components"
+    value={query}
+  />
+</Input.Root>
+```
+
+Use `Input.Action` when a custom adornment is interactive. Status changes
+animate inside a fixed icon slot; pass `animationKey` when a custom icon swap
+is driven by something other than the input status.
+
+```tsx
+<Input.Root appearance="filled">
+  <Input.Control placeholder="Search" />
+  <Input.Trailing>
+    <Input.Action accessibilityLabel="Search">
+      <Input.Icon>
+        {({ color, size }) => <SearchIcon color={color} size={size} />}
+      </Input.Icon>
+    </Input.Action>
+  </Input.Trailing>
+</Input.Root>
+```
+
+`clearable` is ignored when `secureEntry` or a custom `Input.Trailing` is
+present, keeping ownership of the right-side action unambiguous.
+
+## Focus color
+
+Use `focusColor` when one color should drive the active border, label, caret,
+and adornments for a field.
+
+```tsx
+<Input.Root appearance="filled" focusColor="#6558D9">
+  <Input.Control clearable placeholder="Email address" />
+</Input.Root>
+```
+
+For separate active content and border colors, use the theme tokens described
+below.
+
+## Secure entry
+
+Set `secureEntry` on the root to secure the control and add an animated
+Eye/EyeOff visibility action. The action is accessible and can be replaced with
+your own `Input.PasswordToggle` composition when needed.
+
+```tsx
+<Input.Root appearance="external" secureEntry>
+  <Input.Label required>Password</Input.Label>
+  <Input.Control autoComplete="current-password" />
+  <Input.Message tone="info">
+    Use at least 8 characters.
+  </Input.Message>
+</Input.Root>
+```
+
+## Theming
+
+Use `InputThemeProvider` to change defaults for a subtree. Themes can override
+semantic colors, individual appearances, named sizes, and squircle smoothing.
+Nested providers merge with the closest parent theme.
+
+```tsx
+import {
+  Input,
+  InputThemeProvider,
+} from '@/components/ui/Input';
+
+<InputThemeProvider
+  theme={{
+    appearances: {
+      filled: { backgroundColor: '#E8F0EC' },
+    },
+    colors: {
+      filledFocusBorder: '#4D806E',
+      focus: '#28594A',
+    },
+  }}
+>
+  <Input.Root appearance="filled">
+    <Input.Control placeholder="Provider theme" />
+  </Input.Root>
+</InputThemeProvider>;
+```
+
+Use the root `theme` prop for one field without changing its surrounding
+provider defaults.
+
+```tsx
+<Input.Root
+  appearance="filled"
+  theme={{
+    appearance: {
+      backgroundColor: '#EEE9FF',
+      borderRadius: 16,
+    },
+    colors: {
+      filledFocusBorder: '#725DB7',
+      focus: '#5138A5',
+    },
+    cornerSmoothing: 0.9,
+  }}
+>
+  <Input.Control placeholder="Per-input theme" />
+</Input.Root>
 ```
 
 ## Props
 
-The component accepts every React Native `TextInputProps` value and adds one
-optional prop:
+`Input.Root` accepts the props below. `Input.Control` accepts all native React
+Native `TextInputProps`, and `Input.Action` accepts `PressableProps`.
 
-```ts
-type InputProps = TextInputProps & {
-  invalid?: boolean;
-};
-```
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `appearance` | `'filled' \| 'stacked' \| 'notched' \| 'external'` | `'filled'` | Selects the visual treatment. |
+| `disabled` | `boolean` | `false` | Disables the control and trailing actions. |
+| `focusColor` | `string` | Theme value | Sets the focused border, label, caret, and active adornment color together. |
+| `invalid` | `boolean` | `false` | Applies error styling without requiring an error message. |
+| `labelBackgroundColor` | `string` | `'#F2F0EA'` | Background behind labels that overlap the border. |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Controls the field scale and keeps compound parts synchronized. |
+| `secureEntry` | `boolean` | `false` | Secures the control and adds the password visibility action. |
+| `status` | `'default' \| 'success' \| 'error'` | `'default'` | Selects the semantic visual state. |
+| `fieldStyle` | `ViewStyle` | — | Overrides the field shell style. |
+| `theme` | `InputThemeOverride` | — | Overrides appearance, colors, size tokens, and corner smoothing for one field. |
+
+### Compound parts
+
+| Part | Purpose |
+| --- | --- |
+| `Input.Label` | Renders a label and optional required marker. |
+| `Input.Control` | Accepts native `TextInputProps` and adds the optional `clearable` action. |
+| `Input.Leading` | Positions left-side content inside the field. |
+| `Input.Trailing` | Positions right-side content inside the field. |
+| `Input.Action` | Provides a pressable trailing action. |
+| `Input.Icon` | Provides color and size tokens and animates status-driven icon swaps. |
+| `Input.PasswordToggle` | Toggles secure visibility with animated eye icons. |
+| `Input.Message` | Renders an info, success, or error label below the field. |
+
+## Motion
+
+Icons mount from the center with a short zoom transition and unmount with a
+faster zoom-out transition. This covers validation swaps, the clear action, and
+secure-entry visibility without changing the field layout. The transitions
+respect the system reduce-motion preference.

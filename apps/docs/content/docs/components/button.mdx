@@ -8,7 +8,7 @@ The Button is a source-first compound component. Compose `Button.Label` and
 consistent interaction model.
 
 <DocVideo
-  label="Button variants, loading states, icon buttons, and theming"
+  label="Button variants, sizes, loading states, icon buttons, and theming"
   src="/videos/components/button.mp4"
 />
 
@@ -176,6 +176,32 @@ For an icon-only button, use `size="icon"` and provide an accessible name:
 </Button>
 ```
 
+## Sizes
+
+`md` is the default. Use `sm` for compact actions, `lg` for a more prominent
+touch target, and `icon` for a square icon-only control. Each size keeps the
+height, horizontal padding, icon slot, and label font size in sync.
+
+```tsx
+<Button size="sm">
+  <Button.Label>Small</Button.Label>
+</Button>
+
+<Button size="md">
+  <Button.Label>Medium</Button.Label>
+</Button>
+
+<Button size="lg">
+  <Button.Label>Large</Button.Label>
+</Button>
+
+<Button accessibilityLabel="Add item" size="icon">
+  <Button.Icon>
+    {({ color, size }) => <PlusIcon color={color} size={size} />}
+  </Button.Icon>
+</Button>
+```
+
 ## Variants
 
 | Variant | Purpose |
@@ -244,6 +270,13 @@ import {
   theme={{
     cornerSmoothing: 0.9,
     label: { fontSize: 17 },
+    sizes: {
+      lg: {
+        height: 64,
+        labelFontSize: 19,
+        paddingHorizontal: 30,
+      },
+    },
     variants: {
       primary: {
         backgroundColor: '#28594A',
@@ -264,6 +297,7 @@ smoothing tokens without changing the provider defaults.
 ## Motion
 
 Press feedback eases the button to `0.97` scale and returns it to rest on release.
-Loading icons enter with a short scale-and-fade transition; the outgoing icon
-fades out at half the entering duration. Both transitions respect the system
+Loading icons mount from the center with a short zoom transition and unmount
+with a faster zoom-out transition. The fixed icon slot prevents either state
+from shifting the label. Press and icon transitions respect the system
 reduce-motion preference.

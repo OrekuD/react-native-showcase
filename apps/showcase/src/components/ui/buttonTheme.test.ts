@@ -7,6 +7,28 @@ import {
   resolveButtonTokens,
 } from './buttonTheme.ts';
 
+test('button label typography scales with the selected size', () => {
+  const small = resolveButtonTokens(
+    DEFAULT_BUTTON_THEME,
+    'primary',
+    'sm',
+  );
+  const medium = resolveButtonTokens(
+    DEFAULT_BUTTON_THEME,
+    'primary',
+    'md',
+  );
+  const large = resolveButtonTokens(
+    DEFAULT_BUTTON_THEME,
+    'primary',
+    'lg',
+  );
+
+  assert.equal(small.label.fontSize, 14);
+  assert.equal(medium.label.fontSize, 16);
+  assert.equal(large.label.fontSize, 18);
+});
+
 test('merges provider tokens without changing untouched defaults', () => {
   const theme = mergeButtonTheme(DEFAULT_BUTTON_THEME, {
     label: { fontSize: 17 },
@@ -57,6 +79,7 @@ test('per-button tokens override the provider for one button', () => {
     size: {
       height: 58,
       iconSize: 22,
+      labelFontSize: 16,
       paddingHorizontal: 22,
     },
   });

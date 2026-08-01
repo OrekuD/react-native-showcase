@@ -1,4 +1,5 @@
 import { BlurTargetView } from 'expo-blur';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { useRef, type ReactNode, type RefObject } from 'react';
 import {
   Pressable,
@@ -23,6 +24,7 @@ import { ProgressiveBlur } from './ProgressiveBlur';
 
 type ExampleScreenProps = {
   children: ReactNode;
+  keyboardAware?: boolean;
   onBack: () => void;
   progressiveBlurHeader?: boolean;
   scrollViewRef?: RefObject<ScrollView | null>;
@@ -31,6 +33,7 @@ type ExampleScreenProps = {
 
 export function ExampleScreen({
   children,
+  keyboardAware = false,
   onBack,
   progressiveBlurHeader = false,
   scrollViewRef,
@@ -82,19 +85,32 @@ export function ExampleScreen({
     </View>
   );
 
-  const scrollView = (
-    <Animated.ScrollView
-      ref={scrollViewRef}
-      contentContainerStyle={[
-        styles.content,
-        progressiveBlurHeader && styles.contentWithOverlayHeader,
-      ]}
+  const scrollContent = <View style={styles.preview}>{children}</View>;
+  const scrollContentContainerStyle = [
+    styles.content,
+    progressiveBlurHeader && styles.contentWithOverlayHeader,
+  ];
+  const scrollView = keyboardAware ? (
+    <KeyboardAwareScrollView
+      bottomOffset={24}
+      contentContainerStyle={scrollContentContainerStyle}
       keyboardShouldPersistTaps="handled"
       onScroll={onScroll}
       scrollEventThrottle={16}
       showsVerticalScrollIndicator={false}
     >
-      <View style={styles.preview}>{children}</View>
+      {scrollContent}
+    </KeyboardAwareScrollView>
+  ) : (
+    <Animated.ScrollView
+      ref={scrollViewRef}
+      contentContainerStyle={scrollContentContainerStyle}
+      keyboardShouldPersistTaps="handled"
+      onScroll={onScroll}
+      scrollEventThrottle={16}
+      showsVerticalScrollIndicator={false}
+    >
+      {scrollContent}
     </Animated.ScrollView>
   );
 

@@ -1,0 +1,6 @@
+{
+  "segments": [
+    { "startMs": 0, "endMs": 2250 },
+    { "startMs": 6500, "endMs": 9500 }
+  ]
+}

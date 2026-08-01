@@ -1,0 +1,30 @@
+{
+  "name": "input",
+  "files": [
+    {
+      "source": "../../../../apps/showcase/src/components/ui/Input.tsx",
+      "target": "Input.tsx"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/InputThemeProvider.tsx",
+      "target": "InputThemeProvider.tsx"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/inputState.ts",
+      "target": "inputState.ts"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/inputTheme.ts",
+      "target": "inputTheme.ts"
+    }
+  ],
+  "expoDependencies": [
+    "react-native-reanimated",
+    "react-native-svg"
+  ],
+  "dependencies": [
+    "lucide-react-native",
+    "react-native-fast-squircle"
+  ],
+  "requiresPrebuild": true
+}

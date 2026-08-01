@@ -4,6 +4,7 @@ import {
   existsSync,
   mkdirSync,
   mkdtempSync,
+  readFileSync,
   readdirSync,
   rmSync,
 } from 'node:fs';
@@ -24,8 +25,12 @@ function findRecordFlows(directory) {
     const name = entry.name.replace(/-record\.yaml$/, '');
     const relativeDirectory = relative(recordingRoot, directory);
     const key = [relativeDirectory, name].filter(Boolean).join('/');
+    const optionsPath = join(directory, `${name}-record.json`);
+    const options = existsSync(optionsPath)
+      ? JSON.parse(readFileSync(optionsPath, 'utf8'))
+      : {};
 
-    return [{ directory, flow: entryPath, key, name }];
+    return [{ directory, flow: entryPath, key, name, options }];
   });
 }
 
@@ -96,6 +101,7 @@ function runRecordedMaestro(flow, temporaryVideo, flowName) {
       { cwd: root, stdio: ['inherit', 'pipe', 'pipe'] },
     );
     let recorder;
+    let recorderStartedAtMs;
     let output = '';
 
     const forwardOutput = (stream, chunk) => {
@@ -105,6 +111,7 @@ function runRecordedMaestro(flow, temporaryVideo, flowName) {
 
       if (!recorder && output.includes(`> Flow ${flowName}`)) {
         recorder = startSimulatorRecorder(temporaryVideo);
+        recorderStartedAtMs = Date.now();
       }
     };
 
@@ -112,6 +119,10 @@ function runRecordedMaestro(flow, temporaryVideo, flowName) {
     maestro.stderr.on('data', (chunk) => forwardOutput(process.stderr, chunk));
     maestro.once('error', rejectFlow);
     maestro.once('close', async (status) => {
+      const flowDurationMs = recorderStartedAtMs
+        ? Date.now() - recorderStartedAtMs
+        : undefined;
+
       try {
         if (recorder) await stopRecorder(recorder);
         if (status !== 0) {
@@ -121,12 +132,64 @@ function runRecordedMaestro(flow, temporaryVideo, flowName) {
           return;
         }
 
-        resolveFlow();
+        resolveFlow(flowDurationMs);
       } catch (error) {
         rejectFlow(error);
       }
     });
   });
+}
+
+function normalizeVideo(source, destination, durationMs, options = {}) {
+  const durationSeconds = Math.max(0.5, durationMs / 1000 + 0.25);
+  const segmentFilter = options.segments
+    ?.map(
+      ({ startMs, endMs }, index) =>
+        `[0:v]trim=start=${startMs / 1000}:end=${endMs / 1000},setpts=PTS-STARTPTS[v${index}]`,
+    )
+    .join(';');
+  const videoFilters = options.segments?.length
+    ? [
+        '-filter_complex',
+        `${segmentFilter};${options.segments
+          .map((_, index) => `[v${index}]`)
+          .join('')}concat=n=${options.segments.length}:v=1:a=0,fps=30,format=yuv420p[v]`,
+        '-map',
+        '[v]',
+      ]
+    : [
+        '-t',
+        durationSeconds.toFixed(3),
+        '-vf',
+        'fps=30,format=yuv420p',
+      ];
+  const result = spawnSync(
+    'ffmpeg',
+    [
+      '-y',
+      '-loglevel',
+      'error',
+      '-i',
+      source,
+      '-an',
+      ...videoFilters,
+      '-c:v',
+      'libx264',
+      '-preset',
+      'medium',
+      '-crf',
+      '18',
+      '-movflags',
+      '+faststart',
+      destination,
+    ],
+    { cwd: root, stdio: 'inherit' },
+  );
+
+  if (result.error) throw result.error;
+  if (result.status !== 0) {
+    throw new Error(`ffmpeg failed with status ${result.status ?? 'unknown'}`);
+  }
 }
 
 function waitForExit(child) {
@@ -170,6 +233,10 @@ async function recordTarget(target) {
     join(tmpdir(), `rn-showcase-${target.name}-`),
   );
   const temporaryVideo = join(temporaryDirectory, `${target.name}.mp4`);
+  const normalizedVideo = join(
+    temporaryDirectory,
+    `${target.name}-normalized.mp4`,
+  );
   const destination = resolve(
     root,
     'apps/docs/public/videos',
@@ -178,7 +245,23 @@ async function recordTarget(target) {
   );
 
   try {
-    await runRecordedMaestro(target.flow, temporaryVideo, target.name);
+    const durationMs = await runRecordedMaestro(
+      target.flow,
+      temporaryVideo,
+      target.name,
+    );
+    if (!durationMs) {
+      throw new Error(`Recorder did not start for ${target.key}`);
+    }
+    const normalizedDurationMs = target.options.maxDurationMs
+      ? Math.min(durationMs, target.options.maxDurationMs)
+      : durationMs;
+    normalizeVideo(
+      temporaryVideo,
+      normalizedVideo,
+      normalizedDurationMs,
+      target.options,
+    );
   } catch (error) {
     rmSync(temporaryDirectory, { force: true, recursive: true });
     throw error;
@@ -187,9 +270,12 @@ async function recordTarget(target) {
   if (!existsSync(temporaryVideo)) {
     throw new Error(`Recorder did not create ${temporaryVideo}`);
   }
+  if (!existsSync(normalizedVideo)) {
+    throw new Error(`ffmpeg did not create ${normalizedVideo}`);
+  }
 
   mkdirSync(dirname(destination), { recursive: true });
-  cpSync(temporaryVideo, destination);
+  cpSync(normalizedVideo, destination);
   rmSync(temporaryDirectory, { force: true, recursive: true });
   console.log(`Wrote ${destination}`);
 }

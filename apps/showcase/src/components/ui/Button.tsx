@@ -21,12 +21,12 @@ import {
 import FastSquircleView from "react-native-fast-squircle";
 import Animated, {
   Easing,
-  FadeOut,
   ReduceMotion,
+  ZoomIn,
+  ZoomOut,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
-  type EntryExitAnimationFunction,
 } from "react-native-reanimated";
 
 import { resolveButtonState } from "./buttonState";
@@ -93,35 +93,19 @@ type ButtonContextValue = ButtonIconRenderProps & {
   loading: boolean;
 };
 
-const ICON_ENTER_DURATION_MS = 180;
-const ICON_EXIT_DURATION_MS = ICON_ENTER_DURATION_MS / 2;
+const ICON_ENTER_DURATION_MS = 280;
+const ICON_EXIT_DURATION_MS = ICON_ENTER_DURATION_MS * 0.7;
 const PRESS_IN_DURATION_MS = 120;
 const PRESS_OUT_DURATION_MS = 90;
 const PRESSED_SCALE = 0.97;
 const EASE_OUT = Easing.bezier(0.23, 1, 0.32, 1);
 
-const ICON_ENTERING: EntryExitAnimationFunction = () => {
-  "worklet";
+const ICON_ENTERING = ZoomIn.duration(ICON_ENTER_DURATION_MS)
+  .easing(EASE_OUT)
+  .withInitialValues({ transform: [{ scale: 0.42 }] })
+  .reduceMotion(ReduceMotion.System);
 
-  const config = {
-    duration: ICON_ENTER_DURATION_MS,
-    easing: EASE_OUT,
-    reduceMotion: ReduceMotion.System,
-  };
-
-  return {
-    animations: {
-      opacity: withTiming(1, config),
-      transform: [{ scale: withTiming(1, config) }],
-    },
-    initialValues: {
-      opacity: 0,
-      transform: [{ scale: 0.92 }],
-    },
-  };
-};
-
-const ICON_EXITING = FadeOut.duration(ICON_EXIT_DURATION_MS)
+const ICON_EXITING = ZoomOut.duration(ICON_EXIT_DURATION_MS)
   .easing(EASE_OUT)
   .reduceMotion(ReduceMotion.System);
 
@@ -287,25 +271,14 @@ function ButtonIcon({ children, style, ...props }: ButtonIconProps) {
       pointerEvents="none"
       style={[style, styles.iconSlot, { height: size, width: size }]}
     >
-      {loading ? (
-        <Animated.View
-          entering={ICON_ENTERING}
-          exiting={ICON_EXITING}
-          key="loading"
-          style={styles.iconLayer}
-        >
-          <ActivityIndicator color={color} size="small" />
-        </Animated.View>
-      ) : (
-        <Animated.View
-          entering={ICON_ENTERING}
-          exiting={ICON_EXITING}
-          key="icon"
-          style={styles.iconLayer}
-        >
-          {icon}
-        </Animated.View>
-      )}
+      <Animated.View
+        entering={ICON_ENTERING}
+        exiting={ICON_EXITING}
+        key={loading ? "loading" : "icon"}
+        style={styles.iconLayer}
+      >
+        {loading ? <ActivityIndicator color={color} size="small" /> : icon}
+      </Animated.View>
     </View>
   );
 }

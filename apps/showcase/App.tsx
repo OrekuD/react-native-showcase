@@ -1,5 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { StyleSheet } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -16,26 +17,28 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 export default function App() {
   return (
     <GestureHandlerRootView style={styles.root}>
-      <SafeAreaProvider>
-        <NavigationContainer>
-          <Stack.Navigator
-            screenOptions={{
-              animation: 'slide_from_right',
-              contentStyle: styles.screen,
-              headerShown: false,
-            }}
-          >
-            <Stack.Screen name="Home" component={HomeScreen} />
-            <Stack.Screen name="Button" component={ButtonScreen} />
-            <Stack.Screen name="Input" component={InputScreen} />
-            <Stack.Screen name="Switch" component={SwitchScreen} />
-            <Stack.Screen
-              name="CurrencyFormatting"
-              component={CurrencyFormattingScreen}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </SafeAreaProvider>
+      <KeyboardProvider>
+        <SafeAreaProvider>
+          <NavigationContainer>
+            <Stack.Navigator
+              screenOptions={{
+                animation: 'slide_from_right',
+                contentStyle: styles.screen,
+                headerShown: false,
+              }}
+            >
+              <Stack.Screen name="Home" component={HomeScreen} />
+              <Stack.Screen name="Button" component={ButtonScreen} />
+              <Stack.Screen name="Input" component={InputScreen} />
+              <Stack.Screen name="Switch" component={SwitchScreen} />
+              <Stack.Screen
+                name="CurrencyFormatting"
+                component={CurrencyFormattingScreen}
+              />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </SafeAreaProvider>
+      </KeyboardProvider>
     </GestureHandlerRootView>
   );
 }

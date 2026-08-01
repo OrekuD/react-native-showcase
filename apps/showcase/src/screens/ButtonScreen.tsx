@@ -1,18 +1,18 @@
-import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { StatusBar } from 'expo-status-bar';
-import { useRef, useState } from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import type { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { StatusBar } from "expo-status-bar";
+import { useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
 
-import { ExampleScreen } from '../components/ExampleScreen';
+import { ExampleScreen } from "../components/ExampleScreen";
 import {
   Button,
   ButtonThemeProvider,
   type ButtonTheme,
   type ButtonThemeOverride,
-} from '../components/ui/Button';
-import type { RootStackParamList } from '../navigation/types';
+} from "../components/ui/Button";
+import type { RootStackParamList } from "../navigation/types";
 
-type ButtonScreenProps = NativeStackScreenProps<RootStackParamList, 'Button'>;
+type ButtonScreenProps = NativeStackScreenProps<RootStackParamList, "Button">;
 
 const PROVIDER_THEME = {
   cornerSmoothing: 0.9,
@@ -21,18 +21,18 @@ const PROVIDER_THEME = {
   },
   variants: {
     primary: {
-      backgroundColor: '#28594A',
-      foregroundColor: '#F4FBF7',
+      backgroundColor: "#28594A",
+      foregroundColor: "#F4FBF7",
     },
   },
 } satisfies ButtonTheme;
 
 const LOCAL_THEME = {
-  backgroundColor: '#EEE9FF',
-  borderColor: 'transparent',
+  backgroundColor: "#EEE9FF",
+  borderColor: "transparent",
   borderWidth: 0,
   cornerSmoothing: 0.95,
-  foregroundColor: '#5138A5',
+  foregroundColor: "#5138A5",
   label: {
     fontSize: 17,
   },
@@ -65,24 +65,15 @@ function DemoIcon({ color, glyph, size }: DemoIconProps) {
 
 export function ButtonScreen({ navigation }: ButtonScreenProps) {
   const [loading, setLoading] = useState(false);
-  const scrollViewRef = useRef<ScrollView>(null);
 
   const toggleLoading = () => {
-    const nextLoading = !loading;
-    setLoading(nextLoading);
-
-    if (nextLoading) {
-      requestAnimationFrame(() => {
-        scrollViewRef.current?.scrollTo({ animated: true, y: 180 });
-      });
-    }
+    setLoading((currentLoading) => !currentLoading);
   };
 
   return (
     <ExampleScreen
       onBack={navigation.goBack}
       progressiveBlurHeader
-      scrollViewRef={scrollViewRef}
       title="Button"
     >
       <StatusBar style="dark" />
@@ -135,7 +126,7 @@ export function ButtonScreen({ navigation }: ButtonScreenProps) {
               variant="secondary"
             >
               <Button.Label>
-                {loading ? 'Stop loading' : 'Start loading'}
+                {loading ? "Stop loading" : "Start loading"}
               </Button.Label>
             </Button>
           </View>
@@ -178,7 +169,7 @@ export function ButtonScreen({ navigation }: ButtonScreenProps) {
             </Button>
 
             <Button
-              accessibilityLabel={loading ? 'Loading item' : 'Refresh item'}
+              accessibilityLabel={loading ? "Loading item" : "Refresh item"}
               loading={loading}
               size="icon"
               testID="button-icon-loading"
@@ -191,6 +182,22 @@ export function ButtonScreen({ navigation }: ButtonScreenProps) {
               </Button.Icon>
             </Button>
           </View>
+        </View>
+
+        <View style={styles.section}>
+          <Text style={styles.sectionLabel}>SIZES</Text>
+
+          <Button size="sm" testID="button-size-sm" variant="secondary">
+            <Button.Label>Small</Button.Label>
+          </Button>
+
+          <Button size="md" testID="button-size-md" variant="secondary">
+            <Button.Label>Medium</Button.Label>
+          </Button>
+
+          <Button size="lg" testID="button-size-lg" variant="secondary">
+            <Button.Label>Large</Button.Label>
+          </Button>
         </View>
 
         <View style={styles.section}>
@@ -218,24 +225,24 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   sectionHeading: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   sectionLabel: {
-    color: '#77736B',
+    color: "#77736B",
     fontSize: 11,
-    fontWeight: '700',
+    fontWeight: "700",
     letterSpacing: 1.3,
   },
   iconButtonRow: {
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: 12,
   },
   demoIcon: {
-    fontWeight: '700',
+    fontWeight: "700",
     includeFontPadding: false,
-    textAlign: 'center',
-    textAlignVertical: 'center',
+    textAlign: "center",
+    textAlignVertical: "center",
   },
 });

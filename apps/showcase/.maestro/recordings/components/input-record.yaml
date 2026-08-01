@@ -1,0 +1,16 @@
+appId: com.oreku.reactnativeshowcase
+---
+- tapOn:
+    id: input-filled
+- inputText: "hello@example.com"
+- tapOn: Clear input
+- tapOn: APPEARANCES
+- scrollUntilVisible:
+    element:
+      text: COMPOSED SEARCH
+    direction: DOWN
+- tapOn:
+    id: input-composed-search
+- inputText: "Button"
+- tapOn: Clear input
+- tapOn: COMPOSED SEARCH

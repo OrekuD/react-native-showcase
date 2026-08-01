@@ -8,7 +8,7 @@ import {
 } from 'fumadocs-ui/components/codeblock';
 import { ExpandableCodeBlock } from './ExpandableCodeBlock';
 
-type RegistryItemName = 'button';
+type RegistryItemName = 'button' | 'input';
 
 type RegistryManifest = {
   files: Array<{
