@@ -1,6 +1,12 @@
 import { BlurTargetView } from 'expo-blur';
-import { useRef, type ReactNode } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useRef, type ReactNode, type RefObject } from 'react';
+import {
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import Animated, {
   Extrapolation,
   interpolate,
@@ -19,6 +25,7 @@ type ExampleScreenProps = {
   children: ReactNode;
   onBack: () => void;
   progressiveBlurHeader?: boolean;
+  scrollViewRef?: RefObject<ScrollView | null>;
   title: string;
 };
 
@@ -26,6 +33,7 @@ export function ExampleScreen({
   children,
   onBack,
   progressiveBlurHeader = false,
+  scrollViewRef,
   title,
 }: ExampleScreenProps) {
   const insets = useSafeAreaInsets();
@@ -76,6 +84,7 @@ export function ExampleScreen({
 
   const scrollView = (
     <Animated.ScrollView
+      ref={scrollViewRef}
       contentContainerStyle={[
         styles.content,
         progressiveBlurHeader && styles.contentWithOverlayHeader,

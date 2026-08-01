@@ -1,0 +1,9 @@
+appId: com.oreku.reactnativeshowcase
+---
+- launchApp
+- assertVisible: Showcase
+- tapOn:
+    id: home-component-button
+- assertVisible:
+    id: progressive-blur-header
+- assertVisible: VARIANTS

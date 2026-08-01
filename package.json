@@ -14,6 +14,7 @@
     "start:docs": "pnpm --filter @rn-showcase/docs start",
     "ios": "pnpm --filter @rn-showcase/showcase ios",
     "android": "pnpm --filter @rn-showcase/showcase android",
+    "record": "node scripts/record.mjs",
     "prebuild": "pnpm --filter @rn-showcase/showcase prebuild",
     "prebuild:clean": "pnpm --filter @rn-showcase/showcase prebuild:clean",
     "build": "turbo run build",

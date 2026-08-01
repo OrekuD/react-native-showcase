@@ -8,8 +8,8 @@ A source-first library of React Native components, interactions, and visual
 experiments. Each entry is designed to be copied into an application, studied,
 and adapted rather than hidden behind a package API.
 
-> React Native Showcase is in early development. The mobile gallery and docs are
-> working; the registry and CLI are planned but are not published yet.
+> React Native Showcase is in early development. The mobile gallery, docs, and
+> first registry entry are working; the CLI is not published yet.
 
 ## What is included
 
@@ -29,8 +29,8 @@ usage, dependencies, behavior, and implementation details.
 | --- | --- |
 | `apps/showcase` | Expo 57 app containing the component and motion gallery |
 | `apps/docs` | Next.js and Fumadocs documentation site |
-| `packages/registry` | Planned source registry for copyable entries and metadata |
-| `packages/cli` | Planned CLI for adding registry entries to React Native apps |
+| `packages/registry` | Source registry for copyable entries and dependency metadata |
+| `packages/cli` | `@rn-showcase/cli` for adding registry entries to React Native apps |
 
 The monorepo uses pnpm workspaces and Turborepo.
 
@@ -97,6 +97,7 @@ pnpm dev:docs
 | `pnpm dev:docs` | Start Fumadocs only |
 | `pnpm ios` | Build and launch the iOS app |
 | `pnpm android` | Build and launch the Android app |
+| `pnpm record [name]` | Generate all docs videos, or only the named Maestro flow |
 | `pnpm prebuild` | Regenerate native projects |
 | `pnpm prebuild:clean` | Regenerate native projects from a clean state |
 | `pnpm lint` | Lint workspace packages |
@@ -120,7 +121,7 @@ pnpm dev:docs
 
 - Settle the source format for components, interactions, and showcases
 - Add live previews, source copying, and AI implementation prompts to the docs
-- Build the registry package
+- Expand the registry beyond the Button
 - Publish `@rn-showcase/cli`
 - Expand the interaction and Skia showcase collections
 

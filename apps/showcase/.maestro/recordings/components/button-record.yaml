@@ -1,0 +1,7 @@
+appId: com.oreku.reactnativeshowcase
+---
+- assertVisible:
+    id: button-toggle-loading
+- tapOn:
+    id: button-toggle-loading
+    waitToSettleTimeoutMs: 250

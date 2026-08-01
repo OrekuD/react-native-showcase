@@ -1,9 +1,15 @@
 import defaultMdxComponents from 'fumadocs-ui/mdx';
+import * as TabsComponents from 'fumadocs-ui/components/tabs';
 import type { MDXComponents } from 'mdx/types';
+import { DocVideo } from './DocVideo';
+import { RegistryManualInstall } from './RegistryManualInstall';
 
 export function getMDXComponents(components?: MDXComponents) {
   return {
     ...defaultMdxComponents,
+    ...TabsComponents,
+    DocVideo,
+    RegistryManualInstall,
     ...components,
   } satisfies MDXComponents;
 }

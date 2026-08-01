@@ -1,7 +1,7 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
-import { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { useRef, useState } from 'react';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { ExampleScreen } from '../components/ExampleScreen';
 import {
@@ -65,11 +65,24 @@ function DemoIcon({ color, glyph, size }: DemoIconProps) {
 
 export function ButtonScreen({ navigation }: ButtonScreenProps) {
   const [loading, setLoading] = useState(false);
+  const scrollViewRef = useRef<ScrollView>(null);
+
+  const toggleLoading = () => {
+    const nextLoading = !loading;
+    setLoading(nextLoading);
+
+    if (nextLoading) {
+      requestAnimationFrame(() => {
+        scrollViewRef.current?.scrollTo({ animated: true, y: 180 });
+      });
+    }
+  };
 
   return (
     <ExampleScreen
       onBack={navigation.goBack}
       progressiveBlurHeader
+      scrollViewRef={scrollViewRef}
       title="Button"
     >
       <StatusBar style="dark" />
@@ -116,7 +129,7 @@ export function ButtonScreen({ navigation }: ButtonScreenProps) {
           <View style={styles.sectionHeading}>
             <Text style={styles.sectionLabel}>STATES</Text>
             <Button
-              onPress={() => setLoading((current) => !current)}
+              onPress={toggleLoading}
               size="sm"
               testID="button-toggle-loading"
               variant="secondary"

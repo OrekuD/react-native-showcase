@@ -1,0 +1,29 @@
+{
+  "name": "button",
+  "files": [
+    {
+      "source": "../../../../apps/showcase/src/components/ui/Button.tsx",
+      "target": "Button.tsx"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/ButtonThemeProvider.tsx",
+      "target": "ButtonThemeProvider.tsx"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/buttonState.ts",
+      "target": "buttonState.ts"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/buttonTheme.ts",
+      "target": "buttonTheme.ts"
+    }
+  ],
+  "expoDependencies": [
+    "expo-haptics",
+    "react-native-reanimated"
+  ],
+  "dependencies": [
+    "react-native-fast-squircle"
+  ],
+  "requiresPrebuild": true
+}

@@ -1,15 +1,92 @@
 ---
 title: Button
-description: A compact React Native button with primary, secondary, and ghost treatments.
+description: A composable React Native button with native states, motion, haptics, and themeable treatments.
 ---
 
-The Button is built on React Native's `Pressable`. It provides a consistent
-shape, typography, disabled state, and tactile pressed feedback without adding a
-runtime dependency.
+The Button is a source-first compound component. Compose `Button.Label` and
+`Button.Icon` to keep text, icons, loading indicators, and accessibility in one
+consistent interaction model.
 
-## Requirements
+<DocVideo
+  label="Button variants, loading states, icon buttons, and theming"
+  src="/videos/components/button.mp4"
+/>
 
-No additional package is required.
+## Installation
+
+The Button uses Reanimated for press and loading transitions, Expo Haptics for
+optional tactile feedback, and Fast Squircle for its native shape renderer.
+
+<Tabs items={['Command', 'Manual']}>
+  <Tab value="Command">
+    <Tabs groupId="package-manager" items={['npm', 'pnpm', 'yarn', 'bun']} persist>
+      <Tab value="npm">
+        ```bash
+        npx @rn-showcase/cli add button
+        ```
+      </Tab>
+      <Tab value="pnpm">
+        ```bash
+        pnpm dlx @rn-showcase/cli add button
+        ```
+      </Tab>
+      <Tab value="yarn">
+        ```bash
+        yarn dlx @rn-showcase/cli add button
+        ```
+      </Tab>
+      <Tab value="bun">
+        ```bash
+        bunx @rn-showcase/cli add button
+        ```
+      </Tab>
+    </Tabs>
+
+    The CLI installs the required packages and copies the Button source into
+    `components/ui`.
+  </Tab>
+  <Tab value="Manual">
+    Install the dependencies first:
+
+    <Tabs groupId="package-manager" items={['npm', 'pnpm', 'yarn', 'bun']} persist>
+      <Tab value="npm">
+        ```bash
+        npx expo install expo-haptics react-native-reanimated
+        npm install react-native-fast-squircle
+        npx expo prebuild
+        ```
+      </Tab>
+      <Tab value="pnpm">
+        ```bash
+        pnpm exec expo install expo-haptics react-native-reanimated
+        pnpm add react-native-fast-squircle
+        pnpm exec expo prebuild
+        ```
+      </Tab>
+      <Tab value="yarn">
+        ```bash
+        yarn expo install expo-haptics react-native-reanimated
+        yarn add react-native-fast-squircle
+        yarn expo prebuild
+        ```
+      </Tab>
+      <Tab value="bun">
+        ```bash
+        bun x expo install expo-haptics react-native-reanimated
+        bun add react-native-fast-squircle
+        bun x expo prebuild
+        ```
+      </Tab>
+    </Tabs>
+
+    Then copy these files into `components/ui`:
+
+    <RegistryManualInstall name="button" />
+  </Tab>
+</Tabs>
+
+Run a native development build after installing `react-native-fast-squircle`;
+Expo Go cannot load that native module.
 
 ## Usage
 
@@ -19,12 +96,44 @@ import { Button } from '@/components/ui/Button';
 export function Actions() {
   return (
     <>
-      <Button label="Save changes" onPress={() => save()} />
-      <Button label="Preview" variant="secondary" onPress={() => preview()} />
-      <Button label="Learn more" variant="ghost" onPress={() => openDocs()} />
+      <Button onPress={save}>
+        <Button.Label>Save changes</Button.Label>
+      </Button>
+
+      <Button haptics onPress={preview} variant="secondary">
+        <Button.Label>Preview</Button.Label>
+      </Button>
+
+      <Button onPress={openDocs} variant="ghost">
+        <Button.Label>Learn more</Button.Label>
+      </Button>
     </>
   );
 }
+```
+
+Add an icon with a render function when the icon needs the active foreground
+color and size:
+
+```tsx
+<Button onPress={download}>
+  <Button.Icon>
+    {({ color, size }) => (
+      <DownloadIcon color={color} size={size} />
+    )}
+  </Button.Icon>
+  <Button.Label>Download file</Button.Label>
+</Button>
+```
+
+For an icon-only button, use `size="icon"` and provide an accessible name:
+
+```tsx
+<Button accessibilityLabel="Add item" size="icon">
+  <Button.Icon>
+    {({ color, size }) => <PlusIcon color={color} size={size} />}
+  </Button.Icon>
+</Button>
 ```
 
 ## Variants
@@ -32,24 +141,97 @@ export function Actions() {
 | Variant | Purpose |
 | --- | --- |
 | `primary` | The main action in a group. |
-| `secondary` | A quieter action that still needs a visible boundary. |
+| `secondary` | A quieter filled action on the current surface. |
+| `outline` | A bordered action with a transparent background. |
 | `ghost` | A low-emphasis action on an existing surface. |
+| `destructive` | A destructive action with a light red boundary and red content. |
+
+## States
+
+Use `disabled` when an action is unavailable and `loading` when the action is
+being processed. Loading also disables the press target, marks it busy for
+assistive technology, and swaps each icon slot for an `ActivityIndicator`.
+
+```tsx
+<Button disabled>
+  <Button.Label>Unavailable</Button.Label>
+</Button>
+
+<Button loading={isSaving} onPress={save}>
+  <Button.Label>{isSaving ? 'Saving' : 'Save changes'}</Button.Label>
+</Button>
+```
+
+Set `haptics` to enable a light impact after a successful press. It is disabled
+by default and can be toggled per button.
 
 ## Props
 
-`Button` accepts React Native `PressableProps`, except for `children` and
-`style`. Use `label` for the visible text and `variant` for its treatment.
+`Button` accepts React Native `PressableProps`, except for `children`,
+`disabled`, and `style`, which are composed by the component.
 
 ```ts
-type ButtonVariant = 'primary' | 'secondary' | 'ghost';
+type ButtonVariant =
+  | 'primary'
+  | 'secondary'
+  | 'outline'
+  | 'ghost'
+  | 'destructive';
 
-type ButtonProps = Omit<PressableProps, 'children' | 'style'> & {
-  label: string;
+type ButtonSize = 'sm' | 'md' | 'lg' | 'icon';
+
+type ButtonProps = {
+  children: React.ReactNode;
+  accessibilityLabel?: string;
+  disabled?: boolean;
+  haptics?: boolean;
+  loading?: boolean;
+  size?: ButtonSize;
+  style?: StyleProp<ViewStyle>;
+  theme?: ButtonThemeOverride;
   variant?: ButtonVariant;
 };
 ```
 
-## Behavior
+An icon-only button must provide `accessibilityLabel`. The `Button.Icon` render
+function receives the resolved `color` and `size` tokens for the active variant
+and size.
 
-The pressed state scales the control to `0.98` and lowers its opacity. Disabled
-buttons remain visible but do not respond to input.
+## Theming
+
+Use `ButtonThemeProvider` for shared defaults, or pass `theme` to one Button
+when a local treatment is needed. Both approaches preserve the compound API.
+
+```tsx
+import {
+  Button,
+  ButtonThemeProvider,
+} from '@/components/ui/Button';
+
+<ButtonThemeProvider
+  theme={{
+    cornerSmoothing: 0.9,
+    label: { fontSize: 17 },
+    variants: {
+      primary: {
+        backgroundColor: '#28594A',
+        foregroundColor: '#F4FBF7',
+      },
+    },
+  }}
+>
+  <Button>
+    <Button.Label>Provider theme</Button.Label>
+  </Button>
+</ButtonThemeProvider>;
+```
+
+The per-button `theme` override accepts appearance, label, size, and corner
+smoothing tokens without changing the provider defaults.
+
+## Motion
+
+Press feedback eases the button to `0.97` scale and returns it to rest on release.
+Loading icons enter with a short scale-and-fade transition; the outgoing icon
+fades out at half the entering duration. Both transitions respect the system
+reduce-motion preference.

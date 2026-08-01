@@ -121,6 +121,55 @@ html > body[data-scroll-locked] {
   padding-bottom: 1.5rem;
 }
 
+.showcase-doc-video {
+  align-items: center;
+  background: color-mix(in srgb, var(--showcase-paper-deep) 58%, transparent);
+  border: 1px solid var(--showcase-line);
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0 3rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.showcase-doc-video video {
+  background: var(--showcase-paper-deep);
+  display: block;
+  height: min(720px, 70vh);
+  max-height: min(720px, 70vh);
+  max-width: 100%;
+  object-fit: contain;
+  width: auto;
+}
+
+.showcase-doc-video-toggle {
+  align-items: center;
+  background: color-mix(in srgb, var(--showcase-ink) 82%, transparent);
+  border: 1px solid color-mix(in srgb, var(--showcase-paper) 42%, transparent);
+  border-radius: 999px;
+  bottom: 1rem;
+  color: var(--showcase-paper);
+  cursor: pointer;
+  display: inline-flex;
+  height: 2.25rem;
+  justify-content: center;
+  position: absolute;
+  right: 1rem;
+  transition: background-color 160ms ease, transform 160ms ease;
+  width: 2.25rem;
+}
+
+.showcase-doc-video-toggle:hover {
+  background: var(--showcase-ink);
+  transform: scale(1.05);
+}
+
+.showcase-doc-video-toggle:focus-visible {
+  outline: 2px solid var(--showcase-signal);
+  outline-offset: 3px;
+}
+
 .showcase-doc-body {
   font-size: 15px;
   line-height: 1.75;

@@ -1,0 +1,25 @@
+{
+  "name": "@rn-showcase/cli",
+  "version": "0.1.0",
+  "description": "Add copyable React Native Showcase components to your project.",
+  "type": "module",
+  "bin": {
+    "rn-showcase": "./dist/index.mjs"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "prepack": "pnpm build",
+    "test": "node --test test/*.test.mjs",
+    "test:coverage": "node --experimental-test-coverage --test test/*.test.mjs"
+  },
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
