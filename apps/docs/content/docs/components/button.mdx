@@ -17,71 +17,111 @@ consistent interaction model.
 The Button uses Reanimated for press and loading transitions, Expo Haptics for
 optional tactile feedback, and Fast Squircle for its native shape renderer.
 
-<Tabs items={['Command', 'Manual']}>
-  <Tab value="Command">
-    <Tabs groupId="package-manager" items={['npm', 'pnpm', 'yarn', 'bun']} persist>
-      <Tab value="npm">
+<Tabs className="showcase-install-tabs" items={['Command', 'Manual']}>
+  <Tab className="showcase-install-panel" value="Command">
+    <div className="showcase-install-intro">
+      Add the Button to your project with the Showcase CLI.
+    </div>
+
+    <CodeBlockTabs
+      className="showcase-package-tabs"
+      defaultValue="npm"
+      groupId="package-manager"
+      persist
+    >
+      <CodeBlockTabsList>
+        <CodeBlockTabsTrigger value="npm">npm</CodeBlockTabsTrigger>
+        <CodeBlockTabsTrigger value="pnpm">pnpm</CodeBlockTabsTrigger>
+        <CodeBlockTabsTrigger value="yarn">yarn</CodeBlockTabsTrigger>
+        <CodeBlockTabsTrigger value="bun">bun</CodeBlockTabsTrigger>
+      </CodeBlockTabsList>
+      <CodeBlockTab value="npm">
         ```bash
         npx @rn-showcase/cli add button
         ```
-      </Tab>
-      <Tab value="pnpm">
+      </CodeBlockTab>
+      <CodeBlockTab value="pnpm">
         ```bash
         pnpm dlx @rn-showcase/cli add button
         ```
-      </Tab>
-      <Tab value="yarn">
+      </CodeBlockTab>
+      <CodeBlockTab value="yarn">
         ```bash
         yarn dlx @rn-showcase/cli add button
         ```
-      </Tab>
-      <Tab value="bun">
+      </CodeBlockTab>
+      <CodeBlockTab value="bun">
         ```bash
         bunx @rn-showcase/cli add button
         ```
-      </Tab>
-    </Tabs>
+      </CodeBlockTab>
+    </CodeBlockTabs>
 
-    The CLI installs the required packages and copies the Button source into
-    `components/ui`.
+    <div className="showcase-install-note">
+      The CLI installs the required packages and copies the Button source into
+      <code>components/ui</code>.
+    </div>
   </Tab>
-  <Tab value="Manual">
-    Install the dependencies first:
-
-    <Tabs groupId="package-manager" items={['npm', 'pnpm', 'yarn', 'bun']} persist>
-      <Tab value="npm">
+  <Tab className="showcase-install-panel" value="Manual">
+    <div className="showcase-install-step">
+      <span aria-hidden="true" className="showcase-install-step-marker">
+        1
+      </span>
+      <div className="showcase-install-step-title">Install the dependencies.</div>
+      <div className="showcase-install-step-body">
+        <CodeBlockTabs
+          className="showcase-package-tabs"
+          defaultValue="npm"
+          groupId="package-manager"
+          persist
+        >
+          <CodeBlockTabsList>
+            <CodeBlockTabsTrigger value="npm">npm</CodeBlockTabsTrigger>
+            <CodeBlockTabsTrigger value="pnpm">pnpm</CodeBlockTabsTrigger>
+            <CodeBlockTabsTrigger value="yarn">yarn</CodeBlockTabsTrigger>
+            <CodeBlockTabsTrigger value="bun">bun</CodeBlockTabsTrigger>
+          </CodeBlockTabsList>
+          <CodeBlockTab value="npm">
         ```bash
         npx expo install expo-haptics react-native-reanimated
         npm install react-native-fast-squircle
         npx expo prebuild
         ```
-      </Tab>
-      <Tab value="pnpm">
+          </CodeBlockTab>
+          <CodeBlockTab value="pnpm">
         ```bash
         pnpm exec expo install expo-haptics react-native-reanimated
         pnpm add react-native-fast-squircle
         pnpm exec expo prebuild
         ```
-      </Tab>
-      <Tab value="yarn">
+          </CodeBlockTab>
+          <CodeBlockTab value="yarn">
         ```bash
         yarn expo install expo-haptics react-native-reanimated
         yarn add react-native-fast-squircle
         yarn expo prebuild
         ```
-      </Tab>
-      <Tab value="bun">
+          </CodeBlockTab>
+          <CodeBlockTab value="bun">
         ```bash
         bun x expo install expo-haptics react-native-reanimated
         bun add react-native-fast-squircle
         bun x expo prebuild
         ```
-      </Tab>
-    </Tabs>
+          </CodeBlockTab>
+        </CodeBlockTabs>
+      </div>
+    </div>
 
-    Then copy these files into `components/ui`:
-
-    <RegistryManualInstall name="button" />
+    <div className="showcase-install-step">
+      <span aria-hidden="true" className="showcase-install-step-marker">
+        2
+      </span>
+      <div className="showcase-install-step-title">Copy the component files into your project.</div>
+      <div className="showcase-install-step-body">
+        <RegistryManualInstall name="button" />
+      </div>
+    </div>
   </Tab>
 </Tabs>
 
@@ -167,31 +207,23 @@ by default and can be toggled per button.
 
 ## Props
 
-`Button` accepts React Native `PressableProps`, except for `children`,
-`disabled`, and `style`, which are composed by the component.
+`Button` accepts all React Native `PressableProps` and adds the props below.
+The compound API still lets you compose content with `Button.Label` and
+`Button.Icon`.
 
-```ts
-type ButtonVariant =
-  | 'primary'
-  | 'secondary'
-  | 'outline'
-  | 'ghost'
-  | 'destructive';
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `accessibilityLabel` | `string` | — | Inherited from `Pressable`; required for icon-only buttons. |
+| `haptics` | `boolean` | `false` | Adds light impact feedback after a successful press. |
+| `loading` | `boolean` | `false` | Disables interaction and swaps icon slots for an activity indicator. |
+| `size` | `'sm' \| 'md' \| 'lg' \| 'icon'` | `'md'` | Controls button height, spacing, and icon-only layout. |
+| `theme` | `ButtonThemeOverride` | — | Overrides appearance, typography, sizing, and corner smoothing for one button. |
+| `variant` | `ButtonVariant` | `'primary'` | Selects the visual treatment: `primary`, `secondary`, `outline`, `ghost`, or `destructive`. |
 
-type ButtonSize = 'sm' | 'md' | 'lg' | 'icon';
-
-type ButtonProps = {
-  children: React.ReactNode;
-  accessibilityLabel?: string;
-  disabled?: boolean;
-  haptics?: boolean;
-  loading?: boolean;
-  size?: ButtonSize;
-  style?: StyleProp<ViewStyle>;
-  theme?: ButtonThemeOverride;
-  variant?: ButtonVariant;
-};
-```
+All other `PressableProps` pass through to the underlying control, including
+`children`, `disabled`, `style`, event handlers, accessibility props, and
+`testID`. `children` can be compound content or a Pressable render function;
+`style` supports both static styles and Pressable's `(state) => style` form.
 
 An icon-only button must provide `accessibilityLabel`. The `Button.Icon` render
 function receives the resolved `color` and `size` tokens for the active variant

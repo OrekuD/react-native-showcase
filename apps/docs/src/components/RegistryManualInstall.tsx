@@ -6,7 +6,7 @@ import {
   CodeBlockTabsList,
   CodeBlockTabsTrigger,
 } from 'fumadocs-ui/components/codeblock';
-import { DynamicCodeBlock } from 'fumadocs-ui/components/dynamic-codeblock';
+import { ExpandableCodeBlock } from './ExpandableCodeBlock';
 
 type RegistryItemName = 'button';
 
@@ -38,8 +38,11 @@ export function RegistryManualInstall({ name }: { name: RegistryItemName }) {
   const files = readRegistryFiles(name);
 
   return (
-    <CodeBlockTabs defaultValue={files[0].name}>
-      <CodeBlockTabsList>
+    <CodeBlockTabs
+      className="showcase-registry-tabs"
+      defaultValue={files[0].name}
+    >
+      <CodeBlockTabsList className="showcase-registry-tabs-list">
         {files.map((file) => (
           <CodeBlockTabsTrigger key={file.name} value={file.name}>
             {file.name}
@@ -48,13 +51,10 @@ export function RegistryManualInstall({ name }: { name: RegistryItemName }) {
       </CodeBlockTabsList>
       {files.map((file) => (
         <CodeBlockTab key={file.name} value={file.name}>
-          <DynamicCodeBlock
+          <ExpandableCodeBlock
             code={file.code}
-            codeblock={{
-              allowCopy: true,
-              title: `components/ui/${file.name}`,
-            }}
             lang={file.name.endsWith('.tsx') ? 'tsx' : 'ts'}
+            title={`components/ui/${file.name}`}
           />
         </CodeBlockTab>
       ))}

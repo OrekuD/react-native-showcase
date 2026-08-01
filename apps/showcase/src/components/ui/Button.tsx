@@ -15,9 +15,7 @@ import {
   View,
   type GestureResponderEvent,
   type PressableProps,
-  type StyleProp,
   type TextProps,
-  type ViewStyle,
   type ViewProps,
 } from "react-native";
 import FastSquircleView from "react-native-fast-squircle";
@@ -53,20 +51,11 @@ export type {
 export { ButtonThemeProvider } from "./ButtonThemeProvider";
 export type { ButtonThemeProviderProps } from "./ButtonThemeProvider";
 
-type SharedButtonProps = Omit<
-  PressableProps,
-  "accessibilityLabel" | "children" | "disabled" | "style"
-> & {
-  /** Composed button content, usually {@link Button.Label} and {@link Button.Icon}. */
-  children: ReactNode;
-  /** Prevents interaction and applies the disabled appearance. */
-  disabled?: boolean;
+type SharedButtonProps = PressableProps & {
   /** Enables subtle impact feedback after a successful press. @default false */
   haptics?: boolean;
   /** Prevents interaction and swaps every icon slot for a loading indicator. */
   loading?: boolean;
-  /** Customizes the outer visual frame without replacing press feedback. */
-  style?: StyleProp<ViewStyle>;
   /** Overrides theme tokens for this button only. */
   theme?: ButtonThemeOverride;
   /** Controls the button's visual treatment. @default 'primary' */
@@ -162,7 +151,7 @@ const ButtonRoot = forwardRef<View, ButtonProps>(function ButtonRoot(
     onPressIn,
     onPressOut,
     size = "md",
-    style,
+    style: pressableStyle,
     theme,
     variant = "primary",
     ...props
@@ -240,7 +229,6 @@ const ButtonRoot = forwardRef<View, ButtonProps>(function ButtonRoot(
             width: tokens.size.height,
           },
           disabled && styles.disabled,
-          style,
           animatedPressStyle,
         ]}
       >
@@ -253,7 +241,7 @@ const ButtonRoot = forwardRef<View, ButtonProps>(function ButtonRoot(
           onPressIn={handlePressIn}
           onPressOut={handlePressOut}
           ref={ref}
-          style={[
+          style={(state) => [
             styles.root,
             {
               minHeight: tokens.size.height,
@@ -263,6 +251,9 @@ const ButtonRoot = forwardRef<View, ButtonProps>(function ButtonRoot(
               height: tokens.size.height,
               width: tokens.size.height,
             },
+            typeof pressableStyle === "function"
+              ? pressableStyle(state)
+              : pressableStyle,
           ]}
           {...props}
         >
