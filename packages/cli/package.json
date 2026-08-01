@@ -1,6 +1,6 @@
 {
   "name": "@rn-showcase/cli",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Add copyable React Native Showcase components to your project.",
   "license": "MIT",
   "author": "OrekuD",
