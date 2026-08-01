@@ -46,8 +46,8 @@
     "ios": "expo run:ios",
     "prebuild": "expo prebuild",
     "prebuild:clean": "expo prebuild --clean",
-    "test": "node --test src/**/*.test.ts",
-    "test:coverage": "node --experimental-test-coverage --test src/**/*.test.ts",
+    "test": "node --experimental-strip-types --test src/**/*.test.ts",
+    "test:coverage": "node --experimental-strip-types --experimental-test-coverage --test src/**/*.test.ts",
     "typecheck": "tsc --noEmit",
     "web": "expo start --web"
   },
