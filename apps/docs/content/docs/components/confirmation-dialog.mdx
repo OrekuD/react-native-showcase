@@ -1,0 +1,260 @@
+---
+title: Confirmation Dialog
+description: A source-first confirmation dialog with native alerts and three custom treatments.
+---
+
+Confirmation Dialog gives one API for platform alerts and copyable custom
+confirmations. Use the familiar imperative form when a decision starts from an
+event handler, or use the controlled component when dialog state belongs to
+your screen.
+
+<DocVideo
+  label="Confirmation dialog action-sheet, compact, and prominent variants"
+  src="/videos/components/confirmation-dialog.mp4"
+/>
+
+## Installation
+
+<Tabs className="showcase-install-tabs" items={['Command', 'Manual']}>
+  <Tab className="showcase-install-panel" value="Command">
+    <div className="showcase-install-intro">
+      Add Confirmation Dialog to your project with the Showcase CLI.
+    </div>
+
+    <CodeBlockTabs
+      className="showcase-package-tabs"
+      defaultValue="npm"
+      groupId="package-manager"
+      persist
+    >
+      <CodeBlockTabsList>
+        <CodeBlockTabsTrigger value="npm">npm</CodeBlockTabsTrigger>
+        <CodeBlockTabsTrigger value="pnpm">pnpm</CodeBlockTabsTrigger>
+        <CodeBlockTabsTrigger value="yarn">yarn</CodeBlockTabsTrigger>
+        <CodeBlockTabsTrigger value="bun">bun</CodeBlockTabsTrigger>
+      </CodeBlockTabsList>
+      <CodeBlockTab value="npm">
+        ```bash
+        npx @rn-showcase/cli add confirmation-dialog
+        ```
+      </CodeBlockTab>
+      <CodeBlockTab value="pnpm">
+        ```bash
+        pnpm dlx @rn-showcase/cli add confirmation-dialog
+        ```
+      </CodeBlockTab>
+      <CodeBlockTab value="yarn">
+        ```bash
+        yarn dlx @rn-showcase/cli add confirmation-dialog
+        ```
+      </CodeBlockTab>
+      <CodeBlockTab value="bun">
+        ```bash
+        bunx @rn-showcase/cli add confirmation-dialog
+        ```
+      </CodeBlockTab>
+    </CodeBlockTabs>
+
+    <div className="showcase-install-note">
+      The CLI installs the dependencies and copies the dialog source files into
+      <code>components/ui</code>.
+    </div>
+  </Tab>
+
+  <Tab className="showcase-install-panel" value="Manual">
+    <div className="showcase-install-step">
+      <span aria-hidden="true" className="showcase-install-step-marker">
+        1
+      </span>
+      <div className="showcase-install-step-title">Install the dependencies.</div>
+      <div className="showcase-install-step-body">
+        <CodeBlockTabs
+          className="showcase-package-tabs"
+          defaultValue="npm"
+          groupId="package-manager"
+          persist
+        >
+          <CodeBlockTabsList>
+            <CodeBlockTabsTrigger value="npm">npm</CodeBlockTabsTrigger>
+            <CodeBlockTabsTrigger value="pnpm">pnpm</CodeBlockTabsTrigger>
+            <CodeBlockTabsTrigger value="yarn">yarn</CodeBlockTabsTrigger>
+            <CodeBlockTabsTrigger value="bun">bun</CodeBlockTabsTrigger>
+          </CodeBlockTabsList>
+          <CodeBlockTab value="npm">
+        ```bash
+        npx expo install expo-glass-effect react-native-reanimated react-native-svg
+        npm install @rn-primitives/portal lucide-react-native react-native-fast-squircle
+        npx expo prebuild
+        ```
+          </CodeBlockTab>
+          <CodeBlockTab value="pnpm">
+        ```bash
+        pnpm exec expo install expo-glass-effect react-native-reanimated react-native-svg
+        pnpm add @rn-primitives/portal lucide-react-native react-native-fast-squircle
+        pnpm exec expo prebuild
+        ```
+          </CodeBlockTab>
+          <CodeBlockTab value="yarn">
+        ```bash
+        yarn expo install expo-glass-effect react-native-reanimated react-native-svg
+        yarn add @rn-primitives/portal lucide-react-native react-native-fast-squircle
+        yarn expo prebuild
+        ```
+          </CodeBlockTab>
+          <CodeBlockTab value="bun">
+        ```bash
+        bun x expo install expo-glass-effect react-native-reanimated react-native-svg
+        bun add @rn-primitives/portal lucide-react-native react-native-fast-squircle
+        bun x expo prebuild
+        ```
+          </CodeBlockTab>
+        </CodeBlockTabs>
+      </div>
+    </div>
+
+    <div className="showcase-install-step">
+      <span aria-hidden="true" className="showcase-install-step-marker">
+        2
+      </span>
+      <div className="showcase-install-step-title">Copy the component files into your project.</div>
+      <div className="showcase-install-step-body">
+        <RegistryManualInstall name="confirmation-dialog" />
+      </div>
+    </div>
+  </Tab>
+</Tabs>
+
+Run a native development build after installation. The custom dialog uses Fast
+Squircle and the iOS backdrop uses Expo Glass Effect, neither of which runs in
+Expo Go.
+
+## Setup
+
+Mount `ConfirmationDialogHost` once near your app root. It renders custom
+dialog portals for both the controlled and imperative APIs.
+
+```tsx
+import { ConfirmationDialogHost } from '@/components/ui/ConfirmationDialog';
+
+export function App() {
+  return (
+    <>
+      <Navigation />
+      <ConfirmationDialogHost />
+    </>
+  );
+}
+```
+
+## Controlled usage
+
+The controlled component works well when the surrounding screen owns the open
+state. Custom mode is the default.
+
+```tsx
+import { useState } from 'react';
+import { ConfirmationDialog } from '@/components/ui/ConfirmationDialog';
+
+export function DeleteComment() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <Button title="Remove comment" onPress={() => setOpen(true)} />
+      <ConfirmationDialog
+        cancelLabel="Cancel"
+        confirmLabel="Remove"
+        description="This comment will be removed everywhere it appears."
+        destructive
+        dismissible
+        onConfirm={removeComment}
+        onOpenChange={setOpen}
+        open={open}
+        title="Remove this comment?"
+        variant="compact"
+      />
+    </>
+  );
+}
+```
+
+## Imperative usage
+
+`alert` follows React Native's `Alert.alert` shape. It renders the compact
+custom dialog by default; choose `mode: 'native'` to use the system alert.
+
+```tsx
+ConfirmationDialog.alert(
+  'Delete this draft?',
+  "You won't be able to recover it after deleting.",
+  [
+    { text: 'Keep draft', style: 'cancel' },
+    { text: 'Delete', style: 'destructive', onPress: deleteDraft },
+  ],
+);
+
+ConfirmationDialog.alert('Continue?', undefined, undefined, {
+  mode: 'native',
+});
+```
+
+Use `show` when you need custom variants or derived actions.
+
+```tsx
+ConfirmationDialog.show({
+  cancelLabel: 'Keep request',
+  confirmLabel: 'Cancel request',
+  description: "Your payment link will stop working.",
+  destructive: true,
+  title: 'Cancel this request?',
+  variant: 'prominent',
+});
+```
+
+## Variants
+
+| Variant | Treatment |
+| --- | --- |
+| `compact` | Centered copy with equal-width horizontal actions. This is the default. |
+| `action-sheet` | Centered copy with full-width, separated action rows. |
+| `prominent` | Left-aligned headline with large stacked actions and the cancel action last. |
+
+The custom dialog uses an iOS glass backdrop when the Glass Effect API is
+available. Android uses a dimmed RGBA backdrop. The content container remains a
+native squircle on both platforms.
+
+```tsx
+<ConfirmationDialog
+  buttons={[
+    { text: 'Mute story', style: 'destructive' },
+    { text: 'Mute story and posts' },
+    { text: 'Cancel', style: 'cancel' },
+  ]}
+  open={open}
+  onOpenChange={setOpen}
+  title="Mute updates?"
+  variant="action-sheet"
+/>
+```
+
+## Props
+
+`ConfirmationDialog` accepts the props below. The static `alert` method also
+accepts React Native `AlertOptions`, plus `mode`.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `buttons` | `AlertButton[]` | — | Explicit actions. Overrides derived confirm and cancel actions. |
+| `cancelable` | `boolean` | `true` | Allows backdrop taps and Android back to dismiss a custom dialog. |
+| `cancelLabel` | `string` | — | Adds a derived cancel action. |
+| `confirmLabel` | `string` | `'OK'` | Label for the derived confirmation action. |
+| `description` | `string` | — | Supporting text below the title. |
+| `destructive` | `boolean` | `false` | Styles the derived confirmation as destructive. |
+| `dismissible` | `boolean` | `false` | Shows a close button for `compact` and `prominent`. |
+| `mode` | `'custom' \| 'native'` | `'custom'` | Chooses the custom dialog or platform `Alert`. |
+| `onCancel` | `() => void` | — | Runs after a cancel action or permitted dismissal. |
+| `onConfirm` | `() => void` | — | Runs after the derived confirmation action. |
+| `onOpenChange` | `(open: boolean) => void` | — | Receives open-state changes from the controlled component. |
+| `open` | `boolean` | — | Controls the component form. |
+| `title` | `string` | — | Dialog heading. |
+| `variant` | `'action-sheet' \| 'compact' \| 'prominent'` | `'compact'` | Chooses the custom treatment; ignored in native mode. |

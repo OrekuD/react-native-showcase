@@ -8,7 +8,7 @@ import {
 } from 'fumadocs-ui/components/codeblock';
 import { ExpandableCodeBlock } from './ExpandableCodeBlock';
 
-type RegistryItemName = 'button' | 'input' | 'otp-input';
+type RegistryItemName = 'button' | 'confirmation-dialog' | 'input' | 'otp-input';
 
 type RegistryManifest = {
   files: Array<{

@@ -1,0 +1,32 @@
+{
+  "name": "confirmation-dialog",
+  "files": [
+    {
+      "source": "../../../../apps/showcase/src/components/ui/ConfirmationDialog.tsx",
+      "target": "ConfirmationDialog.tsx"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/ConfirmationDialogOverlay.tsx",
+      "target": "ConfirmationDialogOverlay.tsx"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/confirmationDialogState.ts",
+      "target": "confirmationDialogState.ts"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/confirmationDialogStore.ts",
+      "target": "confirmationDialogStore.ts"
+    }
+  ],
+  "expoDependencies": [
+    "expo-glass-effect",
+    "react-native-reanimated",
+    "react-native-svg"
+  ],
+  "dependencies": [
+    "@rn-primitives/portal",
+    "lucide-react-native",
+    "react-native-fast-squircle"
+  ],
+  "requiresPrebuild": true
+}

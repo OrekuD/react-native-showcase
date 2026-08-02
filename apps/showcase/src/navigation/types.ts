@@ -3,6 +3,7 @@ export type RootStackParamList = {
   Button: undefined;
   Input: undefined;
   OtpInput: undefined;
+  ConfirmationDialog: undefined;
   Switch: undefined;
   CurrencyFormatting: undefined;
 };

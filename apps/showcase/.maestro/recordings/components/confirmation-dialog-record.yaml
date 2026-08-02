@@ -1,0 +1,19 @@
+appId: com.oreku.reactnativeshowcase
+---
+- tapOn:
+    id: confirmation-dialog-action-sheet
+    waitToSettleTimeoutMs: 800
+- tapOn:
+    text: Mute story
+    waitToSettleTimeoutMs: 450
+- tapOn:
+    id: confirmation-dialog-compact
+    waitToSettleTimeoutMs: 800
+- tapOn:
+    text: Remove
+    waitToSettleTimeoutMs: 450
+- tapOn:
+    id: confirmation-dialog-prominent
+    waitToSettleTimeoutMs: 1000
+- assertVisible: Cancel this request?
+- waitForAnimationToEnd

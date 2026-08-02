@@ -43,6 +43,13 @@ export function HomeScreen({ navigation }: HomeScreenProps) {
             OTP Input
           </ListItem>
           <ListItem
+            onPress={() => navigation.navigate("ConfirmationDialog")}
+            testID="home-component-confirmation-dialog"
+            trailing="›"
+          >
+            Confirmation Dialog
+          </ListItem>
+          <ListItem
             onPress={() => navigation.navigate("Switch")}
             testID="home-component-switch"
             trailing="›"
