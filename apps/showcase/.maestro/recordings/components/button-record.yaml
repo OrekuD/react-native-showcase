@@ -1,7 +1,7 @@
 appId: com.oreku.reactnativeshowcase
 ---
 - tapOn:
-    point: 84%,80%
+    id: button-toggle-loading
     waitToSettleTimeoutMs: 1
 - swipe:
     start: 50%, 80%

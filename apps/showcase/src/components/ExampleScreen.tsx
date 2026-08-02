@@ -1,30 +1,28 @@
-import { BlurTargetView } from 'expo-blur';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
-import { useRef, type ReactNode, type RefObject } from 'react';
+import { BlurTargetView } from "expo-blur";
 import {
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+  KeyboardAwareScrollView,
+  type KeyboardAwareScrollViewRef,
+} from "react-native-keyboard-controller";
+import { useRef, type ReactNode, type RefObject } from "react";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import Animated, {
   Extrapolation,
   interpolate,
   useAnimatedScrollHandler,
   useAnimatedStyle,
   useSharedValue,
-} from 'react-native-reanimated';
+} from "react-native-reanimated";
 import {
   SafeAreaView,
   useSafeAreaInsets,
-} from 'react-native-safe-area-context';
+} from "react-native-safe-area-context";
 
-import { ProgressiveBlur } from './ProgressiveBlur';
+import { ProgressiveBlur } from "./ProgressiveBlur";
 
 type ExampleScreenProps = {
   children: ReactNode;
   keyboardAware?: boolean;
+  keyboardAwareScrollViewRef?: RefObject<KeyboardAwareScrollViewRef | null>;
   onBack: () => void;
   progressiveBlurHeader?: boolean;
   scrollViewRef?: RefObject<ScrollView | null>;
@@ -34,8 +32,9 @@ type ExampleScreenProps = {
 export function ExampleScreen({
   children,
   keyboardAware = false,
+  keyboardAwareScrollViewRef,
   onBack,
-  progressiveBlurHeader = false,
+  progressiveBlurHeader = true,
   scrollViewRef,
   title,
 }: ExampleScreenProps) {
@@ -48,12 +47,7 @@ export function ExampleScreen({
     },
   });
   const blurStyle = useAnimatedStyle(() => ({
-    opacity: interpolate(
-      scrollY.value,
-      [0, 28],
-      [0, 1],
-      Extrapolation.CLAMP,
-    ),
+    opacity: interpolate(scrollY.value, [0, 28], [0, 1], Extrapolation.CLAMP),
   }));
 
   const header = (
@@ -96,6 +90,7 @@ export function ExampleScreen({
       contentContainerStyle={scrollContentContainerStyle}
       keyboardShouldPersistTaps="handled"
       onScroll={onScroll}
+      ref={keyboardAwareScrollViewRef}
       scrollEventThrottle={16}
       showsVerticalScrollIndicator={false}
     >
@@ -148,59 +143,59 @@ export function ExampleScreen({
 
 const styles = StyleSheet.create({
   safeArea: {
-    backgroundColor: '#F2F0EA',
+    backgroundColor: "#F2F0EA",
     flex: 1,
   },
   header: {
-    alignItems: 'center',
-    flexDirection: 'row',
+    alignItems: "center",
+    flexDirection: "row",
     minHeight: 66,
     paddingHorizontal: 20,
-    position: 'relative',
+    position: "relative",
     zIndex: 2,
   },
   overlayHeader: {
     height: 104,
     left: 0,
-    position: 'absolute',
+    position: "absolute",
     right: 0,
     top: 0,
     zIndex: 10,
   },
   backButton: {
-    alignItems: 'center',
-    backgroundColor: '#FFFFFF',
-    borderColor: '#DAD7CE',
+    alignItems: "center",
+    backgroundColor: "#FFFFFF",
+    borderColor: "#DAD7CE",
     borderRadius: 24,
     borderWidth: 1,
     height: 48,
-    justifyContent: 'center',
+    justifyContent: "center",
     transform: [{ scale: 1 }],
     width: 48,
   },
   backButtonPressed: {
-    backgroundColor: '#E7E4DC',
+    backgroundColor: "#E7E4DC",
     transform: [{ scale: 0.96 }],
   },
   backIcon: {
-    color: '#1D1D1B',
+    color: "#1D1D1B",
     fontSize: 24,
     lineHeight: 27,
   },
   title: {
-    color: '#66645E',
+    color: "#66645E",
     flex: 1,
     fontSize: 13,
-    fontWeight: '700',
+    fontWeight: "700",
     letterSpacing: 0.2,
-    textAlign: 'center',
+    textAlign: "center",
   },
   headerSpacer: {
     width: 48,
   },
   content: {
     flexGrow: 1,
-    justifyContent: 'center',
+    justifyContent: "center",
     padding: 20,
   },
   contentWithOverlayHeader: {
@@ -211,8 +206,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   preview: {
-    alignSelf: 'center',
+    alignSelf: "center",
     maxWidth: 420,
-    width: '100%',
+    width: "100%",
   },
 });

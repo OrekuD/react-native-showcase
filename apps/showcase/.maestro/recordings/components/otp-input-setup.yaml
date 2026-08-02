@@ -1,0 +1,11 @@
+appId: com.oreku.reactnativeshowcase
+---
+- launchApp
+- assertVisible: Showcase
+- tapOn:
+    id: home-component-otp-input
+- assertVisible:
+    id: progressive-blur-header
+- assertVisible: INLINE
+- assertVisible:
+    id: otp-inline-large

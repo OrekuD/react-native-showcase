@@ -36,6 +36,13 @@ export function HomeScreen({ navigation }: HomeScreenProps) {
             Input
           </ListItem>
           <ListItem
+            onPress={() => navigation.navigate("OtpInput")}
+            testID="home-component-otp-input"
+            trailing="›"
+          >
+            OTP Input
+          </ListItem>
+          <ListItem
             onPress={() => navigation.navigate("Switch")}
             testID="home-component-switch"
             trailing="›"

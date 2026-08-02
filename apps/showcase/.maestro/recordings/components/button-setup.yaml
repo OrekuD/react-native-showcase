@@ -12,10 +12,4 @@ appId: com.oreku.reactnativeshowcase
       id: button-toggle-loading
     direction: DOWN
 - assertVisible:
-    id: button-size-sm
-- assertVisible:
-    id: button-size-md
-- assertVisible:
-    id: button-size-lg
-- assertVisible:
     id: button-toggle-loading

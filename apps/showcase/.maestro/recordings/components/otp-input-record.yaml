@@ -1,0 +1,19 @@
+appId: com.oreku.reactnativeshowcase
+---
+- tapOn:
+    id: otp-inline-large
+- inputText: "123456"
+- tapOn: INLINE
+- swipe:
+    start: 50%, 80%
+    end: 50%, 35%
+    duration: 250
+    waitToSettleTimeoutMs: 1
+- scrollUntilVisible:
+    element:
+      id: otp-themed
+    direction: DOWN
+- tapOn:
+    id: otp-themed
+- inputText: "654321"
+- tapOn: THEMING

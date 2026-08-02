@@ -10,6 +10,7 @@ import { ButtonScreen } from './src/screens/ButtonScreen';
 import { CurrencyFormattingScreen } from './src/screens/CurrencyFormattingScreen';
 import { HomeScreen } from './src/screens/HomeScreen';
 import { InputScreen } from './src/screens/InputScreen';
+import { OtpInputScreen } from './src/screens/OtpInputScreen';
 import { SwitchScreen } from './src/screens/SwitchScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -30,6 +31,7 @@ export default function App() {
               <Stack.Screen name="Home" component={HomeScreen} />
               <Stack.Screen name="Button" component={ButtonScreen} />
               <Stack.Screen name="Input" component={InputScreen} />
+              <Stack.Screen name="OtpInput" component={OtpInputScreen} />
               <Stack.Screen name="Switch" component={SwitchScreen} />
               <Stack.Screen
                 name="CurrencyFormatting"

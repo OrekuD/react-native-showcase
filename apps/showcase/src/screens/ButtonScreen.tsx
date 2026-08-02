@@ -73,7 +73,6 @@ export function ButtonScreen({ navigation }: ButtonScreenProps) {
   return (
     <ExampleScreen
       onBack={navigation.goBack}
-      progressiveBlurHeader
       title="Button"
     >
       <StatusBar style="dark" />
@@ -188,15 +187,15 @@ export function ButtonScreen({ navigation }: ButtonScreenProps) {
           <Text style={styles.sectionLabel}>SIZES</Text>
 
           <Button size="sm" testID="button-size-sm" variant="secondary">
-            <Button.Label>Small</Button.Label>
+            <Button.Label>Continue</Button.Label>
           </Button>
 
           <Button size="md" testID="button-size-md" variant="secondary">
-            <Button.Label>Medium</Button.Label>
+            <Button.Label>Continue</Button.Label>
           </Button>
 
           <Button size="lg" testID="button-size-lg" variant="secondary">
-            <Button.Label>Large</Button.Label>
+            <Button.Label>Continue</Button.Label>
           </Button>
         </View>
 

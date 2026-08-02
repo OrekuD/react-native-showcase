@@ -1,0 +1,269 @@
+---
+title: OTP Input
+description: A styled, source-first React Native OTP input with flexible visual treatments and theme tokens.
+---
+
+OTP Input is a source-first wrapper around `input-otp-native`. It keeps its
+native input behavior while giving you consistent inline, outline, filled, and
+underline treatments that can be copied into your app.
+
+<DocVideo
+  label="OTP Input variants, grouped entry, and theme customization"
+  src="/videos/components/otp-input.mp4"
+/>
+
+## Installation
+
+<Tabs className="showcase-install-tabs" items={['Command', 'Manual']}>
+  <Tab className="showcase-install-panel" value="Command">
+    <div className="showcase-install-intro">
+      Add OTP Input to your project with the Showcase CLI.
+    </div>
+
+    <CodeBlockTabs
+      className="showcase-package-tabs"
+      defaultValue="npm"
+      groupId="package-manager"
+      persist
+    >
+      <CodeBlockTabsList>
+        <CodeBlockTabsTrigger value="npm">npm</CodeBlockTabsTrigger>
+        <CodeBlockTabsTrigger value="pnpm">pnpm</CodeBlockTabsTrigger>
+        <CodeBlockTabsTrigger value="yarn">yarn</CodeBlockTabsTrigger>
+        <CodeBlockTabsTrigger value="bun">bun</CodeBlockTabsTrigger>
+      </CodeBlockTabsList>
+      <CodeBlockTab value="npm">
+        ```bash
+        npx @rn-showcase/cli add otp-input
+        ```
+      </CodeBlockTab>
+      <CodeBlockTab value="pnpm">
+        ```bash
+        pnpm dlx @rn-showcase/cli add otp-input
+        ```
+      </CodeBlockTab>
+      <CodeBlockTab value="yarn">
+        ```bash
+        yarn dlx @rn-showcase/cli add otp-input
+        ```
+      </CodeBlockTab>
+      <CodeBlockTab value="bun">
+        ```bash
+        bunx @rn-showcase/cli add otp-input
+        ```
+      </CodeBlockTab>
+    </CodeBlockTabs>
+
+    <div className="showcase-install-note">
+      The CLI installs the dependencies and copies the OTP source files into
+      <code>components/ui</code>.
+    </div>
+  </Tab>
+
+  <Tab className="showcase-install-panel" value="Manual">
+    <div className="showcase-install-step">
+      <span aria-hidden="true" className="showcase-install-step-marker">
+        1
+      </span>
+      <div className="showcase-install-step-title">Install the dependencies.</div>
+      <div className="showcase-install-step-body">
+        <CodeBlockTabs
+          className="showcase-package-tabs"
+          defaultValue="npm"
+          groupId="package-manager"
+          persist
+        >
+          <CodeBlockTabsList>
+            <CodeBlockTabsTrigger value="npm">npm</CodeBlockTabsTrigger>
+            <CodeBlockTabsTrigger value="pnpm">pnpm</CodeBlockTabsTrigger>
+            <CodeBlockTabsTrigger value="yarn">yarn</CodeBlockTabsTrigger>
+            <CodeBlockTabsTrigger value="bun">bun</CodeBlockTabsTrigger>
+          </CodeBlockTabsList>
+          <CodeBlockTab value="npm">
+        ```bash
+        npm install input-otp-native react-native-fast-squircle
+        npx expo prebuild
+        ```
+          </CodeBlockTab>
+          <CodeBlockTab value="pnpm">
+        ```bash
+        pnpm add input-otp-native react-native-fast-squircle
+        pnpm exec expo prebuild
+        ```
+          </CodeBlockTab>
+          <CodeBlockTab value="yarn">
+        ```bash
+        yarn add input-otp-native react-native-fast-squircle
+        yarn expo prebuild
+        ```
+          </CodeBlockTab>
+          <CodeBlockTab value="bun">
+        ```bash
+        bun add input-otp-native react-native-fast-squircle
+        bun x expo prebuild
+        ```
+          </CodeBlockTab>
+        </CodeBlockTabs>
+      </div>
+    </div>
+
+    <div className="showcase-install-step">
+      <span aria-hidden="true" className="showcase-install-step-marker">
+        2
+      </span>
+      <div className="showcase-install-step-title">Copy the component files into your project.</div>
+      <div className="showcase-install-step-body">
+        <RegistryManualInstall name="otp-input" />
+      </div>
+    </div>
+  </Tab>
+</Tabs>
+
+Run a native development build after installing `react-native-fast-squircle`;
+Expo Go cannot load that native module.
+
+## Usage
+
+Use a controlled value with `onTextChange`. `onFilled` runs once every cell has
+an entered value.
+
+```tsx
+import { useState } from 'react';
+import { OtpInput } from '@/components/ui/OtpInput';
+
+export function VerificationCode() {
+  const [code, setCode] = useState('');
+
+  return (
+    <OtpInput
+      numberOfDigits={6}
+      onFilled={verifyCode}
+      onTextChange={setCode}
+      placeholder="••••••"
+      separator
+      value={code}
+    />
+  );
+}
+```
+
+## Variants
+
+| Variant | Treatment |
+| --- | --- |
+| `outline` | Individual bordered cells. This is the default. |
+| `filled` | Individual soft, filled cells. |
+| `underline` | Transparent cells with a bottom-only line. |
+| `inline` | Cells joined inside one soft continuous surface. |
+
+All variants accept `separator`. For an even-length code, it splits the cells
+into two groups with a real, styled divider rather than placing text over the
+slots.
+
+```tsx
+<OtpInput placeholder="******" separator variant="outline" />
+
+<OtpInput placeholder="••••••" separator variant="filled" />
+
+<OtpInput placeholder="••••••" separator variant="inline" />
+
+<OtpInput variant="underline" />
+```
+
+## Sizes
+
+`lg` is the default. Use `sm` where the OTP input needs to take less visual
+space; its cells, spacing, type, and separator all scale together.
+
+```tsx
+<OtpInput placeholder="******" size="sm" />
+
+<OtpInput placeholder="******" size="lg" />
+```
+
+## Secure entry
+
+Set `secureTextEntry` to render entered characters as bullets. A placeholder
+can use the same bullet treatment or `*` characters; it is separate from the
+entered value.
+
+```tsx
+<OtpInput
+  placeholder="••••••"
+  secureTextEntry
+  separator
+  variant="filled"
+/>
+```
+
+## Focus and theming
+
+Use `focusColor` when one color should style the active cell and cursor for a
+single OTP input.
+
+```tsx
+<OtpInput focusColor="#28594A" placeholder="******" />
+```
+
+Use `OtpInputThemeProvider` when an OTP flow needs shared tokens. `focus` and
+`cursor` are deliberately separate so an active cell and insertion cursor can
+use different colors. The rest of the tokens style the passive visual parts.
+
+```tsx
+import {
+  OtpInput,
+  OtpInputThemeProvider,
+} from '@/components/ui/OtpInput';
+
+<OtpInputThemeProvider
+  theme={{
+    colors: {
+      cursor: '#C2410C',
+      focus: '#28594A',
+      outlineBorder: '#AAB9B1',
+      placeholder: '#8C9A91',
+      separator: '#4C655B',
+      surface: '#E8F0EC',
+    },
+  }}
+>
+  <OtpInput placeholder="••••••" separator variant="filled" />
+</OtpInputThemeProvider>;
+```
+
+## Props
+
+`OtpInput` accepts the props below, plus compatible native `TextInputProps`
+and `input-otp-native` options such as `value`, `defaultValue`, `placeholder`,
+`pattern`, `inputMode`, `secureTextEntry`, `autoFocus`, `onFocus`, and
+`onBlur`.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `focusColor` | `ColorValue` | Theme `focus` and `cursor` | Overrides the active cell and cursor colors together for one input. |
+| `numberOfDigits` | `number` | `6` | Number of rendered OTP cells. |
+| `onTextChange` | `(value: string) => void` | — | Called whenever the entered value changes. |
+| `onFilled` | `(value: string) => void` | — | Called when every OTP cell is filled. |
+| `separator` | `boolean` | `false` | Renders a middle separator for an even number of cells. |
+| `size` | `'sm' \| 'lg'` | `'lg'` | Coordinates the OTP cells, typography, and spacing. |
+| `style` | `StyleProp<ViewStyle>` | — | Styles the outer OTP wrapper. |
+| `variant` | `'inline' \| 'outline' \| 'filled' \| 'underline'` | `'outline'` | Selects the visual treatment. |
+
+`maxLength`, `onChange`, `onComplete`, `render`, `containerStyle`, and the
+underlying native `style` are owned by the component so its visual structure
+stays intact. Use `numberOfDigits`, `onTextChange`, `onFilled`, and the outer
+`style` prop instead.
+
+### Theme colors
+
+| Token | Description |
+| --- | --- |
+| `focus` | Active outline or underline color. |
+| `cursor` | Fake insertion cursor color. |
+| `surface` | Filled-cell and inline-group background. |
+| `outlineBorder` | Resting outline border color. |
+| `underline` | Resting underline color. |
+| `text` | Entered character color. |
+| `placeholder` | Placeholder character color. |
+| `separator` | Middle group separator color. |
+| `inlineDivider` | Separator between cells inside an inline group. |
