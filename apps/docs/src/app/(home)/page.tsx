@@ -5,7 +5,7 @@ const sections = [
     index: '01',
     title: 'Components',
     description: 'Small, reusable interface foundations.',
-    count: '03',
+    count: '10',
     href: '/docs/components',
   },
   {
@@ -17,10 +17,10 @@ const sections = [
   },
   {
     index: '03',
-    title: 'Showcases',
-    description: 'Larger experiments that combine the pieces.',
+    title: 'Recipes',
+    description: 'Larger copyable examples that combine the pieces.',
     count: '00',
-    href: '/docs/showcases',
+    href: '/docs/recipes',
   },
 ] as const;
 

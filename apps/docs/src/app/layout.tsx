@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     template: '%s — React Native Showcase',
   },
   description:
-    'Copyable React Native components, interactions, and visual showcases.',
+    'Copyable React Native components, interactions, and recipes.',
 };
 
 export default function Layout({ children }: LayoutProps<'/'>) {
