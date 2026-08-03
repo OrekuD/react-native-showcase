@@ -2,20 +2,24 @@
   "name": "confirmation-dialog",
   "files": [
     {
-      "source": "../../../../apps/showcase/src/components/ui/ConfirmationDialog.tsx",
-      "target": "ConfirmationDialog.tsx"
+      "source": "../../../../apps/showcase/src/components/ui/confirmation-dialog/ConfirmationDialog.tsx",
+      "target": "confirmation-dialog/ConfirmationDialog.tsx"
     },
     {
-      "source": "../../../../apps/showcase/src/components/ui/ConfirmationDialogOverlay.tsx",
-      "target": "ConfirmationDialogOverlay.tsx"
+      "source": "../../../../apps/showcase/src/components/ui/confirmation-dialog/ConfirmationDialogOverlay.tsx",
+      "target": "confirmation-dialog/ConfirmationDialogOverlay.tsx"
     },
     {
-      "source": "../../../../apps/showcase/src/components/ui/confirmationDialogState.ts",
-      "target": "confirmationDialogState.ts"
+      "source": "../../../../apps/showcase/src/components/ui/confirmation-dialog/confirmationDialogState.ts",
+      "target": "confirmation-dialog/confirmationDialogState.ts"
     },
     {
-      "source": "../../../../apps/showcase/src/components/ui/confirmationDialogStore.ts",
-      "target": "confirmationDialogStore.ts"
+      "source": "../../../../apps/showcase/src/components/ui/confirmation-dialog/confirmationDialogStore.ts",
+      "target": "confirmation-dialog/confirmationDialogStore.ts"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/confirmation-dialog/index.ts",
+      "target": "confirmation-dialog/index.ts"
     }
   ],
   "expoDependencies": [

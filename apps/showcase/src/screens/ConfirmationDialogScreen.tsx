@@ -8,7 +8,7 @@ import {
   ConfirmationDialog,
   type ConfirmationDialogMode,
   type ConfirmationDialogVariant,
-} from "../components/ui/ConfirmationDialog";
+} from "../components/ui/confirmation-dialog";
 import { Button } from "../components/ui/button";
 import type { RootStackParamList } from "../navigation/types";
 

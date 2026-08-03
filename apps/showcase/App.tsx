@@ -1,6 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
+import { PortalHost } from '@rn-primitives/portal';
 import { StyleSheet, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -15,7 +16,7 @@ import { MenuScreen } from './src/screens/MenuScreen';
 import { OtpInputScreen } from './src/screens/OtpInputScreen';
 import { SelectScreen } from './src/screens/SelectScreen';
 import { SwitchScreen } from './src/screens/SwitchScreen';
-import { ConfirmationDialogHost } from './src/components/ui/ConfirmationDialog';
+import { ConfirmationDialogHost } from './src/components/ui/confirmation-dialog';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -51,6 +52,7 @@ export default function App() {
               </Stack.Navigator>
             </NavigationContainer>
             <ConfirmationDialogHost />
+            <PortalHost />
           </View>
         </SafeAreaProvider>
       </KeyboardProvider>

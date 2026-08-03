@@ -1,4 +1,3 @@
-import { PortalHost } from "@rn-primitives/portal";
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import { Alert, StyleSheet, View, type AlertButton } from "react-native";
 
@@ -199,7 +198,6 @@ export function ConfirmationDialogHost() {
 
   return (
     <View pointerEvents="box-none" style={styles.host}>
-      <PortalHost />
       {request ? (
         <ConfirmationDialogOverlay
           key={request.id}
