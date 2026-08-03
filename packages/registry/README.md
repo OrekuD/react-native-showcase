@@ -15,8 +15,8 @@ Each entry lives in `packages/registry/items/<name>/registry.json`:
   "name": "button",
   "files": [
     {
-      "source": "../../../../apps/showcase/src/components/ui/Button.tsx",
-      "target": "Button.tsx"
+      "source": "../../../../apps/showcase/src/components/ui/button/Button.tsx",
+      "target": "button/Button.tsx"
     }
   ],
   "expoDependencies": [],

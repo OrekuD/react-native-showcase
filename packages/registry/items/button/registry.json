@@ -2,20 +2,24 @@
   "name": "button",
   "files": [
     {
-      "source": "../../../../apps/showcase/src/components/ui/Button.tsx",
-      "target": "Button.tsx"
+      "source": "../../../../apps/showcase/src/components/ui/button/Button.tsx",
+      "target": "button/Button.tsx"
     },
     {
-      "source": "../../../../apps/showcase/src/components/ui/ButtonThemeProvider.tsx",
-      "target": "ButtonThemeProvider.tsx"
+      "source": "../../../../apps/showcase/src/components/ui/button/ButtonThemeProvider.tsx",
+      "target": "button/ButtonThemeProvider.tsx"
     },
     {
-      "source": "../../../../apps/showcase/src/components/ui/buttonState.ts",
-      "target": "buttonState.ts"
+      "source": "../../../../apps/showcase/src/components/ui/button/buttonState.ts",
+      "target": "button/buttonState.ts"
     },
     {
-      "source": "../../../../apps/showcase/src/components/ui/buttonTheme.ts",
-      "target": "buttonTheme.ts"
+      "source": "../../../../apps/showcase/src/components/ui/button/buttonTheme.ts",
+      "target": "button/buttonTheme.ts"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/button/index.ts",
+      "target": "button/index.ts"
     }
   ],
   "expoDependencies": [

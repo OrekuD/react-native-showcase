@@ -9,7 +9,7 @@ import {
   type ConfirmationDialogMode,
   type ConfirmationDialogVariant,
 } from "../components/ui/ConfirmationDialog";
-import { Button } from "../components/ui/Button";
+import { Button } from "../components/ui/button";
 import type { RootStackParamList } from "../navigation/types";
 
 type ConfirmationDialogScreenProps = NativeStackScreenProps<

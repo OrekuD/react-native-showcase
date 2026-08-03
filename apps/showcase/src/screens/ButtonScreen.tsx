@@ -9,7 +9,7 @@ import {
   ButtonThemeProvider,
   type ButtonTheme,
   type ButtonThemeOverride,
-} from "../components/ui/Button";
+} from "../components/ui/button";
 import type { RootStackParamList } from "../navigation/types";
 
 type ButtonScreenProps = NativeStackScreenProps<RootStackParamList, "Button">;

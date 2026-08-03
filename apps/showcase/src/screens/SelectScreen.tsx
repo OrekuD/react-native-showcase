@@ -11,7 +11,7 @@ import { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 import { ExampleScreen } from "../components/ExampleScreen";
-import { Button } from "../components/ui/Button";
+import { Button } from "../components/ui/button";
 import {
   Select,
   SelectThemeProvider,
