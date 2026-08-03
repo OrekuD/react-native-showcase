@@ -7,9 +7,10 @@ The Button is a source-first compound component. Compose `Button.Label` and
 `Button.Icon` to keep text, icons, loading indicators, and accessibility in one
 consistent interaction model.
 
-<DocVideo
+<PlatformVideos
+  android="/videos/components/button-android.mp4"
+  ios="/videos/components/button-ios.mp4"
   label="Button variants, sizes, loading states, icon buttons, and theming"
-  src="/videos/components/button.mp4"
 />
 
 ## Installation
@@ -131,7 +132,7 @@ Expo Go cannot load that native module.
 ## Usage
 
 ```tsx
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 
 export function Actions() {
   return (
@@ -264,7 +265,7 @@ when a local treatment is needed. Both approaches preserve the compound API.
 import {
   Button,
   ButtonThemeProvider,
-} from '@/components/ui/Button';
+} from '@/components/ui/button';
 
 <ButtonThemeProvider
   theme={{

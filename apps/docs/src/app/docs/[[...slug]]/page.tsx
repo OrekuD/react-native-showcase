@@ -22,7 +22,7 @@ export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
   const markdownUrl = getPageMarkdownUrl(page).url;
 
   return (
-    <DocsPage toc={page.data.toc} full={page.data.full}>
+    <DocsPage toc={page.data.toc} full>
       <div className="showcase-doc-page">
         <DocsTitle className="showcase-doc-title">{page.data.title}</DocsTitle>
         <DocsDescription className="showcase-doc-description">

@@ -15,7 +15,7 @@ Open http://localhost:3000 with your browser to see the result.
 
 - `content/docs/components`: source-first component guides
 - `content/docs/interactions`: reusable interaction patterns
-- `content/docs/showcases`: larger visual experiments
+- `content/docs/recipes`: larger copyable examples
 - `public/videos`: recorded previews used at the top of entry pages
 - `src/components`: Fumadocs and registry-powered UI components
 

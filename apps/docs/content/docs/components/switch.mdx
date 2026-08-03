@@ -1,20 +1,139 @@
 ---
 title: Switch
-description: A labeled native switch row for clear on and off settings.
+description: A themeable React Native switch with custom treatments, native mode, haptics, and animated thumb icons.
 ---
 
-Switch keeps React Native's native toggle and adds a consistent label,
-supporting description, spacing, and disabled treatment.
+Switch is a source-first setting row. Use its custom control for the Showcase
+treatments or opt into React Native's platform switch while retaining the same
+label, haptics, and on/off color model.
 
-## Requirements
+<PlatformVideos
+  android="/videos/components/switch-android.mp4"
+  ios="/videos/components/switch-ios.mp4"
+  label="Switch variants, thumb icons, theming, and native mode"
+/>
 
-No additional package is required.
+## Installation
+
+Switch uses Reanimated for custom-track motion, Expo Haptics for optional
+selection feedback, and Fast Squircle for custom track and thumb shapes.
+
+<Tabs className="showcase-install-tabs" items={['Command', 'Manual']}>
+  <Tab className="showcase-install-panel" value="Command">
+    <div className="showcase-install-intro">
+      Add Switch to your project with the Showcase CLI.
+    </div>
+
+    <CodeBlockTabs
+      className="showcase-package-tabs"
+      defaultValue="npm"
+      groupId="package-manager"
+      persist
+    >
+      <CodeBlockTabsList>
+        <CodeBlockTabsTrigger value="npm">npm</CodeBlockTabsTrigger>
+        <CodeBlockTabsTrigger value="pnpm">pnpm</CodeBlockTabsTrigger>
+        <CodeBlockTabsTrigger value="yarn">yarn</CodeBlockTabsTrigger>
+        <CodeBlockTabsTrigger value="bun">bun</CodeBlockTabsTrigger>
+      </CodeBlockTabsList>
+      <CodeBlockTab value="npm">
+        ```bash
+        npx @rn-showcase/cli add switch
+        ```
+      </CodeBlockTab>
+      <CodeBlockTab value="pnpm">
+        ```bash
+        pnpm dlx @rn-showcase/cli add switch
+        ```
+      </CodeBlockTab>
+      <CodeBlockTab value="yarn">
+        ```bash
+        yarn dlx @rn-showcase/cli add switch
+        ```
+      </CodeBlockTab>
+      <CodeBlockTab value="bun">
+        ```bash
+        bunx @rn-showcase/cli add switch
+        ```
+      </CodeBlockTab>
+    </CodeBlockTabs>
+
+    <div className="showcase-install-note">
+      The CLI installs the required packages and copies Switch into
+      <code>components/ui/switch</code>.
+    </div>
+  </Tab>
+  <Tab className="showcase-install-panel" value="Manual">
+    <div className="showcase-install-step">
+      <span aria-hidden="true" className="showcase-install-step-marker">
+        1
+      </span>
+      <div className="showcase-install-step-title">Install the dependencies.</div>
+      <div className="showcase-install-step-body">
+        <CodeBlockTabs
+          className="showcase-package-tabs"
+          defaultValue="npm"
+          groupId="package-manager"
+          persist
+        >
+          <CodeBlockTabsList>
+            <CodeBlockTabsTrigger value="npm">npm</CodeBlockTabsTrigger>
+            <CodeBlockTabsTrigger value="pnpm">pnpm</CodeBlockTabsTrigger>
+            <CodeBlockTabsTrigger value="yarn">yarn</CodeBlockTabsTrigger>
+            <CodeBlockTabsTrigger value="bun">bun</CodeBlockTabsTrigger>
+          </CodeBlockTabsList>
+          <CodeBlockTab value="npm">
+        ```bash
+        npx expo install expo-haptics react-native-reanimated react-native-worklets
+        npm install react-native-fast-squircle
+        npx expo prebuild
+        ```
+          </CodeBlockTab>
+          <CodeBlockTab value="pnpm">
+        ```bash
+        pnpm exec expo install expo-haptics react-native-reanimated react-native-worklets
+        pnpm add react-native-fast-squircle
+        pnpm exec expo prebuild
+        ```
+          </CodeBlockTab>
+          <CodeBlockTab value="yarn">
+        ```bash
+        yarn expo install expo-haptics react-native-reanimated react-native-worklets
+        yarn add react-native-fast-squircle
+        yarn expo prebuild
+        ```
+          </CodeBlockTab>
+          <CodeBlockTab value="bun">
+        ```bash
+        bun x expo install expo-haptics react-native-reanimated react-native-worklets
+        bun add react-native-fast-squircle
+        bun x expo prebuild
+        ```
+          </CodeBlockTab>
+        </CodeBlockTabs>
+      </div>
+    </div>
+
+    <div className="showcase-install-step">
+      <span aria-hidden="true" className="showcase-install-step-marker">
+        2
+      </span>
+      <div className="showcase-install-step-title">Copy the component files into your project.</div>
+      <div className="showcase-install-step-body">
+        <RegistryManualInstall name="switch" />
+      </div>
+    </div>
+  </Tab>
+</Tabs>
+
+Run a native development build after installing `react-native-fast-squircle`;
+Expo Go cannot load that native module.
 
 ## Usage
 
 ```tsx
 import { useState } from 'react';
-import { Switch } from '@/components/ui/Switch';
+import { Switch } from '@/components/ui/switch';
 
 export function MotionSetting() {
   const [reduceMotion, setReduceMotion] = useState(false);
@@ -22,6 +141,7 @@ export function MotionSetting() {
   return (
     <Switch
       description="Prefer calmer transitions throughout the app."
+      haptics
       label="Reduce motion"
       onValueChange={setReduceMotion}
       value={reduceMotion}
@@ -30,20 +150,147 @@ export function MotionSetting() {
 }
 ```
 
+The custom solid treatment is the default. It is controlled by `value` and
+`onValueChange`, just like React Native's Switch.
+
+## Modes and variants
+
+Use `mode="native"` when the platform switch is a better fit. Native mode
+still uses the shared on/off theme colors and the optional `haptics` feedback.
+
+| Mode | Purpose |
+| --- | --- |
+| `custom` | Showcase's squircle-based, animated control. This is the default. |
+| `native` | React Native's platform Switch. |
+
+Custom mode has three treatments:
+
+| Variant | Purpose |
+| --- | --- |
+| `solid` | Standard filled track with a comfortable thumb inset. Default. |
+| `solid-tight` | Filled track with a tighter thumb inset. |
+| `outline` | Transparent track with a visible border. |
+
+```tsx
+<Switch label="Solid" value={solid} onValueChange={setSolid} />
+
+<Switch
+  label="Outline"
+  value={outlined}
+  onValueChange={setOutlined}
+  variant="outline"
+/>
+
+<Switch
+  label="System setting"
+  mode="native"
+  value={systemSetting}
+  onValueChange={setSystemSetting}
+/>
+```
+
+## Thumb icons
+
+Pass optional `on` and `off` React nodes with `thumbIcons`. The icon frame
+stays centered in the moving thumb: the next icon scales in and the previous
+one fades out faster from the same position.
+
+```tsx
+import { Check, X } from 'lucide-react-native';
+
+<Switch
+  label="Notifications"
+  value={notificationsEnabled}
+  onValueChange={setNotificationsEnabled}
+  variant="solid-tight"
+  thumbIcons={{
+    off: <X color="#A1A1AA" size={15} strokeWidth={2.5} />,
+    on: <Check color="#5962EE" size={15} strokeWidth={2.8} />,
+  }}
+/>
+```
+
+Icons apply only to custom mode. Each state is optional, so either side can be
+intentionally icon-free.
+
+## Theming
+
+`SwitchThemeProvider` shares semantic `on` and `off` colors with every Switch
+in its subtree. The same colors drive custom tracks and thumbs, as well as the
+native `trackColor` and `thumbColor` values. Border color is used by custom
+mode only.
+
+```tsx
+import {
+  Switch,
+  SwitchThemeProvider,
+} from '@/components/ui/switch';
+
+<SwitchThemeProvider
+  theme={{
+    off: {
+      borderColor: '#AAB9B1',
+      thumbColor: '#FFFFFF',
+      trackColor: '#DDE9E1',
+    },
+    on: {
+      borderColor: '#28594A',
+      thumbColor: '#FFFFFF',
+      trackColor: '#28594A',
+    },
+  }}
+>
+  <Switch label="Custom" value={custom} onValueChange={setCustom} />
+  <Switch
+    label="Native"
+    mode="native"
+    value={native}
+    onValueChange={setNative}
+  />
+</SwitchThemeProvider>
+```
+
+Override the same semantic states on one Switch without repeating its active
+variant:
+
+```tsx
+<Switch
+  label="Private account"
+  value={isPrivate}
+  onValueChange={setIsPrivate}
+  variant="outline"
+  theme={{
+    on: { borderColor: '#8B5CF6', thumbColor: '#8B5CF6' },
+    off: { borderColor: '#D1D5DB', thumbColor: '#A1A1AA' },
+  }}
+/>
+```
+
+## Haptics and motion
+
+Set `haptics` to enable selection feedback when a user changes the value. It is
+off by default. Custom switches animate track, thumb, and border colors from a
+single 140ms eased progress value, so rapid toggles reverse smoothly. The icon
+swap respects the system reduce-motion preference.
+
 ## Props
 
-```ts
-type SwitchProps = {
-  description?: string;
-  disabled?: boolean;
-  label: string;
-  onValueChange: (value: boolean) => void;
-  value: boolean;
-};
-```
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `description` | `string` | — | Supporting text below the visible label. |
+| `disabled` | `boolean` | `false` | Prevents value changes and dims the row. |
+| `haptics` | `boolean` | `false` | Adds selection feedback after a value change. |
+| `label` | `string` | — | Visible label and accessible name. |
+| `mode` | `'custom' \| 'native'` | `'custom'` | Selects the custom or platform control. |
+| `onValueChange` | `(value: boolean) => void` | — | Receives the next controlled value. |
+| `testID` | `string` | — | Identifier for automated tests. |
+| `theme` | `SwitchThemeOverride` | — | Local on/off color and corner-smoothing overrides. |
+| `thumbIcons` | `{ on?: ReactNode; off?: ReactNode }` | — | Custom-mode icons rendered in the thumb. |
+| `variant` | `'solid' \| 'solid-tight' \| 'outline'` | `'solid'` | Selects the custom treatment; ignored by native mode. |
+| `value` | `boolean` | — | Controlled checked value. |
 
 ## Accessibility
 
-The visible label is also passed to the native switch as its accessibility
-label. The native control retains the platform's expected switch role and
-interaction behavior.
+Custom mode exposes the `switch` role, the current checked state, disabled
+state, and the visible label as its accessible name. Native mode delegates the
+interaction semantics to React Native's platform Switch.

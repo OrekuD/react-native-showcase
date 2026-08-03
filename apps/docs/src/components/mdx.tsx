@@ -8,6 +8,7 @@ import {
 import * as TabsComponents from 'fumadocs-ui/components/tabs';
 import type { MDXComponents } from 'mdx/types';
 import { DocVideo } from './DocVideo';
+import { PlatformVideos } from './PlatformVideos';
 import { RegistryManualInstall } from './RegistryManualInstall';
 
 export function getMDXComponents(components?: MDXComponents) {
@@ -19,6 +20,7 @@ export function getMDXComponents(components?: MDXComponents) {
     CodeBlockTabsTrigger,
     ...TabsComponents,
     DocVideo,
+    PlatformVideos,
     RegistryManualInstall,
     ...components,
   } satisfies MDXComponents;

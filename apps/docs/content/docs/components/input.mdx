@@ -7,9 +7,10 @@ Input is a source-first compound component. Choose an appearance on
 `Input.Root`, then compose labels, controls, trailing actions, and messages for
 the exact field your form needs.
 
-<DocVideo
+<PlatformVideos
+  android="/videos/components/input-android.mp4"
+  ios="/videos/components/input-ios.mp4"
   label="Input appearances, live validation, clear actions, and composed search"
-  src="/videos/components/input.mp4"
 />
 
 ## Installation
@@ -134,7 +135,7 @@ the shell while the composition stays the same.
 
 ```tsx
 import { useState } from 'react';
-import { Input } from '@/components/ui/Input';
+import { Input } from '@/components/ui/input';
 
 export function EmailField() {
   const [email, setEmail] = useState('');
@@ -318,7 +319,7 @@ Nested providers merge with the closest parent theme.
 import {
   Input,
   InputThemeProvider,
-} from '@/components/ui/Input';
+} from '@/components/ui/input';
 
 <InputThemeProvider
   theme={{

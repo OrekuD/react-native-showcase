@@ -8,9 +8,10 @@ confirmations. Use the familiar imperative form when a decision starts from an
 event handler, or use the controlled component when dialog state belongs to
 your screen.
 
-<DocVideo
+<PlatformVideos
+  android="/videos/components/confirmation-dialog-android.mp4"
+  ios="/videos/components/confirmation-dialog-ios.mp4"
   label="Confirmation dialog action-sheet, compact, and prominent variants"
-  src="/videos/components/confirmation-dialog.mp4"
 />
 
 ## Installation
@@ -134,7 +135,7 @@ Mount `ConfirmationDialogHost` once near your app root. It renders custom
 dialog portals for both the controlled and imperative APIs.
 
 ```tsx
-import { ConfirmationDialogHost } from '@/components/ui/ConfirmationDialog';
+import { ConfirmationDialogHost } from '@/components/ui/confirmation-dialog';
 
 export function App() {
   return (
@@ -153,7 +154,7 @@ state. Custom mode is the default.
 
 ```tsx
 import { useState } from 'react';
-import { ConfirmationDialog } from '@/components/ui/ConfirmationDialog';
+import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
 
 export function DeleteComment() {
   const [open, setOpen] = useState(false);

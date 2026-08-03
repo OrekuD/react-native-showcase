@@ -7,9 +7,10 @@ OTP Input is a source-first wrapper around `input-otp-native`. It keeps its
 native input behavior while giving you consistent inline, outline, filled, and
 underline treatments that can be copied into your app.
 
-<DocVideo
+<PlatformVideos
+  android="/videos/components/otp-input-android.mp4"
+  ios="/videos/components/otp-input-ios.mp4"
   label="OTP Input variants, grouped entry, and theme customization"
-  src="/videos/components/otp-input.mp4"
 />
 
 ## Installation
@@ -129,7 +130,7 @@ an entered value.
 
 ```tsx
 import { useState } from 'react';
-import { OtpInput } from '@/components/ui/OtpInput';
+import { OtpInput } from '@/components/ui/otp-input';
 
 export function VerificationCode() {
   const [code, setCode] = useState('');
@@ -213,7 +214,7 @@ use different colors. The rest of the tokens style the passive visual parts.
 import {
   OtpInput,
   OtpInputThemeProvider,
-} from '@/components/ui/OtpInput';
+} from '@/components/ui/otp-input';
 
 <OtpInputThemeProvider
   theme={{

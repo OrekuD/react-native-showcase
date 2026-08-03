@@ -7,9 +7,10 @@ Menu gives you a composed custom popover for richly detailed actions, or Expo
 UI's native menu when platform behavior is the better fit. Both start from the
 same `Menu` and `Menu.Trigger` API.
 
-<DocVideo
+<PlatformVideos
+  android="/videos/components/menu-android.mp4"
+  ios="/videos/components/menu-ios.mp4"
   label="Custom Menu with detailed and compact actions"
-  src="/videos/components/menu.mp4"
 />
 
 ## Installation
@@ -86,28 +87,28 @@ also requires Expo UI.
           <CodeBlockTab value="npm">
         ```bash
         npx expo install @expo/ui expo-haptics react-native-reanimated react-native-worklets
-        npm install react-native-fast-squircle
+        npm install @rn-primitives/dropdown-menu react-native-fast-squircle
         npx expo prebuild
         ```
           </CodeBlockTab>
           <CodeBlockTab value="pnpm">
         ```bash
         pnpm exec expo install @expo/ui expo-haptics react-native-reanimated react-native-worklets
-        pnpm add react-native-fast-squircle
+        pnpm add @rn-primitives/dropdown-menu react-native-fast-squircle
         pnpm exec expo prebuild
         ```
           </CodeBlockTab>
           <CodeBlockTab value="yarn">
         ```bash
         yarn expo install @expo/ui expo-haptics react-native-reanimated react-native-worklets
-        yarn add react-native-fast-squircle
+        yarn add @rn-primitives/dropdown-menu react-native-fast-squircle
         yarn expo prebuild
         ```
           </CodeBlockTab>
           <CodeBlockTab value="bun">
         ```bash
         bun x expo install @expo/ui expo-haptics react-native-reanimated react-native-worklets
-        bun add react-native-fast-squircle
+        bun add @rn-primitives/dropdown-menu react-native-fast-squircle
         bun x expo prebuild
         ```
           </CodeBlockTab>
@@ -211,6 +212,27 @@ menu. Native mode uses the same trigger composition, but does not render
 </Menu>
 ```
 
+## Theming
+
+`MenuThemeProvider` applies shared tokens to custom menus in its subtree. Pass
+`theme` directly to one custom Menu for a local override. Native mode keeps the
+platform menu appearance.
+
+```tsx
+import { Menu, MenuThemeProvider } from '@/components/ui/menu';
+
+<MenuThemeProvider
+  theme={{
+    backgroundColor: '#EEF4FF',
+    iconBackgroundColor: '#DDEAFF',
+    labelColor: '#172B4D',
+    separatorColor: '#C7D8F5',
+  }}
+>
+  <FileMenu />
+</MenuThemeProvider>
+```
+
 ## Props
 
 ### `Menu`
@@ -223,6 +245,7 @@ menu. Native mode uses the same trigger composition, but does not render
 | `onOpenChange` | `(open: boolean) => void` | — | Receives custom-menu visibility changes. |
 | `shouldOpenOnLongPress` | `boolean` | `false` | Opens from a long press rather than a tap. |
 | `testID` | `string` | — | Applies a native test identifier to the trigger. |
+| `theme` | `MenuThemeOverride` | — | Overrides custom menu tokens locally. |
 | `actions` | `NativeMenuAction[]` | — | Expo UI actions; required only with `mode="native"`. |
 | `onSelect` | `(id: string) => void` | — | Receives the selected action id in native mode. |
 | `title` | `string` | — | iOS title for the native menu. |

@@ -48,14 +48,16 @@ preview and the CLI/manual install path stay aligned.
 
 ## Record a preview
 
-The docs video is generated from the app itself:
+Component previews are generated from the app itself:
 
 ```bash
-pnpm record showcase
+pnpm record button
+pnpm record button --platform android
 ```
 
-The command runs the setup flow, records the named Maestro flow on the booted
-iOS simulator, and writes `apps/docs/public/videos/showcase.mp4`.
+With no platform flag, the command records the named Maestro flow on both
+booted simulators and writes `button-ios.mp4` and `button-android.mp4` under
+`apps/docs/public/videos/components`.
 
 ## Checks
 

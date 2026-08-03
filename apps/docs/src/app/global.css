@@ -170,6 +170,36 @@ html > body[data-scroll-locked] {
   outline-offset: 3px;
 }
 
+.showcase-platform-videos {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 2rem 0 3rem;
+}
+
+.showcase-platform-video {
+  min-width: 0;
+}
+
+.showcase-platform-video-label {
+  color: var(--showcase-soft-ink);
+  font-family: var(--font-showcase-mono), monospace;
+  font-size: 0.68rem;
+  font-weight: 650;
+  letter-spacing: 0.12em;
+  margin-bottom: 0.65rem;
+  text-transform: uppercase;
+}
+
+.showcase-platform-video .showcase-doc-video {
+  margin: 0;
+}
+
+.showcase-platform-video .showcase-doc-video video {
+  height: min(680px, 68vh);
+  max-height: min(680px, 68vh);
+}
+
 .showcase-doc-body {
   font-size: 15px;
   line-height: 1.75;
@@ -660,6 +690,10 @@ html > body[data-scroll-locked] {
 }
 
 @media (max-width: 900px) {
+  .showcase-platform-videos {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
   .showcase-hero {
     gap: 4rem;
     grid-template-columns: 1fr;
