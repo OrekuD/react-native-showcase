@@ -13,7 +13,9 @@ type RegistryItemName =
   | 'confirmation-dialog'
   | 'input'
   | 'menu'
-  | 'otp-input';
+  | 'otp-input'
+  | 'select'
+  | 'switch';
 
 type RegistryManifest = {
   files: Array<{

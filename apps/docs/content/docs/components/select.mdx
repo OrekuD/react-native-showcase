@@ -1,0 +1,230 @@
+---
+title: Select
+description: A single-value control with custom popovers, checkmarks, theming, and Expo UI native mode.
+---
+
+Select shares Menu's trigger and popover model, but adds controlled values and a
+trailing checkmark for the active option. Use custom mode for a copyable,
+themeable surface or native mode for the platform menu.
+
+<PlatformVideos
+  android="/videos/components/select-android.mp4"
+  ios="/videos/components/select-ios.mp4"
+  label="Select custom, compact, native, and themed examples"
+/>
+
+## Installation
+
+<Tabs className="showcase-install-tabs" items={['Command', 'Manual']}>
+  <Tab className="showcase-install-panel" value="Command">
+    <div className="showcase-install-intro">
+      Add Select to your project with the Showcase CLI.
+    </div>
+
+    <CodeBlockTabs className="showcase-package-tabs" defaultValue="npm" groupId="package-manager" persist>
+      <CodeBlockTabsList>
+        <CodeBlockTabsTrigger value="npm">npm</CodeBlockTabsTrigger>
+        <CodeBlockTabsTrigger value="pnpm">pnpm</CodeBlockTabsTrigger>
+        <CodeBlockTabsTrigger value="yarn">yarn</CodeBlockTabsTrigger>
+        <CodeBlockTabsTrigger value="bun">bun</CodeBlockTabsTrigger>
+      </CodeBlockTabsList>
+      <CodeBlockTab value="npm">
+        ```bash
+        npx @rn-showcase/cli add select
+        ```
+      </CodeBlockTab>
+      <CodeBlockTab value="pnpm">
+        ```bash
+        pnpm dlx @rn-showcase/cli add select
+        ```
+      </CodeBlockTab>
+      <CodeBlockTab value="yarn">
+        ```bash
+        yarn dlx @rn-showcase/cli add select
+        ```
+      </CodeBlockTab>
+      <CodeBlockTab value="bun">
+        ```bash
+        bunx @rn-showcase/cli add select
+        ```
+      </CodeBlockTab>
+    </CodeBlockTabs>
+  </Tab>
+
+  <Tab className="showcase-install-panel" value="Manual">
+    <div className="showcase-install-step">
+      <span aria-hidden="true" className="showcase-install-step-marker">1</span>
+      <div className="showcase-install-step-title">Install the dependencies.</div>
+      <div className="showcase-install-step-body">
+        <CodeBlockTabs className="showcase-package-tabs" defaultValue="npm" groupId="package-manager" persist>
+          <CodeBlockTabsList>
+            <CodeBlockTabsTrigger value="npm">npm</CodeBlockTabsTrigger>
+            <CodeBlockTabsTrigger value="pnpm">pnpm</CodeBlockTabsTrigger>
+            <CodeBlockTabsTrigger value="yarn">yarn</CodeBlockTabsTrigger>
+            <CodeBlockTabsTrigger value="bun">bun</CodeBlockTabsTrigger>
+          </CodeBlockTabsList>
+          <CodeBlockTab value="npm">
+        ```bash
+        npx expo install @expo/ui expo-haptics react-native-reanimated react-native-worklets
+        npm install @rn-primitives/dropdown-menu react-native-fast-squircle
+        npx expo prebuild
+        ```
+          </CodeBlockTab>
+          <CodeBlockTab value="pnpm">
+        ```bash
+        pnpm exec expo install @expo/ui expo-haptics react-native-reanimated react-native-worklets
+        pnpm add @rn-primitives/dropdown-menu react-native-fast-squircle
+        pnpm exec expo prebuild
+        ```
+          </CodeBlockTab>
+          <CodeBlockTab value="yarn">
+        ```bash
+        yarn expo install @expo/ui expo-haptics react-native-reanimated react-native-worklets
+        yarn add @rn-primitives/dropdown-menu react-native-fast-squircle
+        yarn expo prebuild
+        ```
+          </CodeBlockTab>
+          <CodeBlockTab value="bun">
+        ```bash
+        bun x expo install @expo/ui expo-haptics react-native-reanimated react-native-worklets
+        bun add @rn-primitives/dropdown-menu react-native-fast-squircle
+        bun x expo prebuild
+        ```
+          </CodeBlockTab>
+        </CodeBlockTabs>
+      </div>
+    </div>
+
+    <div className="showcase-install-step">
+      <span aria-hidden="true" className="showcase-install-step-marker">2</span>
+      <div className="showcase-install-step-title">Copy the component files into your project.</div>
+      <div className="showcase-install-step-body">
+        <RegistryManualInstall name="select" />
+      </div>
+    </div>
+  </Tab>
+</Tabs>
+
+Run a native development build after installation. Expo UI and Fast Squircle
+both include native code.
+
+## Usage
+
+```tsx
+import { useState } from 'react';
+import { ChevronDown } from 'lucide-react-native';
+import { Button } from '@/components/ui/button';
+import { Select } from '@/components/ui/select';
+
+export function WorkspaceSelect() {
+  const [value, setValue] = useState('design');
+
+  return (
+    <Select value={value} onValueChange={setValue}>
+      <Select.Trigger>
+        <Button variant="outline">
+          <Button.Label>
+            <Select.Value placeholder="Choose workspace" />
+          </Button.Label>
+          <Button.Icon>
+            {({ color, size }) => <ChevronDown color={color} size={size} />}
+          </Button.Icon>
+        </Button>
+      </Select.Trigger>
+
+      <Select.Content align="start">
+        <Select.Group label="WORKSPACES">
+          <Select.Item value="personal">Personal</Select.Item>
+          <Select.Item value="design">Design</Select.Item>
+          <Select.Item value="engineering">Engineering</Select.Item>
+        </Select.Group>
+      </Select.Content>
+    </Select>
+  );
+}
+```
+
+## Native mode
+
+Pass `mode="native"` to turn the options into Expo UI actions. The selected
+action is marked by the platform menu.
+
+```tsx
+<Select mode="native" title="Workspace" value={value} onValueChange={setValue}>
+  <Select.Trigger>
+    <Button variant="outline">
+      <Button.Label><Select.Value /></Button.Label>
+    </Button>
+  </Select.Trigger>
+  <Select.Content>
+    <Select.Item value="personal">Personal</Select.Item>
+    <Select.Item value="design">Design</Select.Item>
+  </Select.Content>
+</Select>
+```
+
+## Density and rich options
+
+`Select.Content` accepts `size="compact"`. Custom items can include a leading
+icon, description, disabled state, and optional light haptic feedback.
+
+```tsx
+<Select.Content align="end" size="compact">
+  <Select.Item value="recent">Most recent</Select.Item>
+  <Select.Item value="name">Name</Select.Item>
+  <Select.Item disabled value="archived">Archived</Select.Item>
+</Select.Content>
+```
+
+## Theming
+
+`SelectThemeProvider` supplies shared custom-mode colors. Pass `theme` to one
+Select for a local override.
+
+```tsx
+import { Select, SelectThemeProvider } from '@/components/ui/select';
+
+<SelectThemeProvider
+  theme={{
+    backgroundColor: '#EEF4FF',
+    checkmarkColor: '#205EAF',
+    iconBackgroundColor: '#DDEAFF',
+    labelColor: '#172B4D',
+  }}
+>
+  <WorkspaceSelect />
+</SelectThemeProvider>
+```
+
+## Props
+
+### `Select`
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `string` | — | Controlled selected value. |
+| `defaultValue` | `string` | — | Initial uncontrolled selected value. |
+| `onValueChange` | `(value: string) => void` | — | Receives a selected option value. |
+| `mode` | `'custom' \| 'native'` | `'custom'` | Chooses the copyable popover or Expo UI menu. |
+| `disabled` | `boolean` | `false` | Prevents the trigger from opening. |
+| `open` | `boolean` | — | Controls custom popover visibility. |
+| `defaultOpen` | `boolean` | `false` | Initial uncontrolled custom visibility. |
+| `onOpenChange` | `(open: boolean) => void` | — | Receives custom visibility changes. |
+| `shouldOpenOnLongPress` | `boolean` | `false` | Opens a custom Select from a long press. |
+| `theme` | `SelectThemeOverride` | — | Overrides custom visual tokens locally. |
+| `title` | `string` | — | Native menu title; displayed by iOS. |
+
+### Content and item props
+
+| Prop | Component | Type | Default | Description |
+| --- | --- | --- | --- | --- |
+| `align` | `Content` | `'start' \| 'end'` | `'end'` | Aligns the custom popover to the trigger. |
+| `sideOffset` | `Content` | `number` | `8` | Gap between trigger and popover. |
+| `size` | `Content` | `'default' \| 'compact'` | `'default'` | Sets option density. |
+| `label` | `Group` | `string` | — | Labels related options. |
+| `value` | `Item` | `string` | required | Value emitted when selected. |
+| `description` | `Item` | `string` | — | Supporting copy below the label. |
+| `icon` | `Item` | `ReactNode` | — | Leading custom-mode icon. |
+| `haptics` | `Item` | `boolean` | `false` | Enables light selection feedback. |
+| `disabled` | `Item` | `boolean` | `false` | Prevents selection. |
+
