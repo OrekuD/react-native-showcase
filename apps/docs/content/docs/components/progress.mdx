@@ -1,0 +1,166 @@
+---
+title: Progress
+description: A compact animated horizontal progress bar with configurable dimensions, colors, and shared themes.
+---
+
+Progress turns a numeric value into a squircle-backed horizontal indicator. It
+animates value changes by default and clamps values safely against `max`.
+
+<PlatformVideos
+  android="/videos/components/progress-android.mp4"
+  ios="/videos/components/progress-ios.mp4"
+  label="Progress value, size, color, and theme examples"
+/>
+
+## Installation
+
+<Tabs className="showcase-install-tabs" items={['Command', 'Manual']}>
+  <Tab className="showcase-install-panel" value="Command">
+    <div className="showcase-install-intro">Add Progress with the Showcase CLI.</div>
+    <CodeBlockTabs className="showcase-package-tabs" defaultValue="npm" groupId="package-manager" persist>
+      <CodeBlockTabsList>
+        <CodeBlockTabsTrigger value="npm">npm</CodeBlockTabsTrigger>
+        <CodeBlockTabsTrigger value="pnpm">pnpm</CodeBlockTabsTrigger>
+        <CodeBlockTabsTrigger value="yarn">yarn</CodeBlockTabsTrigger>
+        <CodeBlockTabsTrigger value="bun">bun</CodeBlockTabsTrigger>
+      </CodeBlockTabsList>
+      <CodeBlockTab value="npm">
+        ```bash
+        npx @rn-showcase/cli add progress
+        ```
+      </CodeBlockTab>
+      <CodeBlockTab value="pnpm">
+        ```bash
+        pnpm dlx @rn-showcase/cli add progress
+        ```
+      </CodeBlockTab>
+      <CodeBlockTab value="yarn">
+        ```bash
+        yarn dlx @rn-showcase/cli add progress
+        ```
+      </CodeBlockTab>
+      <CodeBlockTab value="bun">
+        ```bash
+        bunx @rn-showcase/cli add progress
+        ```
+      </CodeBlockTab>
+    </CodeBlockTabs>
+  </Tab>
+
+  <Tab className="showcase-install-panel" value="Manual">
+    <div className="showcase-install-step">
+      <span aria-hidden="true" className="showcase-install-step-marker">1</span>
+      <div className="showcase-install-step-title">Install the dependencies.</div>
+      <div className="showcase-install-step-body">
+        <CodeBlockTabs className="showcase-package-tabs" defaultValue="npm" groupId="package-manager" persist>
+          <CodeBlockTabsList>
+            <CodeBlockTabsTrigger value="npm">npm</CodeBlockTabsTrigger>
+            <CodeBlockTabsTrigger value="pnpm">pnpm</CodeBlockTabsTrigger>
+            <CodeBlockTabsTrigger value="yarn">yarn</CodeBlockTabsTrigger>
+            <CodeBlockTabsTrigger value="bun">bun</CodeBlockTabsTrigger>
+          </CodeBlockTabsList>
+          <CodeBlockTab value="npm">
+        ```bash
+        npx expo install react-native-reanimated
+        npm install react-native-fast-squircle
+        npx expo prebuild
+        ```
+          </CodeBlockTab>
+          <CodeBlockTab value="pnpm">
+        ```bash
+        pnpm exec expo install react-native-reanimated
+        pnpm add react-native-fast-squircle
+        pnpm exec expo prebuild
+        ```
+          </CodeBlockTab>
+          <CodeBlockTab value="yarn">
+        ```bash
+        yarn expo install react-native-reanimated
+        yarn add react-native-fast-squircle
+        yarn expo prebuild
+        ```
+          </CodeBlockTab>
+          <CodeBlockTab value="bun">
+        ```bash
+        bun x expo install react-native-reanimated
+        bun add react-native-fast-squircle
+        bun x expo prebuild
+        ```
+          </CodeBlockTab>
+        </CodeBlockTabs>
+      </div>
+    </div>
+    <div className="showcase-install-step">
+      <span aria-hidden="true" className="showcase-install-step-marker">2</span>
+      <div className="showcase-install-step-title">Copy the component files into your project.</div>
+      <div className="showcase-install-step-body">
+        <RegistryManualInstall name="progress" />
+      </div>
+    </div>
+  </Tab>
+</Tabs>
+
+## Usage
+
+```tsx
+import { Progress } from '@/components/ui/progress';
+
+<Progress value={72} />
+```
+
+Use `max` when the source value is not already a percentage. Dimensions and
+colors can be set directly without replacing the base theme.
+
+```tsx
+<Progress
+  color="#BB3E61"
+  height={16}
+  max={250}
+  trackColor="#F4D8DF"
+  value={180}
+  width="72%"
+/>
+```
+
+## Animation
+
+Value changes use a reduced-motion-aware timing transition. Disable it for an
+instant update or tune its duration.
+
+```tsx
+<Progress animated={false} value={completed} />
+<Progress durationMs={480} value={completed} />
+```
+
+## Theming
+
+```tsx
+import { Progress, ProgressThemeProvider } from '@/components/ui/progress';
+
+<ProgressThemeProvider
+  theme={{ indicatorColor: '#2E8F6A', trackColor: '#DDE9E1' }}
+>
+  <Progress value={74} />
+</ProgressThemeProvider>
+```
+
+Use `theme` on one Progress for a local override. Direct `color` and
+`trackColor` props take precedence over theme values.
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `number` | `0` | Current completed value. |
+| `max` | `number` | `100` | Value considered complete. |
+| `animated` | `boolean` | `true` | Animates value changes. |
+| `durationMs` | `number` | `280` | Timing duration in milliseconds. |
+| `height` | `number` | `10` | Track height. |
+| `width` | `DimensionValue` | `'100%'` | Track width. |
+| `color` | `string` | theme | Indicator color. |
+| `trackColor` | `string` | theme | Remaining-track color. |
+| `theme` | `ProgressThemeOverride` | — | Local visual tokens. |
+
+Progress also accepts React Native `ViewProps`, except `children`, and composes
+the supplied `style` with its dimensions and colors.
+

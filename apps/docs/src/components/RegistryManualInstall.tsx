@@ -14,6 +14,7 @@ type RegistryItemName =
   | 'input'
   | 'menu'
   | 'otp-input'
+  | 'progress'
   | 'select'
   | 'switch'
   | 'toast';
