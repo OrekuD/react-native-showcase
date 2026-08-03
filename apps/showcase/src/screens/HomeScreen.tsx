@@ -63,6 +63,13 @@ export function HomeScreen({ navigation }: HomeScreenProps) {
           >
             Menu
           </ListItem>
+          <ListItem
+            onPress={() => navigation.navigate("Select")}
+            testID="home-component-select"
+            trailing="›"
+          >
+            Select
+          </ListItem>
 
           <ExpoText
             style={styles.sectionLabel}

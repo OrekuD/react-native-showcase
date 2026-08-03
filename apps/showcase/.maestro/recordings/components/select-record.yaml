@@ -1,0 +1,34 @@
+appId: com.oreku.reactnativeshowcase
+---
+- tapOn:
+    id: select-custom-trigger
+    waitToSettleTimeoutMs: 400
+- waitForAnimationToEnd
+- tapOn: Personal
+- waitForAnimationToEnd
+- tapOn:
+    id: select-compact-trigger
+    waitToSettleTimeoutMs: 400
+- waitForAnimationToEnd
+- tapOn: Name
+- waitForAnimationToEnd
+- tapOn:
+    id: select-native-trigger
+    waitToSettleTimeoutMs: 400
+- waitForAnimationToEnd
+- tapOn: Design
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      id: select-provider-theme
+    direction: DOWN
+- tapOn:
+    id: select-provider-theme
+    waitToSettleTimeoutMs: 400
+- waitForAnimationToEnd
+- tapOn: Design
+- waitForAnimationToEnd
+- tapOn:
+    id: select-local-theme
+    waitToSettleTimeoutMs: 400
+- waitForAnimationToEnd
