@@ -1,5 +1,6 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
+import { ArrowLeft } from 'lucide-react-native';
 import { AnimatedRollingNumber } from 'react-native-animated-rolling-numbers';
 import { useState } from 'react';
 import {
@@ -60,9 +61,12 @@ export function CurrencyFormattingScreen({
           ]}
           testID="currency-back-button"
         >
-          <Text accessibilityElementsHidden style={styles.backIcon}>
-            ←
-          </Text>
+          <ArrowLeft
+            accessible={false}
+            color="#1C1C1A"
+            size={22}
+            strokeWidth={2.2}
+          />
         </Pressable>
         <Text style={styles.headerTitle}>Rolling currency</Text>
         <View style={styles.headerSpacer} />
@@ -136,11 +140,6 @@ const styles = StyleSheet.create({
   backButtonPressed: {
     backgroundColor: '#E3E1D9',
     transform: [{ scale: 0.96 }],
-  },
-  backIcon: {
-    color: '#1C1C1A',
-    fontSize: 24,
-    lineHeight: 27,
   },
   headerTitle: {
     color: '#66645E',

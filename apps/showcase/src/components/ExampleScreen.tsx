@@ -3,6 +3,7 @@ import {
   KeyboardAwareScrollView,
   type KeyboardAwareScrollViewRef,
 } from "react-native-keyboard-controller";
+import { ArrowLeft } from "lucide-react-native";
 import { useRef, type ReactNode, type RefObject } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import Animated, {
@@ -70,9 +71,12 @@ export function ExampleScreen({
           pressed && styles.backButtonPressed,
         ]}
       >
-        <Text accessibilityElementsHidden style={styles.backIcon}>
-          ←
-        </Text>
+        <ArrowLeft
+          accessible={false}
+          color="#1D1D1B"
+          size={22}
+          strokeWidth={2.2}
+        />
       </Pressable>
       <Text style={styles.title}>{title}</Text>
       <View style={styles.headerSpacer} />
@@ -176,11 +180,6 @@ const styles = StyleSheet.create({
   backButtonPressed: {
     backgroundColor: "#E7E4DC",
     transform: [{ scale: 0.96 }],
-  },
-  backIcon: {
-    color: "#1D1D1B",
-    fontSize: 24,
-    lineHeight: 27,
   },
   title: {
     color: "#66645E",
