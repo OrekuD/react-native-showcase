@@ -2,20 +2,24 @@
   "name": "otp-input",
   "files": [
     {
-      "source": "../../../../apps/showcase/src/components/ui/OtpInput.tsx",
-      "target": "OtpInput.tsx"
+      "source": "../../../../apps/showcase/src/components/ui/otp-input/OtpInput.tsx",
+      "target": "otp-input/OtpInput.tsx"
     },
     {
-      "source": "../../../../apps/showcase/src/components/ui/OtpInputThemeProvider.tsx",
-      "target": "OtpInputThemeProvider.tsx"
+      "source": "../../../../apps/showcase/src/components/ui/otp-input/OtpInputThemeProvider.tsx",
+      "target": "otp-input/OtpInputThemeProvider.tsx"
     },
     {
-      "source": "../../../../apps/showcase/src/components/ui/otpState.ts",
-      "target": "otpState.ts"
+      "source": "../../../../apps/showcase/src/components/ui/otp-input/otpState.ts",
+      "target": "otp-input/otpState.ts"
     },
     {
-      "source": "../../../../apps/showcase/src/components/ui/otpTheme.ts",
-      "target": "otpTheme.ts"
+      "source": "../../../../apps/showcase/src/components/ui/otp-input/otpTheme.ts",
+      "target": "otp-input/otpTheme.ts"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/otp-input/index.ts",
+      "target": "otp-input/index.ts"
     }
   ],
   "expoDependencies": [],

@@ -15,7 +15,7 @@ import {
   OtpInput,
   OtpInputThemeProvider,
   type OtpInputTheme,
-} from "../components/ui/OtpInput";
+} from "../components/ui/otp-input";
 import type { RootStackParamList } from "../navigation/types";
 
 type OtpInputScreenProps = NativeStackScreenProps<
