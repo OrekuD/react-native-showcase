@@ -1,0 +1,35 @@
+{
+  "name": "toast",
+  "files": [
+    {
+      "source": "../../../../apps/showcase/src/components/ui/toast/Toast.tsx",
+      "target": "toast/Toast.tsx"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/toast/ToastThemeProvider.tsx",
+      "target": "toast/ToastThemeProvider.tsx"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/toast/toastState.ts",
+      "target": "toast/toastState.ts"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/toast/toastTheme.ts",
+      "target": "toast/toastTheme.ts"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/toast/index.ts",
+      "target": "toast/index.ts"
+    }
+  ],
+  "expoDependencies": [
+    "react-native-gesture-handler",
+    "react-native-reanimated",
+    "react-native-safe-area-context",
+    "react-native-worklets"
+  ],
+  "dependencies": [
+    "react-native-fast-squircle"
+  ],
+  "requiresPrebuild": true
+}

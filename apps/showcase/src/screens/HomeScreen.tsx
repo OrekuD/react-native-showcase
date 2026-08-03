@@ -70,7 +70,13 @@ export function HomeScreen({ navigation }: HomeScreenProps) {
           >
             Select
           </ListItem>
-
+          <ListItem
+            onPress={() => navigation.navigate("Toast")}
+            testID="home-component-toast"
+            trailing="›"
+          >
+            Toast
+          </ListItem>
           <ExpoText
             style={styles.sectionLabel}
             textStyle={textStyles.sectionLabel}

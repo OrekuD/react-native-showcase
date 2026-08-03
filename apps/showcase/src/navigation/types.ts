@@ -7,5 +7,6 @@ export type RootStackParamList = {
   Menu: undefined;
   Select: undefined;
   Switch: undefined;
+  Toast: undefined;
   CurrencyFormatting: undefined;
 };

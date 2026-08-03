@@ -16,6 +16,7 @@ import { MenuScreen } from './src/screens/MenuScreen';
 import { OtpInputScreen } from './src/screens/OtpInputScreen';
 import { SelectScreen } from './src/screens/SelectScreen';
 import { SwitchScreen } from './src/screens/SwitchScreen';
+import { ToastScreen } from './src/screens/ToastScreen';
 import { ConfirmationDialogHost } from './src/components/ui/confirmation-dialog';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -43,6 +44,7 @@ export default function App() {
                   component={ConfirmationDialogScreen}
                 />
                 <Stack.Screen name="Switch" component={SwitchScreen} />
+                <Stack.Screen name="Toast" component={ToastScreen} />
                 <Stack.Screen name="Menu" component={MenuScreen} />
                 <Stack.Screen name="Select" component={SelectScreen} />
                 <Stack.Screen
