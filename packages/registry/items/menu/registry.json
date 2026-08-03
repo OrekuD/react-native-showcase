@@ -6,8 +6,16 @@
       "target": "menu/Menu.tsx"
     },
     {
+      "source": "../../../../apps/showcase/src/components/ui/menu/MenuThemeProvider.tsx",
+      "target": "menu/MenuThemeProvider.tsx"
+    },
+    {
       "source": "../../../../apps/showcase/src/components/ui/menu/menuState.ts",
       "target": "menu/menuState.ts"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/menu/menuTheme.ts",
+      "target": "menu/menuTheme.ts"
     },
     {
       "source": "../../../../apps/showcase/src/components/ui/menu/index.ts",
@@ -21,6 +29,7 @@
     "react-native-worklets"
   ],
   "dependencies": [
+    "@rn-primitives/dropdown-menu",
     "react-native-fast-squircle"
   ],
   "requiresPrebuild": true

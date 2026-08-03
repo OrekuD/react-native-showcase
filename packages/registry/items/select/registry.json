@@ -1,0 +1,36 @@
+{
+  "name": "select",
+  "files": [
+    {
+      "source": "../../../../apps/showcase/src/components/ui/select/Select.tsx",
+      "target": "select/Select.tsx"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/select/SelectThemeProvider.tsx",
+      "target": "select/SelectThemeProvider.tsx"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/select/selectState.ts",
+      "target": "select/selectState.ts"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/select/selectTheme.ts",
+      "target": "select/selectTheme.ts"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/select/index.ts",
+      "target": "select/index.ts"
+    }
+  ],
+  "expoDependencies": [
+    "@expo/ui",
+    "expo-haptics",
+    "react-native-reanimated",
+    "react-native-worklets"
+  ],
+  "dependencies": [
+    "@rn-primitives/dropdown-menu",
+    "react-native-fast-squircle"
+  ],
+  "requiresPrebuild": true
+}
