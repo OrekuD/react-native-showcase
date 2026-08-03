@@ -77,6 +77,13 @@ export function HomeScreen({ navigation }: HomeScreenProps) {
           >
             Toast
           </ListItem>
+          <ListItem
+            onPress={() => navigation.navigate("Progress")}
+            testID="home-component-progress"
+            trailing="›"
+          >
+            Progress
+          </ListItem>
           <ExpoText
             style={styles.sectionLabel}
             textStyle={textStyles.sectionLabel}

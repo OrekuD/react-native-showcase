@@ -14,6 +14,7 @@ import { HomeScreen } from './src/screens/HomeScreen';
 import { InputScreen } from './src/screens/InputScreen';
 import { MenuScreen } from './src/screens/MenuScreen';
 import { OtpInputScreen } from './src/screens/OtpInputScreen';
+import { ProgressScreen } from './src/screens/ProgressScreen';
 import { SelectScreen } from './src/screens/SelectScreen';
 import { SwitchScreen } from './src/screens/SwitchScreen';
 import { ToastScreen } from './src/screens/ToastScreen';
@@ -45,6 +46,7 @@ export default function App() {
                 />
                 <Stack.Screen name="Switch" component={SwitchScreen} />
                 <Stack.Screen name="Toast" component={ToastScreen} />
+                <Stack.Screen name="Progress" component={ProgressScreen} />
                 <Stack.Screen name="Menu" component={MenuScreen} />
                 <Stack.Screen name="Select" component={SelectScreen} />
                 <Stack.Screen

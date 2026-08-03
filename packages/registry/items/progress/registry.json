@@ -1,0 +1,32 @@
+{
+  "name": "progress",
+  "files": [
+    {
+      "source": "../../../../apps/showcase/src/components/ui/progress/Progress.tsx",
+      "target": "progress/Progress.tsx"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/progress/ProgressThemeProvider.tsx",
+      "target": "progress/ProgressThemeProvider.tsx"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/progress/progressState.ts",
+      "target": "progress/progressState.ts"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/progress/progressTheme.ts",
+      "target": "progress/progressTheme.ts"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/progress/index.ts",
+      "target": "progress/index.ts"
+    }
+  ],
+  "expoDependencies": [
+    "react-native-reanimated"
+  ],
+  "dependencies": [
+    "react-native-fast-squircle"
+  ],
+  "requiresPrebuild": true
+}
