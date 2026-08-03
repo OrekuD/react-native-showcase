@@ -1,0 +1,215 @@
+---
+title: Circular Progress
+description: Skia-powered animated rings, arcs, and multi-value segments with centered render content.
+---
+
+Circular Progress renders directly with React Native Skia. One component covers
+full rings, fitted arcs, sequential segments, cumulative values, and custom
+content inside the track.
+
+<PlatformVideos
+  android="/videos/components/circular-progress-android.mp4"
+  ios="/videos/components/circular-progress-ios.mp4"
+  label="Circular Progress rings, arcs, segments, sizes, and theming"
+/>
+
+## Installation
+
+<Tabs className="showcase-install-tabs" items={['Command', 'Manual']}>
+  <Tab className="showcase-install-panel" value="Command">
+    <div className="showcase-install-intro">Add Circular Progress with the Showcase CLI.</div>
+    <CodeBlockTabs className="showcase-package-tabs" defaultValue="npm" groupId="package-manager" persist>
+      <CodeBlockTabsList>
+        <CodeBlockTabsTrigger value="npm">npm</CodeBlockTabsTrigger>
+        <CodeBlockTabsTrigger value="pnpm">pnpm</CodeBlockTabsTrigger>
+        <CodeBlockTabsTrigger value="yarn">yarn</CodeBlockTabsTrigger>
+        <CodeBlockTabsTrigger value="bun">bun</CodeBlockTabsTrigger>
+      </CodeBlockTabsList>
+      <CodeBlockTab value="npm">
+        ```bash
+        npx @rn-showcase/cli add circular-progress
+        ```
+      </CodeBlockTab>
+      <CodeBlockTab value="pnpm">
+        ```bash
+        pnpm dlx @rn-showcase/cli add circular-progress
+        ```
+      </CodeBlockTab>
+      <CodeBlockTab value="yarn">
+        ```bash
+        yarn dlx @rn-showcase/cli add circular-progress
+        ```
+      </CodeBlockTab>
+      <CodeBlockTab value="bun">
+        ```bash
+        bunx @rn-showcase/cli add circular-progress
+        ```
+      </CodeBlockTab>
+    </CodeBlockTabs>
+  </Tab>
+
+  <Tab className="showcase-install-panel" value="Manual">
+    <div className="showcase-install-step">
+      <span aria-hidden="true" className="showcase-install-step-marker">1</span>
+      <div className="showcase-install-step-title">Install the dependencies.</div>
+      <div className="showcase-install-step-body">
+        <CodeBlockTabs className="showcase-package-tabs" defaultValue="npm" groupId="package-manager" persist>
+          <CodeBlockTabsList>
+            <CodeBlockTabsTrigger value="npm">npm</CodeBlockTabsTrigger>
+            <CodeBlockTabsTrigger value="pnpm">pnpm</CodeBlockTabsTrigger>
+            <CodeBlockTabsTrigger value="yarn">yarn</CodeBlockTabsTrigger>
+            <CodeBlockTabsTrigger value="bun">bun</CodeBlockTabsTrigger>
+          </CodeBlockTabsList>
+          <CodeBlockTab value="npm">
+        ```bash
+        npx expo install @shopify/react-native-skia react-native-reanimated
+        npx expo prebuild
+        ```
+          </CodeBlockTab>
+          <CodeBlockTab value="pnpm">
+        ```bash
+        pnpm exec expo install @shopify/react-native-skia react-native-reanimated
+        pnpm exec expo prebuild
+        ```
+          </CodeBlockTab>
+          <CodeBlockTab value="yarn">
+        ```bash
+        yarn expo install @shopify/react-native-skia react-native-reanimated
+        yarn expo prebuild
+        ```
+          </CodeBlockTab>
+          <CodeBlockTab value="bun">
+        ```bash
+        bun x expo install @shopify/react-native-skia react-native-reanimated
+        bun x expo prebuild
+        ```
+          </CodeBlockTab>
+        </CodeBlockTabs>
+      </div>
+    </div>
+    <div className="showcase-install-step">
+      <span aria-hidden="true" className="showcase-install-step-marker">2</span>
+      <div className="showcase-install-step-title">Copy the component files into your project.</div>
+      <div className="showcase-install-step-body">
+        <RegistryManualInstall name="circular-progress" />
+      </div>
+    </div>
+  </Tab>
+</Tabs>
+
+## Usage
+
+```tsx
+import { Text } from 'react-native';
+import { CircularProgress } from '@/components/ui/circular-progress';
+
+<CircularProgress size={144} thickness={12} value={72}>
+  {({ percentage }) => <Text>{percentage}%</Text>}
+</CircularProgress>
+```
+
+The function child receives `value`, `max`, normalized `progress`, and a
+rounded `percentage`. Its viewport stays inside the ring by default. Set
+`contentArea="full"` when a design needs the component's complete square.
+
+## Arcs
+
+Use angles to turn the ring into a semicircle or gauge. `arcLayout="tight"`
+shrinks the component bounds around the visible arc instead of retaining a
+square canvas.
+
+```tsx
+<CircularProgress
+  arcLayout="tight"
+  size={180}
+  startAngle={180}
+  strokeCap="round"
+  sweepAngle={180}
+  thickness={14}
+  value={72}
+/>
+```
+
+`strokeCap` accepts `round`, `butt`, or `square`.
+
+## Sequential segments
+
+Sequential segments divide one track into ordered contributions. Each item
+needs a stable id, color, and non-negative value.
+
+```tsx
+<CircularProgress
+  max={100}
+  segmentGapAngle={3}
+  segments={[
+    { id: 'design', color: '#6558D9', value: 28 },
+    { id: 'development', color: '#C26638', value: 22 },
+    { id: 'testing', color: '#2E8F6A', value: 20 },
+  ]}
+  size={220}
+  thickness={14}
+/>
+```
+
+## Cumulative segments
+
+Cumulative mode measures every segment against the full `max` and layers them
+from the same origin. It is useful when several values must end at independent
+points on one arc.
+
+```tsx
+<CircularProgress
+  max={100}
+  segmentMode="cumulative"
+  segments={[
+    { id: 'blue', color: '#2563EB', value: 30 },
+    { id: 'yellow', color: '#EAB308', value: 60 },
+    { id: 'red', color: '#DC3545', value: 80 },
+  ]}
+  startAngle={180}
+  sweepAngle={180}
+/>
+```
+
+## Theming
+
+```tsx
+import {
+  CircularProgress,
+  CircularProgressThemeProvider,
+} from '@/components/ui/circular-progress';
+
+<CircularProgressThemeProvider
+  theme={{ indicatorColor: '#2E8F6A', trackColor: '#DDE9E1' }}
+>
+  <CircularProgress value={72} />
+</CircularProgressThemeProvider>
+```
+
+Direct `color` and `trackColor` props override provider and local theme tokens.
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `number` | `0` | Single indicator value. Excluded when using `segments`. |
+| `max` | `number` | `100` | Value considered complete. |
+| `size` | `number` | `96` | Full square size before tight arc fitting. |
+| `thickness` | `number` | `10` | Ring stroke width. |
+| `color` | `string` | theme | Single indicator color. |
+| `trackColor` | `string` | theme | Track color. |
+| `animated` | `boolean` | `true` | Animates value and segment changes. |
+| `durationMs` | `number` | `420` | Timing duration in milliseconds. |
+| `startAngle` | `number` | `-90` | Progress origin in degrees. |
+| `sweepAngle` | `number` | `360` | Track span from greater than `0` through `360`. |
+| `arcLayout` | `'square' \| 'tight'` | `'square'` | Chooses square or fitted partial-arc bounds. |
+| `strokeCap` | `'butt' \| 'round' \| 'square'` | `'round'` | Shapes track and indicator endpoints. |
+| `segments` | `CircularProgressSegment[]` | — | Multi-value indicator data. |
+| `segmentMode` | `'sequential' \| 'cumulative'` | `'sequential'` | Places segments in sequence or from one origin. |
+| `segmentGapAngle` | `number` | `0` | Gap between sequential segments in degrees. |
+| `contentArea` | `'inner' \| 'full'` | `'inner'` | Bounds exposed to function-child content. |
+| `theme` | `CircularProgressThemeOverride` | — | Local color tokens. |
+
+Circular Progress also accepts React Native `ViewProps`; its function child is
+handled separately from the root view props.
+

@@ -10,6 +10,7 @@ import { ExpandableCodeBlock } from './ExpandableCodeBlock';
 
 type RegistryItemName =
   | 'button'
+  | 'circular-progress'
   | 'confirmation-dialog'
   | 'input'
   | 'menu'
