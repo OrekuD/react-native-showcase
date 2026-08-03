@@ -1,0 +1,31 @@
+{
+  "name": "circular-progress",
+  "files": [
+    {
+      "source": "../../../../apps/showcase/src/components/ui/circular-progress/CircularProgress.tsx",
+      "target": "circular-progress/CircularProgress.tsx"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/circular-progress/CircularProgressThemeProvider.tsx",
+      "target": "circular-progress/CircularProgressThemeProvider.tsx"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/circular-progress/circularProgressState.ts",
+      "target": "circular-progress/circularProgressState.ts"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/circular-progress/circularProgressTheme.ts",
+      "target": "circular-progress/circularProgressTheme.ts"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/circular-progress/index.ts",
+      "target": "circular-progress/index.ts"
+    }
+  ],
+  "expoDependencies": [
+    "@shopify/react-native-skia",
+    "react-native-reanimated"
+  ],
+  "dependencies": [],
+  "requiresPrebuild": true
+}

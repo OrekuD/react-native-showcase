@@ -84,6 +84,13 @@ export function HomeScreen({ navigation }: HomeScreenProps) {
           >
             Progress
           </ListItem>
+          <ListItem
+            onPress={() => navigation.navigate("CircularProgress")}
+            testID="home-component-circular-progress"
+            trailing="›"
+          >
+            Circular progress
+          </ListItem>
           <ExpoText
             style={styles.sectionLabel}
             textStyle={textStyles.sectionLabel}

@@ -1,6 +1,7 @@
 export type RootStackParamList = {
   Home: undefined;
   Button: undefined;
+  CircularProgress: undefined;
   Input: undefined;
   OtpInput: undefined;
   Progress: undefined;

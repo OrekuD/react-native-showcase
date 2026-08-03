@@ -8,6 +8,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import type { RootStackParamList } from './src/navigation/types';
 import { ButtonScreen } from './src/screens/ButtonScreen';
+import { CircularProgressScreen } from './src/screens/CircularProgressScreen';
 import { ConfirmationDialogScreen } from './src/screens/ConfirmationDialogScreen';
 import { CurrencyFormattingScreen } from './src/screens/CurrencyFormattingScreen';
 import { HomeScreen } from './src/screens/HomeScreen';
@@ -47,6 +48,10 @@ export default function App() {
                 <Stack.Screen name="Switch" component={SwitchScreen} />
                 <Stack.Screen name="Toast" component={ToastScreen} />
                 <Stack.Screen name="Progress" component={ProgressScreen} />
+                <Stack.Screen
+                  name="CircularProgress"
+                  component={CircularProgressScreen}
+                />
                 <Stack.Screen name="Menu" component={MenuScreen} />
                 <Stack.Screen name="Select" component={SelectScreen} />
                 <Stack.Screen
