@@ -11,6 +11,7 @@ import { ConfirmationDialogScreen } from './src/screens/ConfirmationDialogScreen
 import { CurrencyFormattingScreen } from './src/screens/CurrencyFormattingScreen';
 import { HomeScreen } from './src/screens/HomeScreen';
 import { InputScreen } from './src/screens/InputScreen';
+import { MenuScreen } from './src/screens/MenuScreen';
 import { OtpInputScreen } from './src/screens/OtpInputScreen';
 import { SwitchScreen } from './src/screens/SwitchScreen';
 import { ConfirmationDialogHost } from './src/components/ui/ConfirmationDialog';
@@ -40,6 +41,7 @@ export default function App() {
                   component={ConfirmationDialogScreen}
                 />
                 <Stack.Screen name="Switch" component={SwitchScreen} />
+                <Stack.Screen name="Menu" component={MenuScreen} />
                 <Stack.Screen
                   name="CurrencyFormatting"
                   component={CurrencyFormattingScreen}

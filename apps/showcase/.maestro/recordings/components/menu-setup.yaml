@@ -1,0 +1,11 @@
+appId: com.oreku.reactnativeshowcase
+---
+- launchApp
+- assertVisible: Showcase
+- tapOn:
+    id: home-component-menu
+- assertVisible:
+    id: progressive-blur-header
+- assertVisible: CUSTOM
+- assertVisible:
+    id: menu-custom-trigger

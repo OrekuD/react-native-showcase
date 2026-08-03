@@ -6,7 +6,7 @@ import test from 'node:test';
 
 import { installItem } from '../src/installItem.mjs';
 
-async function createFixture() {
+async function createFixture({ target = 'Button.tsx' } = {}) {
   const root = await mkdtemp(join(tmpdir(), 'rn-showcase-cli-'));
   const projectDirectory = join(root, 'project');
   const registryDirectory = join(root, 'registry');
@@ -22,7 +22,7 @@ async function createFixture() {
     JSON.stringify({
       dependencies: ['react-native-fast-squircle'],
       expoDependencies: ['expo-haptics', 'react-native-reanimated'],
-      files: [{ source: 'Button.tsx', target: 'Button.tsx' }],
+      files: [{ source: 'Button.tsx', target }],
       name: 'button',
       requiresPrebuild: true,
     }),
@@ -92,6 +92,29 @@ test('does not run dependency commands when they are skipped', async () => {
     ),
     'export const Button = {};\n',
   );
+});
+
+test('creates nested target directories before copying an item', async () => {
+  const fixture = await createFixture({ target: 'button/Button.tsx' });
+
+  const result = await installItem({
+    cwd: fixture.projectDirectory,
+    itemName: 'button',
+    overwrite: false,
+    registryDirectory: fixture.registryDirectory,
+    runCommand: async () => {},
+    skipDependencies: true,
+    targetPath: 'components/ui',
+  });
+
+  assert.equal(
+    await readFile(
+      join(fixture.projectDirectory, 'components/ui/button/Button.tsx'),
+      'utf8',
+    ),
+    'export const Button = {};\n',
+  );
+  assert.deepEqual(result.files, ['components/ui/button/Button.tsx']);
 });
 
 test('refuses to overwrite an existing source file by default', async () => {

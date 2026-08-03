@@ -5,7 +5,7 @@ import {
   readFile,
   readdir,
 } from 'node:fs/promises';
-import { isAbsolute, join, relative, resolve, sep } from 'node:path';
+import { dirname, isAbsolute, join, relative, resolve, sep } from 'node:path';
 
 import {
   detectPackageManager,
@@ -109,8 +109,8 @@ export async function installItem({
     }
   }
 
-  await mkdir(destinationDirectory, { recursive: true });
   for (const file of files) {
+    await mkdir(dirname(file.destination), { recursive: true });
     await copyFile(file.source, file.destination);
   }
 

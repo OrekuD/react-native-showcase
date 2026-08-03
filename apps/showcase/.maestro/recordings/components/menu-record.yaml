@@ -1,0 +1,38 @@
+appId: com.oreku.reactnativeshowcase
+---
+- tapOn:
+    id: menu-custom-trigger
+    waitToSettleTimeoutMs: 400
+- waitForAnimationToEnd
+- tapOn:
+    point: 90%, 25%
+    waitToSettleTimeoutMs: 300
+- waitForAnimationToEnd
+- tapOn:
+    id: menu-custom-plain-trigger
+    waitToSettleTimeoutMs: 400
+- waitForAnimationToEnd
+- tapOn:
+    point: 90%, 25%
+    waitToSettleTimeoutMs: 300
+- waitForAnimationToEnd
+- tapOn:
+    id: menu-custom-compact-trigger
+    waitToSettleTimeoutMs: 400
+- waitForAnimationToEnd
+- tapOn:
+    point: 90%, 25%
+    waitToSettleTimeoutMs: 300
+- waitForAnimationToEnd
+- tapOn:
+    id: menu-custom-compact-plain-trigger
+    waitToSettleTimeoutMs: 400
+- waitForAnimationToEnd
+- tapOn:
+    point: 90%, 25%
+    waitToSettleTimeoutMs: 300
+- waitForAnimationToEnd
+- tapOn:
+    id: menu-native-trigger
+    waitToSettleTimeoutMs: 400
+- waitForAnimationToEnd

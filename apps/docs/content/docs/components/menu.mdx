@@ -1,0 +1,245 @@
+---
+title: Menu
+description: A source-first dropdown menu with a custom popover and Expo UI native mode.
+---
+
+Menu gives you a composed custom popover for richly detailed actions, or Expo
+UI's native menu when platform behavior is the better fit. Both start from the
+same `Menu` and `Menu.Trigger` API.
+
+<DocVideo
+  label="Custom Menu with detailed and compact actions"
+  src="/videos/components/menu.mp4"
+/>
+
+## Installation
+
+The custom menu uses Reanimated for enter and exit motion, Expo Haptics for
+optional item feedback, and Fast Squircle for the popover shape. Native mode
+also requires Expo UI.
+
+<Tabs className="showcase-install-tabs" items={['Command', 'Manual']}>
+  <Tab className="showcase-install-panel" value="Command">
+    <div className="showcase-install-intro">
+      Add Menu to your project with the Showcase CLI.
+    </div>
+
+    <CodeBlockTabs
+      className="showcase-package-tabs"
+      defaultValue="npm"
+      groupId="package-manager"
+      persist
+    >
+      <CodeBlockTabsList>
+        <CodeBlockTabsTrigger value="npm">npm</CodeBlockTabsTrigger>
+        <CodeBlockTabsTrigger value="pnpm">pnpm</CodeBlockTabsTrigger>
+        <CodeBlockTabsTrigger value="yarn">yarn</CodeBlockTabsTrigger>
+        <CodeBlockTabsTrigger value="bun">bun</CodeBlockTabsTrigger>
+      </CodeBlockTabsList>
+      <CodeBlockTab value="npm">
+        ```bash
+        npx @rn-showcase/cli add menu
+        ```
+      </CodeBlockTab>
+      <CodeBlockTab value="pnpm">
+        ```bash
+        pnpm dlx @rn-showcase/cli add menu
+        ```
+      </CodeBlockTab>
+      <CodeBlockTab value="yarn">
+        ```bash
+        yarn dlx @rn-showcase/cli add menu
+        ```
+      </CodeBlockTab>
+      <CodeBlockTab value="bun">
+        ```bash
+        bunx @rn-showcase/cli add menu
+        ```
+      </CodeBlockTab>
+    </CodeBlockTabs>
+
+    <div className="showcase-install-note">
+      The CLI installs the dependencies and copies Menu into
+      <code>components/ui/menu</code>.
+    </div>
+  </Tab>
+
+  <Tab className="showcase-install-panel" value="Manual">
+    <div className="showcase-install-step">
+      <span aria-hidden="true" className="showcase-install-step-marker">
+        1
+      </span>
+      <div className="showcase-install-step-title">Install the dependencies.</div>
+      <div className="showcase-install-step-body">
+        <CodeBlockTabs
+          className="showcase-package-tabs"
+          defaultValue="npm"
+          groupId="package-manager"
+          persist
+        >
+          <CodeBlockTabsList>
+            <CodeBlockTabsTrigger value="npm">npm</CodeBlockTabsTrigger>
+            <CodeBlockTabsTrigger value="pnpm">pnpm</CodeBlockTabsTrigger>
+            <CodeBlockTabsTrigger value="yarn">yarn</CodeBlockTabsTrigger>
+            <CodeBlockTabsTrigger value="bun">bun</CodeBlockTabsTrigger>
+          </CodeBlockTabsList>
+          <CodeBlockTab value="npm">
+        ```bash
+        npx expo install @expo/ui expo-haptics react-native-reanimated react-native-worklets
+        npm install react-native-fast-squircle
+        npx expo prebuild
+        ```
+          </CodeBlockTab>
+          <CodeBlockTab value="pnpm">
+        ```bash
+        pnpm exec expo install @expo/ui expo-haptics react-native-reanimated react-native-worklets
+        pnpm add react-native-fast-squircle
+        pnpm exec expo prebuild
+        ```
+          </CodeBlockTab>
+          <CodeBlockTab value="yarn">
+        ```bash
+        yarn expo install @expo/ui expo-haptics react-native-reanimated react-native-worklets
+        yarn add react-native-fast-squircle
+        yarn expo prebuild
+        ```
+          </CodeBlockTab>
+          <CodeBlockTab value="bun">
+        ```bash
+        bun x expo install @expo/ui expo-haptics react-native-reanimated react-native-worklets
+        bun add react-native-fast-squircle
+        bun x expo prebuild
+        ```
+          </CodeBlockTab>
+        </CodeBlockTabs>
+      </div>
+    </div>
+
+    <div className="showcase-install-step">
+      <span aria-hidden="true" className="showcase-install-step-marker">
+        2
+      </span>
+      <div className="showcase-install-step-title">Copy the component files into your project.</div>
+      <div className="showcase-install-step-body">
+        <RegistryManualInstall name="menu" />
+      </div>
+    </div>
+  </Tab>
+</Tabs>
+
+Run a native development build after installation. Fast Squircle is a native
+module, so the custom mode cannot run in Expo Go.
+
+## Usage
+
+`Menu.Trigger` accepts one pressable child. The custom menu is the default and
+items close it after selection.
+
+```tsx
+import { Camera, Images } from 'lucide-react-native';
+import { Button } from '@/components/ui/button';
+import { Menu } from '@/components/ui/menu';
+
+<Menu>
+  <Menu.Trigger>
+    <Button variant="outline">
+      <Button.Label>Add media</Button.Label>
+    </Button>
+  </Menu.Trigger>
+
+  <Menu.Content align="start">
+    <Menu.Item
+      description="Take a new photo or video."
+      icon={<Camera color="#151513" size={20} />}
+      onSelect={openCamera}
+    >
+      Camera
+    </Menu.Item>
+    <Menu.Item
+      icon={<Images color="#151513" size={20} />}
+      onSelect={openLibrary}
+    >
+      Photos
+    </Menu.Item>
+  </Menu.Content>
+</Menu>
+```
+
+## Custom menu
+
+Compose `Menu.Section`, `Menu.Item`, and `Menu.Separator` inside
+`Menu.Content`. Items may include an icon, description, destructive treatment,
+and optional light haptic feedback. They scale briefly on press without adding
+a pressed background.
+
+```tsx
+<Menu.Content align="end" size="compact">
+  <Menu.Item icon={<Camera color="#151513" size={20} />}>Camera</Menu.Item>
+  <Menu.Item icon={<Images color="#151513" size={20} />}>Photos</Menu.Item>
+  <Menu.Item destructive haptics onSelect={removeMedia}>
+    Delete
+  </Menu.Item>
+</Menu.Content>
+```
+
+| `size` | Treatment |
+| --- | --- |
+| `default` | Spacious rows for leading icons and optional descriptions. Default. |
+| `compact` | Smaller rows, icons, and spacing for quick actions. |
+
+## Native mode
+
+Pass `mode="native"` and Expo UI-compatible actions to render the platform
+menu. Native mode uses the same trigger composition, but does not render
+`Menu.Content`.
+
+```tsx
+<Menu
+  actions={[
+    { id: 'rename', image: 'pencil', title: 'Rename' },
+    { id: 'delete', image: 'trash', title: 'Delete', attributes: { destructive: true } },
+  ]}
+  mode="native"
+  onSelect={(id) => console.log(id)}
+  title="File"
+>
+  <Menu.Trigger>
+    <Button variant="outline">
+      <Button.Label>File actions</Button.Label>
+    </Button>
+  </Menu.Trigger>
+</Menu>
+```
+
+## Props
+
+### `Menu`
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `mode` | `'custom' \| 'native'` | `'custom'` | Chooses the custom popover or Expo UI native menu. |
+| `defaultOpen` | `boolean` | `false` | Initial visibility for an uncontrolled custom menu. |
+| `open` | `boolean` | — | Controls custom-menu visibility. |
+| `onOpenChange` | `(open: boolean) => void` | — | Receives custom-menu visibility changes. |
+| `shouldOpenOnLongPress` | `boolean` | `false` | Opens from a long press rather than a tap. |
+| `testID` | `string` | — | Applies a native test identifier to the trigger. |
+| `actions` | `NativeMenuAction[]` | — | Expo UI actions; required only with `mode="native"`. |
+| `onSelect` | `(id: string) => void` | — | Receives the selected action id in native mode. |
+| `title` | `string` | — | iOS title for the native menu. |
+
+### `Menu.Content` and `Menu.Item`
+
+| Prop | Component | Type | Default | Description |
+| --- | --- | --- | --- | --- |
+| `align` | `Content` | `'start' \| 'end'` | `'end'` | Aligns the popover with the trigger edge. |
+| `sideOffset` | `Content` | `number` | `8` | Gap between the trigger and popover. |
+| `size` | `Content` | `'default' \| 'compact'` | `'default'` | Sets the density for every item inside it. |
+| `description` | `Item` | `ReactNode` | — | Supplemental copy below the label. |
+| `destructive` | `Item` | `boolean` | `false` | Applies destructive text color. |
+| `disabled` | `Item` | `boolean` | `false` | Prevents selection. |
+| `haptics` | `Item` | `boolean` | `false` | Plays light impact feedback after selection. |
+| `icon` | `Item` | `ReactNode` | — | Leading icon inside a round container. |
+| `onSelect` | `Item` | `() => void` | — | Runs after the custom menu closes. |
+
+`Menu.Section` accepts `title?: string`; `Menu.Separator` does not accept
+props.

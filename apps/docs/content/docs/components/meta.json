@@ -1,4 +1,4 @@
 {
   "title": "Components",
-  "pages": ["index", "button", "input", "otp-input", "confirmation-dialog", "switch"]
+  "pages": ["index", "button", "input", "otp-input", "confirmation-dialog", "switch", "menu"]
 }

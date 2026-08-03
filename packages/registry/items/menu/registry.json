@@ -1,0 +1,27 @@
+{
+  "name": "menu",
+  "files": [
+    {
+      "source": "../../../../apps/showcase/src/components/ui/menu/Menu.tsx",
+      "target": "menu/Menu.tsx"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/menu/menuState.ts",
+      "target": "menu/menuState.ts"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/menu/index.ts",
+      "target": "menu/index.ts"
+    }
+  ],
+  "expoDependencies": [
+    "@expo/ui",
+    "expo-haptics",
+    "react-native-reanimated",
+    "react-native-worklets"
+  ],
+  "dependencies": [
+    "react-native-fast-squircle"
+  ],
+  "requiresPrebuild": true
+}

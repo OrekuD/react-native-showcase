@@ -56,6 +56,13 @@ export function HomeScreen({ navigation }: HomeScreenProps) {
           >
             Switch
           </ListItem>
+          <ListItem
+            onPress={() => navigation.navigate("Menu")}
+            testID="home-component-menu"
+            trailing="›"
+          >
+            Menu
+          </ListItem>
 
           <ExpoText
             style={styles.sectionLabel}
