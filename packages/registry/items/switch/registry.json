@@ -1,0 +1,34 @@
+{
+  "name": "switch",
+  "files": [
+    {
+      "source": "../../../../apps/showcase/src/components/ui/switch/Switch.tsx",
+      "target": "switch/Switch.tsx"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/switch/SwitchThemeProvider.tsx",
+      "target": "switch/SwitchThemeProvider.tsx"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/switch/switchState.ts",
+      "target": "switch/switchState.ts"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/switch/switchTheme.ts",
+      "target": "switch/switchTheme.ts"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/switch/index.ts",
+      "target": "switch/index.ts"
+    }
+  ],
+  "expoDependencies": [
+    "expo-haptics",
+    "react-native-reanimated",
+    "react-native-worklets"
+  ],
+  "dependencies": [
+    "react-native-fast-squircle"
+  ],
+  "requiresPrebuild": true
+}
