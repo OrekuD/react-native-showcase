@@ -2,20 +2,24 @@
   "name": "input",
   "files": [
     {
-      "source": "../../../../apps/showcase/src/components/ui/Input.tsx",
-      "target": "Input.tsx"
+      "source": "../../../../apps/showcase/src/components/ui/input/Input.tsx",
+      "target": "input/Input.tsx"
     },
     {
-      "source": "../../../../apps/showcase/src/components/ui/InputThemeProvider.tsx",
-      "target": "InputThemeProvider.tsx"
+      "source": "../../../../apps/showcase/src/components/ui/input/InputThemeProvider.tsx",
+      "target": "input/InputThemeProvider.tsx"
     },
     {
-      "source": "../../../../apps/showcase/src/components/ui/inputState.ts",
-      "target": "inputState.ts"
+      "source": "../../../../apps/showcase/src/components/ui/input/inputState.ts",
+      "target": "input/inputState.ts"
     },
     {
-      "source": "../../../../apps/showcase/src/components/ui/inputTheme.ts",
-      "target": "inputTheme.ts"
+      "source": "../../../../apps/showcase/src/components/ui/input/inputTheme.ts",
+      "target": "input/inputTheme.ts"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/input/index.ts",
+      "target": "input/index.ts"
     }
   ],
   "expoDependencies": [

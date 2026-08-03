@@ -10,7 +10,7 @@ import {
   InputThemeProvider,
   type InputTheme,
   type InputThemeOverride,
-} from '../components/ui/Input';
+} from '../components/ui/input';
 import type { RootStackParamList } from '../navigation/types';
 
 type InputScreenProps = NativeStackScreenProps<RootStackParamList, 'Input'>;
