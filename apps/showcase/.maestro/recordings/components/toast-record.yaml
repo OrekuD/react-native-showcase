@@ -1,0 +1,14 @@
+appId: com.oreku.reactnativeshowcase
+---
+- tapOn:
+    id: toast-soft
+    waitToSettleTimeoutMs: 200
+- waitForAnimationToEnd
+- tapOn:
+    id: toast-solid
+    waitToSettleTimeoutMs: 200
+- waitForAnimationToEnd
+- tapOn:
+    id: toast-inverse
+    waitToSettleTimeoutMs: 200
+- waitForAnimationToEnd

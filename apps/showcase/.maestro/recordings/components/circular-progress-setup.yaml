@@ -1,0 +1,14 @@
+appId: com.oreku.reactnativeshowcase
+---
+- launchApp
+- assertVisible: Showcase
+- scrollUntilVisible:
+    element:
+      text: Circular progress
+    direction: DOWN
+- tapOn: Circular progress
+- assertVisible:
+    id: progressive-blur-header
+- assertVisible: DEFAULT
+- assertVisible:
+    id: circular-progress-default

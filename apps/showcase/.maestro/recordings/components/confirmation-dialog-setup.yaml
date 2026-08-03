@@ -2,8 +2,7 @@ appId: com.oreku.reactnativeshowcase
 ---
 - launchApp
 - assertVisible: Showcase
-- tapOn:
-    id: home-component-confirmation-dialog
+- tapOn: Confirmation Dialog
 - assertVisible:
     id: progressive-blur-header
 - assertVisible: CUSTOM VARIANTS

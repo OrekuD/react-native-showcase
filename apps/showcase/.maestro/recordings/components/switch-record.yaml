@@ -1,0 +1,28 @@
+appId: com.oreku.reactnativeshowcase
+---
+- tapOn:
+    id: switch-solid
+    waitToSettleTimeoutMs: 250
+- tapOn:
+    id: switch-outline
+    waitToSettleTimeoutMs: 250
+- tapOn:
+    id: switch-solid-tight
+    waitToSettleTimeoutMs: 250
+- scrollUntilVisible:
+    element:
+      id: switch-thumb-icons
+    direction: DOWN
+- tapOn:
+    id: switch-thumb-icons
+    waitToSettleTimeoutMs: 400
+- scrollUntilVisible:
+    element:
+      id: switch-native
+    direction: DOWN
+- tapOn:
+    id: switch-provider-theme
+    waitToSettleTimeoutMs: 250
+- tapOn:
+    id: switch-native
+    waitToSettleTimeoutMs: 250

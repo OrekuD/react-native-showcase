@@ -4,7 +4,7 @@ appId: com.oreku.reactnativeshowcase
     id: input-filled
 - inputText: "hello@example.com"
 - tapOn: Clear input
-- tapOn: APPEARANCES
+- hideKeyboard
 - scrollUntilVisible:
     element:
       text: COMPOSED SEARCH
@@ -13,4 +13,4 @@ appId: com.oreku.reactnativeshowcase
     id: input-composed-search
 - inputText: "Button"
 - tapOn: Clear input
-- tapOn: COMPOSED SEARCH
+- hideKeyboard

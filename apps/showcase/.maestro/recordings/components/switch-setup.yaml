@@ -2,9 +2,9 @@ appId: com.oreku.reactnativeshowcase
 ---
 - launchApp
 - assertVisible: Showcase
-- tapOn: Select
+- tapOn: Switch
 - assertVisible:
     id: progressive-blur-header
 - assertVisible: CUSTOM
 - assertVisible:
-    id: select-custom-trigger
+    id: switch-solid

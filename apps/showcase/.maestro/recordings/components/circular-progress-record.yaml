@@ -1,0 +1,8 @@
+appId: com.oreku.reactnativeshowcase
+---
+- tapOn: Advance progress
+- waitForAnimationToEnd
+- tapOn: Advance progress
+- waitForAnimationToEnd
+- tapOn: Advance progress
+- waitForAnimationToEnd

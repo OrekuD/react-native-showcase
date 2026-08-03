@@ -66,11 +66,13 @@ pnpm --filter @rn-showcase/showcase test
 pnpm --filter @rn-showcase/showcase typecheck
 ```
 
-Generate the short Showcase app preview used by the docs:
+Generate both platform previews for one component:
 
 ```bash
-pnpm record showcase
+pnpm record button
 ```
 
-This requires a booted iOS simulator with the development build installed.
-The source flow is `apps/showcase/.maestro/recordings/showcase-record.yaml`.
+This requires booted iOS and Android simulators with the development build
+installed. Pass `--platform ios` or `--platform android` to record only one.
+The source flows live under `apps/showcase/.maestro/recordings` and the videos
+are written to `apps/docs/public/videos` with platform suffixes.

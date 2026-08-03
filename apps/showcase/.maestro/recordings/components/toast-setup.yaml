@@ -2,9 +2,13 @@ appId: com.oreku.reactnativeshowcase
 ---
 - launchApp
 - assertVisible: Showcase
-- tapOn: Select
+- scrollUntilVisible:
+    element:
+      text: Toast
+    direction: DOWN
+- tapOn: Toast
 - assertVisible:
     id: progressive-blur-header
-- assertVisible: CUSTOM
+- assertVisible: STYLE RECIPES
 - assertVisible:
-    id: select-custom-trigger
+    id: toast-soft

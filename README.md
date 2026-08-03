@@ -101,7 +101,7 @@ pnpm dev:docs
 | `pnpm dev:docs` | Start Fumadocs only |
 | `pnpm ios` | Build and launch the iOS app |
 | `pnpm android` | Build and launch the Android app |
-| `pnpm record [name]` | Generate all docs videos, or only the named Maestro flow |
+| `pnpm record [name] [--platform ios\|android\|all]` | Generate both platform docs videos, or one platform for a named flow |
 | `pnpm prebuild` | Regenerate native projects |
 | `pnpm prebuild:clean` | Regenerate native projects from a clean state |
 | `pnpm lint` | Lint workspace packages |

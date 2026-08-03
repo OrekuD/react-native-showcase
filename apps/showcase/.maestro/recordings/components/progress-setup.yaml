@@ -2,9 +2,13 @@ appId: com.oreku.reactnativeshowcase
 ---
 - launchApp
 - assertVisible: Showcase
-- tapOn: Select
+- scrollUntilVisible:
+    element:
+      text: Progress
+    direction: DOWN
+- tapOn: Progress
 - assertVisible:
     id: progressive-blur-header
-- assertVisible: CUSTOM
+- assertVisible: DEFAULT
 - assertVisible:
-    id: select-custom-trigger
+    id: progress-default

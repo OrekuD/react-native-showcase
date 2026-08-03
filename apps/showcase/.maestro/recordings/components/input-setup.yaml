@@ -2,8 +2,7 @@ appId: com.oreku.reactnativeshowcase
 ---
 - launchApp
 - assertVisible: Showcase
-- tapOn:
-    id: home-component-input
+- tapOn: Input
 - assertVisible: APPEARANCES
 - assertVisible:
     id: input-filled
