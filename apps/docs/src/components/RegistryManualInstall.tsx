@@ -15,7 +15,8 @@ type RegistryItemName =
   | 'menu'
   | 'otp-input'
   | 'select'
-  | 'switch';
+  | 'switch'
+  | 'toast';
 
 type RegistryManifest = {
   files: Array<{

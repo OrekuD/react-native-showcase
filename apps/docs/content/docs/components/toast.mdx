@@ -1,0 +1,221 @@
+---
+title: Toast
+description: Themeable notifications with safe-area positioning, stacking, swipe dismissal, and repeat feedback.
+---
+
+Toast keeps notification state in a provider and renders it through one
+safe-area-aware viewport. The default surface is intentionally neutral; build
+brand treatments with provider or per-toast theme tokens.
+
+<PlatformVideos
+  android="/videos/components/toast-android.mp4"
+  ios="/videos/components/toast-ios.mp4"
+  label="Toast default and styled notification examples"
+/>
+
+## Installation
+
+<Tabs className="showcase-install-tabs" items={['Command', 'Manual']}>
+  <Tab className="showcase-install-panel" value="Command">
+    <div className="showcase-install-intro">Add Toast with the Showcase CLI.</div>
+    <CodeBlockTabs className="showcase-package-tabs" defaultValue="npm" groupId="package-manager" persist>
+      <CodeBlockTabsList>
+        <CodeBlockTabsTrigger value="npm">npm</CodeBlockTabsTrigger>
+        <CodeBlockTabsTrigger value="pnpm">pnpm</CodeBlockTabsTrigger>
+        <CodeBlockTabsTrigger value="yarn">yarn</CodeBlockTabsTrigger>
+        <CodeBlockTabsTrigger value="bun">bun</CodeBlockTabsTrigger>
+      </CodeBlockTabsList>
+      <CodeBlockTab value="npm">
+        ```bash
+        npx @rn-showcase/cli add toast
+        ```
+      </CodeBlockTab>
+      <CodeBlockTab value="pnpm">
+        ```bash
+        pnpm dlx @rn-showcase/cli add toast
+        ```
+      </CodeBlockTab>
+      <CodeBlockTab value="yarn">
+        ```bash
+        yarn dlx @rn-showcase/cli add toast
+        ```
+      </CodeBlockTab>
+      <CodeBlockTab value="bun">
+        ```bash
+        bunx @rn-showcase/cli add toast
+        ```
+      </CodeBlockTab>
+    </CodeBlockTabs>
+  </Tab>
+
+  <Tab className="showcase-install-panel" value="Manual">
+    <div className="showcase-install-step">
+      <span aria-hidden="true" className="showcase-install-step-marker">1</span>
+      <div className="showcase-install-step-title">Install the dependencies.</div>
+      <div className="showcase-install-step-body">
+        <CodeBlockTabs className="showcase-package-tabs" defaultValue="npm" groupId="package-manager" persist>
+          <CodeBlockTabsList>
+            <CodeBlockTabsTrigger value="npm">npm</CodeBlockTabsTrigger>
+            <CodeBlockTabsTrigger value="pnpm">pnpm</CodeBlockTabsTrigger>
+            <CodeBlockTabsTrigger value="yarn">yarn</CodeBlockTabsTrigger>
+            <CodeBlockTabsTrigger value="bun">bun</CodeBlockTabsTrigger>
+          </CodeBlockTabsList>
+          <CodeBlockTab value="npm">
+        ```bash
+        npx expo install react-native-gesture-handler react-native-reanimated react-native-safe-area-context react-native-worklets
+        npm install react-native-fast-squircle
+        npx expo prebuild
+        ```
+          </CodeBlockTab>
+          <CodeBlockTab value="pnpm">
+        ```bash
+        pnpm exec expo install react-native-gesture-handler react-native-reanimated react-native-safe-area-context react-native-worklets
+        pnpm add react-native-fast-squircle
+        pnpm exec expo prebuild
+        ```
+          </CodeBlockTab>
+          <CodeBlockTab value="yarn">
+        ```bash
+        yarn expo install react-native-gesture-handler react-native-reanimated react-native-safe-area-context react-native-worklets
+        yarn add react-native-fast-squircle
+        yarn expo prebuild
+        ```
+          </CodeBlockTab>
+          <CodeBlockTab value="bun">
+        ```bash
+        bun x expo install react-native-gesture-handler react-native-reanimated react-native-safe-area-context react-native-worklets
+        bun add react-native-fast-squircle
+        bun x expo prebuild
+        ```
+          </CodeBlockTab>
+        </CodeBlockTabs>
+      </div>
+    </div>
+    <div className="showcase-install-step">
+      <span aria-hidden="true" className="showcase-install-step-marker">2</span>
+      <div className="showcase-install-step-title">Copy the component files into your project.</div>
+      <div className="showcase-install-step-body">
+        <RegistryManualInstall name="toast" />
+      </div>
+    </div>
+  </Tab>
+</Tabs>
+
+## Setup
+
+Mount one provider and viewport around the part of the app that calls
+`useToast`. The safe-area and gesture-handler providers should already wrap
+your application.
+
+```tsx
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { Toast } from '@/components/ui/toast';
+
+export function App() {
+  return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <SafeAreaProvider>
+        <Toast.Provider position="bottom" stack="deck">
+          <AppContent />
+          <Toast.Viewport />
+        </Toast.Provider>
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
+  );
+}
+```
+
+## Show a toast
+
+```tsx
+import { useToast } from '@/components/ui/toast';
+
+function SaveButton() {
+  const toast = useToast();
+
+  return (
+    <Button
+      onPress={() =>
+        toast.show({
+          action: { label: 'Undo', onPress: undoSave },
+          message: 'Changes saved',
+        })
+      }
+    >
+      <Button.Label>Save</Button.Label>
+    </Button>
+  );
+}
+```
+
+`show` returns the generated id. Use `durationMs: null` for a persistent
+notification or `dismissible: true` for an explicit close control.
+
+## Repeat feedback
+
+Pass a stable `id` for repeated events such as copying to the clipboard. If a
+matching toast is still visible, its content updates, its timer restarts, and
+it pulses instead of adding a duplicate. Once it has left, the same id enters
+normally again.
+
+```tsx
+toast.show({
+  id: 'clipboard-copied',
+  message: 'Copied to clipboard',
+});
+```
+
+## Position, stacking, and swipe
+
+| Provider prop | Options | Default |
+| --- | --- | --- |
+| `position` | `'top' \| 'bottom'` | `'bottom'` |
+| `stack` | `'deck' \| 'vertical'` | `'deck'` |
+| `swipeDirections` | `('left' \| 'right' \| 'up' \| 'down')[]` | `['left', 'right']` |
+
+A deck expands into a vertical stack when the leading toast is pressed.
+`maxToasts` limits the visible list.
+
+## Theming
+
+Use `ToastThemeProvider` or the `theme` prop on `Toast.Provider` for shared
+tokens. Every `toast.show` call can override those tokens locally.
+
+```tsx
+toast.show({
+  message: 'Your invites are on their way',
+  theme: {
+    backgroundColor: '#3FAF81',
+    borderColor: 'rgba(255, 255, 255, 0.16)',
+    borderRadius: 20,
+    labelColor: '#FFFFFF',
+    layout: { paddingHorizontal: 14, paddingVertical: 9 },
+  },
+});
+```
+
+## Props
+
+### `Toast.Provider`
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `position` | `'top' \| 'bottom'` | `'bottom'` | Anchors the safe-area-aware viewport. |
+| `stack` | `'deck' \| 'vertical'` | `'deck'` | Arranges multiple visible notifications. |
+| `maxToasts` | `number` | `3` | Maximum visible notifications. |
+| `swipeDirections` | `ToastSwipeDirection[]` | `['left', 'right']` | Allowed dismissal directions. |
+| `theme` | `ToastTheme` | — | Provider-local visual tokens. |
+
+### `toast.show`
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `message` | `string` | required | Main notification content. |
+| `id` | `string` | generated | Stable identity for updates and repeat feedback. |
+| `icon` | `ReactNode` | — | Leading visual. |
+| `action` | `ToastAction` | — | Trailing labeled action. |
+| `dismissible` | `boolean` | `false` | Shows an accessible close control. |
+| `durationMs` | `number \| null` | `5000` | Lifetime; `null` keeps the toast visible. |
+| `theme` | `ToastThemeOverride` | — | Visual tokens for this notification only. |
+
