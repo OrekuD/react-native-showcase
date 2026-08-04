@@ -1,4 +1,4 @@
 {
   "title": "Components",
-  "pages": ["index", "button", "input", "otp-input", "confirmation-dialog", "switch", "menu", "select", "toast", "progress", "circular-progress"]
+  "pages": ["index", "button", "input", "otp-input", "confirmation-dialog", "action-sheet", "switch", "menu", "select", "toast", "progress", "circular-progress"]
 }

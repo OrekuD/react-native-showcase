@@ -1,0 +1,295 @@
+---
+title: Action Sheet
+description: A native iOS action sheet with a copyable custom sheet for every platform.
+---
+
+Action Sheet keeps one action model across platforms. Automatic mode uses the
+native iOS sheet where it exists, then falls back to the custom TrueSheet-based
+treatment on Android. Set `mode="custom"` when you want the custom design on
+iOS too.
+
+<PlatformVideos
+  android="/videos/components/action-sheet-android.mp4"
+  ios="/videos/components/action-sheet-ios.mp4"
+  label="Native and custom action sheet examples"
+/>
+
+## Installation
+
+<Tabs className="showcase-install-tabs" items={['Command', 'Manual']}>
+  <Tab className="showcase-install-panel" value="Command">
+    <div className="showcase-install-intro">
+      Add Action Sheet to your project with the Showcase CLI.
+    </div>
+
+    <CodeBlockTabs
+      className="showcase-package-tabs"
+      defaultValue="npm"
+      groupId="package-manager"
+      persist
+    >
+      <CodeBlockTabsList>
+        <CodeBlockTabsTrigger value="npm">npm</CodeBlockTabsTrigger>
+        <CodeBlockTabsTrigger value="pnpm">pnpm</CodeBlockTabsTrigger>
+        <CodeBlockTabsTrigger value="yarn">yarn</CodeBlockTabsTrigger>
+        <CodeBlockTabsTrigger value="bun">bun</CodeBlockTabsTrigger>
+      </CodeBlockTabsList>
+      <CodeBlockTab value="npm">
+        ```bash
+        npx @rn-showcase/cli add action-sheet
+        ```
+      </CodeBlockTab>
+      <CodeBlockTab value="pnpm">
+        ```bash
+        pnpm dlx @rn-showcase/cli add action-sheet
+        ```
+      </CodeBlockTab>
+      <CodeBlockTab value="yarn">
+        ```bash
+        yarn dlx @rn-showcase/cli add action-sheet
+        ```
+      </CodeBlockTab>
+      <CodeBlockTab value="bun">
+        ```bash
+        bunx @rn-showcase/cli add action-sheet
+        ```
+      </CodeBlockTab>
+    </CodeBlockTabs>
+
+    <div className="showcase-install-note">
+      The CLI installs the dependencies and copies Action Sheet into
+      <code>components/ui/action-sheet</code>.
+    </div>
+  </Tab>
+
+  <Tab className="showcase-install-panel" value="Manual">
+    <div className="showcase-install-step">
+      <span aria-hidden="true" className="showcase-install-step-marker">1</span>
+      <div className="showcase-install-step-title">Install the dependencies.</div>
+      <div className="showcase-install-step-body">
+        <CodeBlockTabs
+          className="showcase-package-tabs"
+          defaultValue="npm"
+          groupId="package-manager"
+          persist
+        >
+          <CodeBlockTabsList>
+            <CodeBlockTabsTrigger value="npm">npm</CodeBlockTabsTrigger>
+            <CodeBlockTabsTrigger value="pnpm">pnpm</CodeBlockTabsTrigger>
+            <CodeBlockTabsTrigger value="yarn">yarn</CodeBlockTabsTrigger>
+            <CodeBlockTabsTrigger value="bun">bun</CodeBlockTabsTrigger>
+          </CodeBlockTabsList>
+          <CodeBlockTab value="npm">
+        ```bash
+        npx expo install expo-haptics react-native-reanimated react-native-worklets
+        npm install @lodev09/react-native-true-sheet react-native-fast-squircle
+        npx expo prebuild
+        ```
+          </CodeBlockTab>
+          <CodeBlockTab value="pnpm">
+        ```bash
+        pnpm exec expo install expo-haptics react-native-reanimated react-native-worklets
+        pnpm add @lodev09/react-native-true-sheet react-native-fast-squircle
+        pnpm exec expo prebuild
+        ```
+          </CodeBlockTab>
+          <CodeBlockTab value="yarn">
+        ```bash
+        yarn expo install expo-haptics react-native-reanimated react-native-worklets
+        yarn add @lodev09/react-native-true-sheet react-native-fast-squircle
+        yarn expo prebuild
+        ```
+          </CodeBlockTab>
+          <CodeBlockTab value="bun">
+        ```bash
+        bun x expo install expo-haptics react-native-reanimated react-native-worklets
+        bun add @lodev09/react-native-true-sheet react-native-fast-squircle
+        bun x expo prebuild
+        ```
+          </CodeBlockTab>
+        </CodeBlockTabs>
+      </div>
+    </div>
+
+    <div className="showcase-install-step">
+      <span aria-hidden="true" className="showcase-install-step-marker">2</span>
+      <div className="showcase-install-step-title">Copy the component files into your project.</div>
+      <div className="showcase-install-step-body">
+        <RegistryManualInstall name="action-sheet" />
+      </div>
+    </div>
+  </Tab>
+</Tabs>
+
+Run a native development build after installation. TrueSheet and Fast Squircle
+include native code, so custom Action Sheets do not run in Expo Go.
+
+## Usage
+
+`actions` stays as an array because it can be handed directly to the native
+iOS API. `ActionSheet.Trigger` takes one pressable child, and
+`ActionSheet.Content` renders the custom fallback when needed.
+
+```tsx
+import { Button } from '@/components/ui/button';
+import {
+  ActionSheet,
+  type ActionSheetAction,
+} from '@/components/ui/action-sheet';
+
+const taskActions = [
+  { id: 'copy-link', label: 'Copy link' },
+  { destructive: true, id: 'delete', label: 'Delete task' },
+] satisfies readonly ActionSheetAction[];
+
+export function TaskActions() {
+  const handleSelect = (action: ActionSheetAction) => {
+    console.log(action.id);
+  };
+
+  return (
+    <ActionSheet
+      actions={taskActions}
+      message="Choose what to do with this task."
+      onSelect={handleSelect}
+      title="Task actions"
+    >
+      <ActionSheet.Trigger>
+        <Button variant="outline">
+          <Button.Label>Task actions</Button.Label>
+        </Button>
+      </ActionSheet.Trigger>
+      <ActionSheet.Content />
+    </ActionSheet>
+  );
+}
+```
+
+## Modes
+
+| Mode | iOS | Android |
+| --- | --- | --- |
+| `automatic` | Native `ActionSheetIOS` | Custom sheet |
+| `custom` | Custom sheet | Custom sheet |
+
+The platform sheet in the showcase is intentionally iOS-only: Android has no
+matching native Action Sheet API. The custom sheet is the Android treatment.
+
+## Custom layout and feedback
+
+Pass `haptics` to the root to give custom action rows light feedback. Use
+`ActionSheet.Content` for one-off visual changes; this keeps behavior and
+native action data separate from presentation.
+
+```tsx
+import { Button } from '@/components/ui/button';
+import { ActionSheet } from '@/components/ui/action-sheet';
+
+const fileFormats = [
+  { id: 'csv', label: 'Comma Separated Values (CSV)' },
+  { id: 'ofx', label: 'Open Financial Exchange (OFX)' },
+] as const;
+
+export function FormatPicker() {
+  return (
+    <ActionSheet actions={fileFormats} haptics mode="custom" title="Select a file format">
+      <ActionSheet.Trigger>
+        <Button variant="secondary">
+          <Button.Label>Choose file format</Button.Label>
+        </Button>
+      </ActionSheet.Trigger>
+      <ActionSheet.Content
+        gap={10}
+        inset={8}
+        itemCornerSmoothing={1}
+        itemStyle={{ backgroundColor: '#E4E4EA', borderRadius: 999, minHeight: 54 }}
+        showHandle={false}
+        style={{ backgroundColor: '#F9F9FC', borderRadius: 34, padding: 24 }}
+        titleStyle={{ fontSize: 20, fontWeight: '400', textAlign: 'center' }}
+      />
+    </ActionSheet>
+  );
+}
+```
+
+To replace an individual row entirely, pass `renderAction` to
+`ActionSheet.Content`. Its callback receives the action plus `select()` and
+`close()` helpers.
+
+## Shared theming
+
+Use `ActionSheetThemeProvider` for shared custom-sheet tokens. It does not
+alter the iOS platform sheet.
+
+```tsx
+import { Button } from '@/components/ui/button';
+import {
+  ActionSheet,
+  ActionSheetThemeProvider,
+} from '@/components/ui/action-sheet';
+
+const shareActions = [
+  { id: 'copy', label: 'Copy' },
+  { id: 'share-link', label: 'Share link' },
+];
+
+export function ThemedActionSheet() {
+  return (
+    <ActionSheetThemeProvider
+      theme={{
+        backgroundColor: '#EEF4FF',
+        iconBackgroundColor: '#DDEAFF',
+        iconColor: '#365A8C',
+        labelColor: '#172B4D',
+      }}
+    >
+      <ActionSheet actions={shareActions} mode="custom">
+        <ActionSheet.Trigger>
+          <Button variant="secondary">
+            <Button.Label>Share</Button.Label>
+          </Button>
+        </ActionSheet.Trigger>
+        <ActionSheet.Content />
+      </ActionSheet>
+    </ActionSheetThemeProvider>
+  );
+}
+```
+
+## Props
+
+### `ActionSheet`
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `actions` | `readonly ActionSheetAction[]` | — | Required action data for both rendering modes. Each action needs a stable `id` and `label`. |
+| `mode` | `'automatic' \| 'custom'` | `'automatic'` | Uses native iOS actions automatically, or forces the custom sheet. |
+| `defaultOpen` | `boolean` | `false` | Initial visibility for an uncontrolled custom sheet. |
+| `open` | `boolean` | — | Controls a custom sheet. |
+| `onOpenChange` | `(open: boolean) => void` | — | Receives custom-sheet visibility changes and native iOS presentation state. |
+| `onSelect` | `(action: ActionSheetAction) => void` | — | Runs after a non-disabled action is selected. |
+| `onCancel` | `() => void` | — | Runs when the user dismisses a sheet without selecting an action. |
+| `title` | `string` | — | Title for native and custom presentations. |
+| `message` | `string` | — | Supporting copy for native and custom presentations. |
+| `cancelLabel` | `string` | `'Cancel'` | iOS native cancel action label. |
+| `dismissible` | `boolean` | `true` | Allows dismissing the custom sheet by gesture or outside interaction. |
+| `haptics` | `boolean` | `false` | Plays light feedback when a custom action is selected. |
+| `testID` | `string` | — | Applies a test identifier to the trigger. |
+
+`ActionSheetAction` also accepts `description`, `icon`, `destructive`,
+`disabled`, `onPress`, `separatorBefore`, and `accessibilityLabel`.
+
+### `ActionSheet.Content`
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `style` | `StyleProp<ViewStyle>` | — | One-off panel styles, such as background, radius, or padding. |
+| `itemStyle` | `StyleProp<ViewStyle>` | — | One-off styles applied to each default action row. |
+| `itemLabelStyle` | `StyleProp<TextStyle>` | — | One-off styles applied to each default action label. |
+| `titleStyle` | `StyleProp<TextStyle>` | — | One-off title styles. |
+| `gap` | `number` | Provider default | Space between action rows. |
+| `inset` | `number` | Provider default | Horizontal space from the screen edge. |
+| `cornerSmoothing` | `number` | Provider default | Squircle smoothing for the panel. |
+| `itemCornerSmoothing` | `number` | Provider default | Squircle smoothing for default rows. |
+| `showHandle` | `boolean` | Provider default | Shows the small handle above the content. |
+| `renderAction` | `(action, state) => ReactNode` | — | Replaces a row with fully custom content. |

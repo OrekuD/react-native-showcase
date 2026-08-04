@@ -1,0 +1,59 @@
+{
+  "name": "action-sheet",
+  "files": [
+    {
+      "source": "../../../../apps/showcase/src/components/ui/action-sheet/ActionSheet.ts",
+      "target": "action-sheet/ActionSheet.ts"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/action-sheet/ActionSheetContent.tsx",
+      "target": "action-sheet/ActionSheetContent.tsx"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/action-sheet/ActionSheetDefaultItem.tsx",
+      "target": "action-sheet/ActionSheetDefaultItem.tsx"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/action-sheet/ActionSheetRoot.tsx",
+      "target": "action-sheet/ActionSheetRoot.tsx"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/action-sheet/ActionSheetThemeProvider.tsx",
+      "target": "action-sheet/ActionSheetThemeProvider.tsx"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/action-sheet/ActionSheetTrigger.tsx",
+      "target": "action-sheet/ActionSheetTrigger.tsx"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/action-sheet/actionSheetShared.ts",
+      "target": "action-sheet/actionSheetShared.ts"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/action-sheet/actionSheetState.ts",
+      "target": "action-sheet/actionSheetState.ts"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/action-sheet/actionSheetTheme.ts",
+      "target": "action-sheet/actionSheetTheme.ts"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/action-sheet/index.ts",
+      "target": "action-sheet/index.ts"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/outsetShadow.ts",
+      "target": "outsetShadow.ts"
+    }
+  ],
+  "expoDependencies": [
+    "expo-haptics",
+    "react-native-reanimated",
+    "react-native-worklets"
+  ],
+  "dependencies": [
+    "@lodev09/react-native-true-sheet",
+    "react-native-fast-squircle"
+  ],
+  "requiresPrebuild": true
+}

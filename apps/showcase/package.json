@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@expo/ui": "~57.0.8",
+    "@lodev09/react-native-true-sheet": "3.11.9",
     "@react-native-masked-view/masked-view": "0.3.2",
     "@react-navigation/elements": "^2.9.36",
     "@react-navigation/native": "^7.3.14",
@@ -50,8 +51,8 @@
     "android": "expo run:android",
     "build": "expo export --platform ios --output-dir dist",
     "ios": "expo run:ios",
-    "prebuild": "expo prebuild",
-    "prebuild:clean": "expo prebuild --clean",
+    "expo:prebuild": "expo prebuild",
+    "expo:prebuild:clean": "expo prebuild --clean",
     "test": "node --experimental-strip-types --test src/**/*.test.ts",
     "test:coverage": "node --experimental-strip-types --experimental-test-coverage --test src/**/*.test.ts",
     "typecheck": "tsc --noEmit",

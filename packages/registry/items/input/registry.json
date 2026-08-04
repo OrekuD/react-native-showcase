@@ -2,16 +2,56 @@
   "name": "input",
   "files": [
     {
-      "source": "../../../../apps/showcase/src/components/ui/input/Input.tsx",
-      "target": "input/Input.tsx"
+      "source": "../../../../apps/showcase/src/components/ui/input/Input.ts",
+      "target": "input/Input.ts"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/input/InputAction.tsx",
+      "target": "input/InputAction.tsx"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/input/InputControl.tsx",
+      "target": "input/InputControl.tsx"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/input/InputIcon.tsx",
+      "target": "input/InputIcon.tsx"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/input/InputLabel.tsx",
+      "target": "input/InputLabel.tsx"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/input/InputLeading.tsx",
+      "target": "input/InputLeading.tsx"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/input/InputMessage.tsx",
+      "target": "input/InputMessage.tsx"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/input/InputPasswordToggle.tsx",
+      "target": "input/InputPasswordToggle.tsx"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/input/InputRoot.tsx",
+      "target": "input/InputRoot.tsx"
     },
     {
       "source": "../../../../apps/showcase/src/components/ui/input/InputThemeProvider.tsx",
       "target": "input/InputThemeProvider.tsx"
     },
     {
+      "source": "../../../../apps/showcase/src/components/ui/input/InputTrailing.tsx",
+      "target": "input/InputTrailing.tsx"
+    },
+    {
       "source": "../../../../apps/showcase/src/components/ui/input/inputState.ts",
       "target": "input/inputState.ts"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/input/inputShared.ts",
+      "target": "input/inputShared.ts"
     },
     {
       "source": "../../../../apps/showcase/src/components/ui/input/inputTheme.ts",

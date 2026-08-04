@@ -2,8 +2,20 @@
   "name": "button",
   "files": [
     {
-      "source": "../../../../apps/showcase/src/components/ui/button/Button.tsx",
-      "target": "button/Button.tsx"
+      "source": "../../../../apps/showcase/src/components/ui/button/Button.ts",
+      "target": "button/Button.ts"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/button/ButtonIcon.tsx",
+      "target": "button/ButtonIcon.tsx"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/button/ButtonLabel.tsx",
+      "target": "button/ButtonLabel.tsx"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/button/ButtonRoot.tsx",
+      "target": "button/ButtonRoot.tsx"
     },
     {
       "source": "../../../../apps/showcase/src/components/ui/button/ButtonThemeProvider.tsx",
@@ -12,6 +24,10 @@
     {
       "source": "../../../../apps/showcase/src/components/ui/button/buttonState.ts",
       "target": "button/buttonState.ts"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/button/buttonShared.ts",
+      "target": "button/buttonShared.ts"
     },
     {
       "source": "../../../../apps/showcase/src/components/ui/button/buttonTheme.ts",

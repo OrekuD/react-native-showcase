@@ -2,16 +2,48 @@
   "name": "menu",
   "files": [
     {
-      "source": "../../../../apps/showcase/src/components/ui/menu/Menu.tsx",
-      "target": "menu/Menu.tsx"
+      "source": "../../../../apps/showcase/src/components/ui/menu/Menu.ts",
+      "target": "menu/Menu.ts"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/menu/MenuContent.tsx",
+      "target": "menu/MenuContent.tsx"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/menu/MenuCustomContent.tsx",
+      "target": "menu/MenuCustomContent.tsx"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/menu/MenuItem.tsx",
+      "target": "menu/MenuItem.tsx"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/menu/MenuRoot.tsx",
+      "target": "menu/MenuRoot.tsx"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/menu/MenuSection.tsx",
+      "target": "menu/MenuSection.tsx"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/menu/MenuSeparator.tsx",
+      "target": "menu/MenuSeparator.tsx"
     },
     {
       "source": "../../../../apps/showcase/src/components/ui/menu/MenuThemeProvider.tsx",
       "target": "menu/MenuThemeProvider.tsx"
     },
     {
+      "source": "../../../../apps/showcase/src/components/ui/menu/MenuTrigger.tsx",
+      "target": "menu/MenuTrigger.tsx"
+    },
+    {
       "source": "../../../../apps/showcase/src/components/ui/menu/menuState.ts",
       "target": "menu/menuState.ts"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/menu/menuShared.ts",
+      "target": "menu/menuShared.ts"
     },
     {
       "source": "../../../../apps/showcase/src/components/ui/menu/menuTheme.ts",

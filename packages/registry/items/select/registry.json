@@ -2,16 +2,52 @@
   "name": "select",
   "files": [
     {
-      "source": "../../../../apps/showcase/src/components/ui/select/Select.tsx",
-      "target": "select/Select.tsx"
+      "source": "../../../../apps/showcase/src/components/ui/select/Select.ts",
+      "target": "select/Select.ts"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/select/SelectContent.tsx",
+      "target": "select/SelectContent.tsx"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/select/SelectCustomContent.tsx",
+      "target": "select/SelectCustomContent.tsx"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/select/SelectGroup.tsx",
+      "target": "select/SelectGroup.tsx"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/select/SelectItem.tsx",
+      "target": "select/SelectItem.tsx"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/select/SelectRoot.tsx",
+      "target": "select/SelectRoot.tsx"
     },
     {
       "source": "../../../../apps/showcase/src/components/ui/select/SelectThemeProvider.tsx",
       "target": "select/SelectThemeProvider.tsx"
     },
     {
+      "source": "../../../../apps/showcase/src/components/ui/select/SelectTrigger.tsx",
+      "target": "select/SelectTrigger.tsx"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/select/SelectValue.tsx",
+      "target": "select/SelectValue.tsx"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/select/selectHelpers.ts",
+      "target": "select/selectHelpers.ts"
+    },
+    {
       "source": "../../../../apps/showcase/src/components/ui/select/selectState.ts",
       "target": "select/selectState.ts"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/select/selectShared.ts",
+      "target": "select/selectShared.ts"
     },
     {
       "source": "../../../../apps/showcase/src/components/ui/select/selectTheme.ts",

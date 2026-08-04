@@ -1,0 +1,30 @@
+appId: com.oreku.reactnativeshowcase
+---
+- tapOn:
+    id: action-sheet-custom-trigger
+    waitToSettleTimeoutMs: 700
+- waitForAnimationToEnd
+- tapOn:
+    text: Copy link
+    waitToSettleTimeoutMs: 1000
+- waitForAnimationToEnd
+- tapOn:
+    id: action-sheet-themed-trigger
+    waitToSettleTimeoutMs: 700
+- waitForAnimationToEnd
+- tapOn:
+    text: Copy
+    waitToSettleTimeoutMs: 1000
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      id: action-sheet-format-picker-trigger
+    direction: DOWN
+- tapOn:
+    id: action-sheet-format-picker-trigger
+    waitToSettleTimeoutMs: 700
+- waitForAnimationToEnd
+- tapOn:
+    text: Open Financial Exchange (OFX)
+    waitToSettleTimeoutMs: 1000
+- waitForAnimationToEnd

@@ -9,6 +9,7 @@ import {
 import { ExpandableCodeBlock } from './ExpandableCodeBlock';
 
 type RegistryItemName =
+  | 'action-sheet'
   | 'button'
   | 'circular-progress'
   | 'confirmation-dialog'

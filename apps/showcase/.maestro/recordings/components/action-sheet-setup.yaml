@@ -1,0 +1,10 @@
+appId: com.oreku.reactnativeshowcase
+---
+- launchApp
+- assertVisible: Showcase
+- tapOn: Action Sheet
+- assertVisible:
+    id: progressive-blur-header
+- assertVisible: CUSTOM · DETACHED
+- assertVisible:
+    id: action-sheet-custom-trigger
