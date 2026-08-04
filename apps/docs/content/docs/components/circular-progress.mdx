@@ -103,9 +103,13 @@ content inside the track.
 import { Text } from 'react-native';
 import { CircularProgress } from '@/components/ui/circular-progress';
 
-<CircularProgress size={144} thickness={12} value={72}>
-  {({ percentage }) => <Text>{percentage}%</Text>}
-</CircularProgress>
+export function BasicCircularProgress() {
+  return (
+    <CircularProgress size={144} thickness={12} value={72}>
+      {({ percentage }) => <Text>{percentage}%</Text>}
+    </CircularProgress>
+  );
+}
 ```
 
 The function child receives `value`, `max`, normalized `progress`, and a
@@ -119,15 +123,21 @@ shrinks the component bounds around the visible arc instead of retaining a
 square canvas.
 
 ```tsx
-<CircularProgress
-  arcLayout="tight"
-  size={180}
-  startAngle={180}
-  strokeCap="round"
-  sweepAngle={180}
-  thickness={14}
-  value={72}
-/>
+import { CircularProgress } from '@/components/ui/circular-progress';
+
+export function SemicircleProgress() {
+  return (
+    <CircularProgress
+      arcLayout="tight"
+      size={180}
+      startAngle={180}
+      strokeCap="round"
+      sweepAngle={180}
+      thickness={14}
+      value={72}
+    />
+  );
+}
 ```
 
 `strokeCap` accepts `round`, `butt`, or `square`.
@@ -138,17 +148,23 @@ Sequential segments divide one track into ordered contributions. Each item
 needs a stable id, color, and non-negative value.
 
 ```tsx
-<CircularProgress
-  max={100}
-  segmentGapAngle={3}
-  segments={[
-    { id: 'design', color: '#6558D9', value: 28 },
-    { id: 'development', color: '#C26638', value: 22 },
-    { id: 'testing', color: '#2E8F6A', value: 20 },
-  ]}
-  size={220}
-  thickness={14}
-/>
+import { CircularProgress } from '@/components/ui/circular-progress';
+
+export function SequentialSegments() {
+  return (
+    <CircularProgress
+      max={100}
+      segmentGapAngle={3}
+      segments={[
+        { id: 'design', color: '#6558D9', value: 28 },
+        { id: 'development', color: '#C26638', value: 22 },
+        { id: 'testing', color: '#2E8F6A', value: 20 },
+      ]}
+      size={220}
+      thickness={14}
+    />
+  );
+}
 ```
 
 ## Cumulative segments
@@ -158,17 +174,23 @@ from the same origin. It is useful when several values must end at independent
 points on one arc.
 
 ```tsx
-<CircularProgress
-  max={100}
-  segmentMode="cumulative"
-  segments={[
-    { id: 'blue', color: '#2563EB', value: 30 },
-    { id: 'yellow', color: '#EAB308', value: 60 },
-    { id: 'red', color: '#DC3545', value: 80 },
-  ]}
-  startAngle={180}
-  sweepAngle={180}
-/>
+import { CircularProgress } from '@/components/ui/circular-progress';
+
+export function CumulativeSegments() {
+  return (
+    <CircularProgress
+      max={100}
+      segmentMode="cumulative"
+      segments={[
+        { id: 'blue', color: '#2563EB', value: 30 },
+        { id: 'yellow', color: '#EAB308', value: 60 },
+        { id: 'red', color: '#DC3545', value: 80 },
+      ]}
+      startAngle={180}
+      sweepAngle={180}
+    />
+  );
+}
 ```
 
 ## Theming
@@ -179,11 +201,15 @@ import {
   CircularProgressThemeProvider,
 } from '@/components/ui/circular-progress';
 
-<CircularProgressThemeProvider
-  theme={{ indicatorColor: '#2E8F6A', trackColor: '#DDE9E1' }}
->
-  <CircularProgress value={72} />
-</CircularProgressThemeProvider>
+export function ThemedCircularProgress() {
+  return (
+    <CircularProgressThemeProvider
+      theme={{ indicatorColor: '#2E8F6A', trackColor: '#DDE9E1' }}
+    >
+      <CircularProgress value={72} />
+    </CircularProgressThemeProvider>
+  );
+}
 ```
 
 Direct `color` and `trackColor` props override provider and local theme tokens.
@@ -212,4 +238,3 @@ Direct `color` and `trackColor` props override provider and local theme tokens.
 
 Circular Progress also accepts React Native `ViewProps`; its function child is
 handled separately from the root view props.
-

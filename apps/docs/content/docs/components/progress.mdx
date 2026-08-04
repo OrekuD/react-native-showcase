@@ -105,21 +105,29 @@ animates value changes by default and clamps values safely against `max`.
 ```tsx
 import { Progress } from '@/components/ui/progress';
 
-<Progress value={72} />
+export function BasicProgress() {
+  return <Progress value={72} />;
+}
 ```
 
 Use `max` when the source value is not already a percentage. Dimensions and
 colors can be set directly without replacing the base theme.
 
 ```tsx
-<Progress
-  color="#BB3E61"
-  height={16}
-  max={250}
-  trackColor="#F4D8DF"
-  value={180}
-  width="72%"
-/>
+import { Progress } from '@/components/ui/progress';
+
+export function StyledProgress() {
+  return (
+    <Progress
+      color="#BB3E61"
+      height={16}
+      max={250}
+      trackColor="#F4D8DF"
+      value={180}
+      width="72%"
+    />
+  );
+}
 ```
 
 ## Animation
@@ -128,8 +136,19 @@ Value changes use a reduced-motion-aware timing transition. Disable it for an
 instant update or tune its duration.
 
 ```tsx
-<Progress animated={false} value={completed} />
-<Progress durationMs={480} value={completed} />
+import { View } from 'react-native';
+import { Progress } from '@/components/ui/progress';
+
+export function ProgressAnimation() {
+  const completed = 72;
+
+  return (
+    <View style={{ gap: 16 }}>
+      <Progress animated={false} value={completed} />
+      <Progress durationMs={480} value={completed} />
+    </View>
+  );
+}
 ```
 
 ## Theming
@@ -137,11 +156,15 @@ instant update or tune its duration.
 ```tsx
 import { Progress, ProgressThemeProvider } from '@/components/ui/progress';
 
-<ProgressThemeProvider
-  theme={{ indicatorColor: '#2E8F6A', trackColor: '#DDE9E1' }}
->
-  <Progress value={74} />
-</ProgressThemeProvider>
+export function ThemedProgress() {
+  return (
+    <ProgressThemeProvider
+      theme={{ indicatorColor: '#2E8F6A', trackColor: '#DDE9E1' }}
+    >
+      <Progress value={74} />
+    </ProgressThemeProvider>
+  );
+}
 ```
 
 Use `theme` on one Progress for a local override. Direct `color` and
@@ -163,4 +186,3 @@ Use `theme` on one Progress for a local override. Direct `color` and
 
 Progress also accepts React Native `ViewProps`, except `children`, and composes
 the supplied `style` with its dimensions and colors.
-

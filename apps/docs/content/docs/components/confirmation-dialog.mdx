@@ -135,12 +135,13 @@ Mount `ConfirmationDialogHost` once near your app root. It renders custom
 dialog portals for both the controlled and imperative APIs.
 
 ```tsx
+import { View } from 'react-native';
 import { ConfirmationDialogHost } from '@/components/ui/confirmation-dialog';
 
 export function App() {
   return (
     <>
-      <Navigation />
+      <View />
       <ConfirmationDialogHost />
     </>
   );
@@ -154,14 +155,18 @@ state. Custom mode is the default.
 
 ```tsx
 import { useState } from 'react';
+import { Button } from '@/components/ui/button';
 import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
 
 export function DeleteComment() {
   const [open, setOpen] = useState(false);
+  const removeComment = () => setOpen(false);
 
   return (
     <>
-      <Button title="Remove comment" onPress={() => setOpen(true)} />
+      <Button onPress={() => setOpen(true)}>
+        <Button.Label>Remove comment</Button.Label>
+      </Button>
       <ConfirmationDialog
         cancelLabel="Cancel"
         confirmLabel="Remove"
@@ -185,31 +190,74 @@ export function DeleteComment() {
 custom dialog by default; choose `mode: 'native'` to use the system alert.
 
 ```tsx
-ConfirmationDialog.alert(
-  'Delete this draft?',
-  "You won't be able to recover it after deleting.",
-  [
-    { text: 'Keep draft', style: 'cancel' },
-    { text: 'Delete', style: 'destructive', onPress: deleteDraft },
-  ],
-);
+import { Button } from '@/components/ui/button';
+import { ConfirmationDialog, ConfirmationDialogHost } from '@/components/ui/confirmation-dialog';
 
-ConfirmationDialog.alert('Continue?', undefined, undefined, {
-  mode: 'native',
-});
+export function ImperativeDialogs() {
+  const deleteDraft = () => {};
+
+  return (
+    <>
+      <ConfirmationDialogHost />
+      <Button
+        onPress={() =>
+          ConfirmationDialog.alert(
+            'Delete this draft?',
+            "You won't be able to recover it after deleting.",
+            [
+              { text: 'Keep draft', style: 'cancel' },
+              {
+                text: 'Delete',
+                style: 'destructive',
+                onPress: deleteDraft,
+              },
+            ],
+          )
+        }
+      >
+        <Button.Label>Delete draft</Button.Label>
+      </Button>
+      <Button
+        onPress={() =>
+          ConfirmationDialog.alert('Continue?', undefined, undefined, {
+            mode: 'native',
+          })
+        }
+      >
+        <Button.Label>Continue</Button.Label>
+      </Button>
+    </>
+  );
+}
 ```
 
 Use `show` when you need custom variants or derived actions.
 
 ```tsx
-ConfirmationDialog.show({
-  cancelLabel: 'Keep request',
-  confirmLabel: 'Cancel request',
-  description: "Your payment link will stop working.",
-  destructive: true,
-  title: 'Cancel this request?',
-  variant: 'prominent',
-});
+import { Button } from '@/components/ui/button';
+import { ConfirmationDialog, ConfirmationDialogHost } from '@/components/ui/confirmation-dialog';
+
+export function ProminentDialog() {
+  return (
+    <>
+      <ConfirmationDialogHost />
+      <Button
+        onPress={() =>
+          ConfirmationDialog.show({
+            cancelLabel: 'Keep request',
+            confirmLabel: 'Cancel request',
+            description: 'Your payment link will stop working.',
+            destructive: true,
+            title: 'Cancel this request?',
+            variant: 'prominent',
+          })
+        }
+      >
+        <Button.Label>Cancel request</Button.Label>
+      </Button>
+    </>
+  );
+}
 ```
 
 ## Variants
@@ -225,17 +273,32 @@ available. Android uses a dimmed RGBA backdrop. The content container remains a
 native squircle on both platforms.
 
 ```tsx
-<ConfirmationDialog
-  buttons={[
-    { text: 'Mute story', style: 'destructive' },
-    { text: 'Mute story and posts' },
-    { text: 'Cancel', style: 'cancel' },
-  ]}
-  open={open}
-  onOpenChange={setOpen}
-  title="Mute updates?"
-  variant="action-sheet"
-/>
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
+
+export function ActionSheetDialog() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <Button onPress={() => setOpen(true)}>
+        <Button.Label>Mute updates</Button.Label>
+      </Button>
+      <ConfirmationDialog
+        buttons={[
+          { text: 'Mute story', style: 'destructive' },
+          { text: 'Mute story and posts' },
+          { text: 'Cancel', style: 'cancel' },
+        ]}
+        open={open}
+        onOpenChange={setOpen}
+        title="Mute updates?"
+        variant="action-sheet"
+      />
+    </>
+  );
+}
 ```
 
 ## Props

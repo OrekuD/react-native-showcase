@@ -137,33 +137,41 @@ module, so the custom mode cannot run in Expo Go.
 items close it after selection.
 
 ```tsx
+import { useCallback } from 'react';
 import { Camera, Images } from 'lucide-react-native';
 import { Button } from '@/components/ui/button';
 import { Menu } from '@/components/ui/menu';
 
-<Menu>
-  <Menu.Trigger>
-    <Button variant="outline">
-      <Button.Label>Add media</Button.Label>
-    </Button>
-  </Menu.Trigger>
+export function MediaMenu() {
+  const openCamera = useCallback(() => {}, []);
+  const openLibrary = useCallback(() => {}, []);
 
-  <Menu.Content align="start">
-    <Menu.Item
-      description="Take a new photo or video."
-      icon={<Camera color="#151513" size={20} />}
-      onSelect={openCamera}
-    >
-      Camera
-    </Menu.Item>
-    <Menu.Item
-      icon={<Images color="#151513" size={20} />}
-      onSelect={openLibrary}
-    >
-      Photos
-    </Menu.Item>
-  </Menu.Content>
-</Menu>
+  return (
+    <Menu>
+      <Menu.Trigger>
+        <Button variant="outline">
+          <Button.Label>Add media</Button.Label>
+        </Button>
+      </Menu.Trigger>
+
+      <Menu.Content align="start">
+        <Menu.Item
+          description="Take a new photo or video."
+          icon={<Camera color="#151513" size={20} />}
+          onSelect={openCamera}
+        >
+          Camera
+        </Menu.Item>
+        <Menu.Item
+          icon={<Images color="#151513" size={20} />}
+          onSelect={openLibrary}
+        >
+          Photos
+        </Menu.Item>
+      </Menu.Content>
+    </Menu>
+  );
+}
 ```
 
 ## Custom menu
@@ -174,13 +182,31 @@ and optional light haptic feedback. They scale briefly on press without adding
 a pressed background.
 
 ```tsx
-<Menu.Content align="end" size="compact">
-  <Menu.Item icon={<Camera color="#151513" size={20} />}>Camera</Menu.Item>
-  <Menu.Item icon={<Images color="#151513" size={20} />}>Photos</Menu.Item>
-  <Menu.Item destructive haptics onSelect={removeMedia}>
-    Delete
-  </Menu.Item>
-</Menu.Content>
+import { Camera, Images } from 'lucide-react-native';
+import { Button } from '@/components/ui/button';
+import { Menu } from '@/components/ui/menu';
+
+export function CompactMenu() {
+  const removeMedia = () => {};
+
+  return (
+    <Menu>
+      <Menu.Trigger>
+        <Button variant="outline">
+          <Button.Label>Quick actions</Button.Label>
+        </Button>
+      </Menu.Trigger>
+
+      <Menu.Content align="end" size="compact">
+        <Menu.Item icon={<Camera color="#151513" size={20} />}>Camera</Menu.Item>
+        <Menu.Item icon={<Images color="#151513" size={20} />}>Photos</Menu.Item>
+        <Menu.Item destructive haptics onSelect={removeMedia}>
+          Delete
+        </Menu.Item>
+      </Menu.Content>
+    </Menu>
+  );
+}
 ```
 
 | `size` | Treatment |
@@ -195,21 +221,33 @@ menu. Native mode uses the same trigger composition, but does not render
 `Menu.Content`.
 
 ```tsx
-<Menu
-  actions={[
-    { id: 'rename', image: 'pencil', title: 'Rename' },
-    { id: 'delete', image: 'trash', title: 'Delete', attributes: { destructive: true } },
-  ]}
-  mode="native"
-  onSelect={(id) => console.log(id)}
-  title="File"
->
-  <Menu.Trigger>
-    <Button variant="outline">
-      <Button.Label>File actions</Button.Label>
-    </Button>
-  </Menu.Trigger>
-</Menu>
+import { Button } from '@/components/ui/button';
+import { Menu } from '@/components/ui/menu';
+
+export function NativeFileMenu() {
+  return (
+    <Menu
+      actions={[
+        { id: 'rename', image: 'pencil', title: 'Rename' },
+        {
+          id: 'delete',
+          image: 'trash',
+          title: 'Delete',
+          attributes: { destructive: true },
+        },
+      ]}
+      mode="native"
+      onSelect={(id) => console.log(id)}
+      title="File"
+    >
+      <Menu.Trigger>
+        <Button variant="outline">
+          <Button.Label>File actions</Button.Label>
+        </Button>
+      </Menu.Trigger>
+    </Menu>
+  );
+}
 ```
 
 ## Theming
@@ -219,18 +257,33 @@ menu. Native mode uses the same trigger composition, but does not render
 platform menu appearance.
 
 ```tsx
+import { Button } from '@/components/ui/button';
 import { Menu, MenuThemeProvider } from '@/components/ui/menu';
 
-<MenuThemeProvider
-  theme={{
-    backgroundColor: '#EEF4FF',
-    iconBackgroundColor: '#DDEAFF',
-    labelColor: '#172B4D',
-    separatorColor: '#C7D8F5',
-  }}
->
-  <FileMenu />
-</MenuThemeProvider>
+export function ThemedMenu() {
+  return (
+    <MenuThemeProvider
+      theme={{
+        backgroundColor: '#EEF4FF',
+        iconBackgroundColor: '#DDEAFF',
+        labelColor: '#172B4D',
+        separatorColor: '#C7D8F5',
+      }}
+    >
+      <Menu>
+        <Menu.Trigger>
+          <Button variant="outline">
+            <Button.Label>Themed menu</Button.Label>
+          </Button>
+        </Menu.Trigger>
+        <Menu.Content>
+          <Menu.Item>Rename</Menu.Item>
+          <Menu.Item>Move</Menu.Item>
+        </Menu.Content>
+      </Menu>
+    </MenuThemeProvider>
+  );
+}
 ```
 
 ## Props

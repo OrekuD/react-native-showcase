@@ -109,8 +109,13 @@ your application.
 
 ```tsx
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { Text } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Toast } from '@/components/ui/toast';
+
+function AppContent() {
+  return <Text>App content</Text>;
+}
 
 export function App() {
   return (
@@ -129,10 +134,12 @@ export function App() {
 ## Show a toast
 
 ```tsx
-import { useToast } from '@/components/ui/toast';
+import { Button } from '@/components/ui/button';
+import { Toast, useToast } from '@/components/ui/toast';
 
 function SaveButton() {
   const toast = useToast();
+  const undoSave = () => {};
 
   return (
     <Button
@@ -145,6 +152,15 @@ function SaveButton() {
     >
       <Button.Label>Save</Button.Label>
     </Button>
+  );
+}
+
+export function SaveToastExample() {
+  return (
+    <Toast.Provider>
+      <SaveButton />
+      <Toast.Viewport />
+    </Toast.Provider>
   );
 }
 ```
@@ -160,10 +176,34 @@ it pulses instead of adding a duplicate. Once it has left, the same id enters
 normally again.
 
 ```tsx
-toast.show({
-  id: 'clipboard-copied',
-  message: 'Copied to clipboard',
-});
+import { Button } from '@/components/ui/button';
+import { Toast, useToast } from '@/components/ui/toast';
+
+function CopyButton() {
+  const toast = useToast();
+
+  return (
+    <Button
+      onPress={() =>
+        toast.show({
+          id: 'clipboard-copied',
+          message: 'Copied to clipboard',
+        })
+      }
+    >
+      <Button.Label>Copy</Button.Label>
+    </Button>
+  );
+}
+
+export function RepeatToastExample() {
+  return (
+    <Toast.Provider>
+      <CopyButton />
+      <Toast.Viewport />
+    </Toast.Provider>
+  );
+}
 ```
 
 ## Position, stacking, and swipe
@@ -183,16 +223,40 @@ Use `ToastThemeProvider` or the `theme` prop on `Toast.Provider` for shared
 tokens. Every `toast.show` call can override those tokens locally.
 
 ```tsx
-toast.show({
-  message: 'Your invites are on their way',
-  theme: {
-    backgroundColor: '#3FAF81',
-    borderColor: 'rgba(255, 255, 255, 0.16)',
-    borderRadius: 20,
-    labelColor: '#FFFFFF',
-    layout: { paddingHorizontal: 14, paddingVertical: 9 },
-  },
-});
+import { Button } from '@/components/ui/button';
+import { Toast, useToast } from '@/components/ui/toast';
+
+function InviteButton() {
+  const toast = useToast();
+
+  return (
+    <Button
+      onPress={() =>
+        toast.show({
+          message: 'Your invites are on their way',
+          theme: {
+            backgroundColor: '#3FAF81',
+            borderColor: 'rgba(255, 255, 255, 0.16)',
+            borderRadius: 20,
+            labelColor: '#FFFFFF',
+            layout: { paddingHorizontal: 14, paddingVertical: 9 },
+          },
+        })
+      }
+    >
+      <Button.Label>Send invites</Button.Label>
+    </Button>
+  );
+}
+
+export function ThemedToastExample() {
+  return (
+    <Toast.Provider>
+      <InviteButton />
+      <Toast.Viewport />
+    </Toast.Provider>
+  );
+}
 ```
 
 ## Props
@@ -218,4 +282,3 @@ toast.show({
 | `dismissible` | `boolean` | `false` | Shows an accessible close control. |
 | `durationMs` | `number \| null` | `5000` | Lifetime; `null` keeps the toast visible. |
 | `theme` | `ToastThemeOverride` | — | Visual tokens for this notification only. |
-

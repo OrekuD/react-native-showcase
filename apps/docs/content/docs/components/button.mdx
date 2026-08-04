@@ -135,6 +135,10 @@ Expo Go cannot load that native module.
 import { Button } from '@/components/ui/button';
 
 export function Actions() {
+  const save = () => {};
+  const preview = () => {};
+  const openDocs = () => {};
+
   return (
     <>
       <Button onPress={save}>
@@ -157,24 +161,36 @@ Add an icon with a render function when the icon needs the active foreground
 color and size:
 
 ```tsx
-<Button onPress={download}>
-  <Button.Icon>
-    {({ color, size }) => (
-      <DownloadIcon color={color} size={size} />
-    )}
-  </Button.Icon>
-  <Button.Label>Download file</Button.Label>
-</Button>
+import { Download } from 'lucide-react-native';
+import { Button } from '@/components/ui/button';
+
+export function DownloadButton() {
+  return (
+    <Button onPress={() => {}}>
+      <Button.Icon>
+        {({ color, size }) => <Download color={color} size={size} />}
+      </Button.Icon>
+      <Button.Label>Download file</Button.Label>
+    </Button>
+  );
+}
 ```
 
 For an icon-only button, use `size="icon"` and provide an accessible name:
 
 ```tsx
-<Button accessibilityLabel="Add item" size="icon">
-  <Button.Icon>
-    {({ color, size }) => <PlusIcon color={color} size={size} />}
-  </Button.Icon>
-</Button>
+import { Plus } from 'lucide-react-native';
+import { Button } from '@/components/ui/button';
+
+export function AddButton() {
+  return (
+    <Button accessibilityLabel="Add item" size="icon">
+      <Button.Icon>
+        {({ color, size }) => <Plus color={color} size={size} />}
+      </Button.Icon>
+    </Button>
+  );
+}
 ```
 
 ## Sizes
@@ -184,23 +200,32 @@ touch target, and `icon` for a square icon-only control. Each size keeps the
 height, horizontal padding, icon slot, and label font size in sync.
 
 ```tsx
-<Button size="sm">
-  <Button.Label>Small</Button.Label>
-</Button>
+import { Plus } from 'lucide-react-native';
+import { Button } from '@/components/ui/button';
 
-<Button size="md">
-  <Button.Label>Medium</Button.Label>
-</Button>
+export function ButtonSizes() {
+  return (
+    <>
+      <Button size="sm">
+        <Button.Label>Small</Button.Label>
+      </Button>
 
-<Button size="lg">
-  <Button.Label>Large</Button.Label>
-</Button>
+      <Button size="md">
+        <Button.Label>Medium</Button.Label>
+      </Button>
 
-<Button accessibilityLabel="Add item" size="icon">
-  <Button.Icon>
-    {({ color, size }) => <PlusIcon color={color} size={size} />}
-  </Button.Icon>
-</Button>
+      <Button size="lg">
+        <Button.Label>Large</Button.Label>
+      </Button>
+
+      <Button accessibilityLabel="Add item" size="icon">
+        <Button.Icon>
+          {({ color, size }) => <Plus color={color} size={size} />}
+        </Button.Icon>
+      </Button>
+    </>
+  );
+}
 ```
 
 ## Variants
@@ -220,13 +245,29 @@ being processed. Loading also disables the press target, marks it busy for
 assistive technology, and swaps each icon slot for an `ActivityIndicator`.
 
 ```tsx
-<Button disabled>
-  <Button.Label>Unavailable</Button.Label>
-</Button>
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
 
-<Button loading={isSaving} onPress={save}>
-  <Button.Label>{isSaving ? 'Saving' : 'Save changes'}</Button.Label>
-</Button>
+export function ButtonStates() {
+  const [isSaving, setIsSaving] = useState(false);
+
+  const save = () => {
+    setIsSaving(true);
+    setTimeout(() => setIsSaving(false), 900);
+  };
+
+  return (
+    <>
+      <Button disabled>
+        <Button.Label>Unavailable</Button.Label>
+      </Button>
+
+      <Button loading={isSaving} onPress={save}>
+        <Button.Label>{isSaving ? 'Saving' : 'Save changes'}</Button.Label>
+      </Button>
+    </>
+  );
+}
 ```
 
 Set `haptics` to enable a light impact after a successful press. It is disabled
@@ -267,29 +308,33 @@ import {
   ButtonThemeProvider,
 } from '@/components/ui/button';
 
-<ButtonThemeProvider
-  theme={{
-    cornerSmoothing: 0.9,
-    label: { fontSize: 17 },
-    sizes: {
-      lg: {
-        height: 64,
-        labelFontSize: 19,
-        paddingHorizontal: 30,
-      },
-    },
-    variants: {
-      primary: {
-        backgroundColor: '#28594A',
-        foregroundColor: '#F4FBF7',
-      },
-    },
-  }}
->
-  <Button>
-    <Button.Label>Provider theme</Button.Label>
-  </Button>
-</ButtonThemeProvider>;
+export function ThemedButton() {
+  return (
+    <ButtonThemeProvider
+      theme={{
+        cornerSmoothing: 0.9,
+        label: { fontSize: 17 },
+        sizes: {
+          lg: {
+            height: 64,
+            labelFontSize: 19,
+            paddingHorizontal: 30,
+          },
+        },
+        variants: {
+          primary: {
+            backgroundColor: '#28594A',
+            foregroundColor: '#F4FBF7',
+          },
+        },
+      }}
+    >
+      <Button>
+        <Button.Label>Provider theme</Button.Label>
+      </Button>
+    </ButtonThemeProvider>
+  );
+}
 ```
 
 The per-button `theme` override accepts appearance, label, size, and corner

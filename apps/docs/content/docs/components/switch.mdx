@@ -172,21 +172,32 @@ Custom mode has three treatments:
 | `outline` | Transparent track with a visible border. |
 
 ```tsx
-<Switch label="Solid" value={solid} onValueChange={setSolid} />
+import { useState } from 'react';
+import { Switch } from '@/components/ui/switch';
 
-<Switch
-  label="Outline"
-  value={outlined}
-  onValueChange={setOutlined}
-  variant="outline"
-/>
+export function SwitchModes() {
+  const [solid, setSolid] = useState(false);
+  const [outlined, setOutlined] = useState(false);
+  const [systemSetting, setSystemSetting] = useState(false);
 
-<Switch
-  label="System setting"
-  mode="native"
-  value={systemSetting}
-  onValueChange={setSystemSetting}
-/>
+  return (
+    <>
+      <Switch label="Solid" value={solid} onValueChange={setSolid} />
+      <Switch
+        label="Outline"
+        value={outlined}
+        onValueChange={setOutlined}
+        variant="outline"
+      />
+      <Switch
+        label="System setting"
+        mode="native"
+        value={systemSetting}
+        onValueChange={setSystemSetting}
+      />
+    </>
+  );
+}
 ```
 
 ## Thumb icons
@@ -197,17 +208,25 @@ one fades out faster from the same position.
 
 ```tsx
 import { Check, X } from 'lucide-react-native';
+import { useState } from 'react';
+import { Switch } from '@/components/ui/switch';
 
-<Switch
-  label="Notifications"
-  value={notificationsEnabled}
-  onValueChange={setNotificationsEnabled}
-  variant="solid-tight"
-  thumbIcons={{
-    off: <X color="#A1A1AA" size={15} strokeWidth={2.5} />,
-    on: <Check color="#5962EE" size={15} strokeWidth={2.8} />,
-  }}
-/>
+export function IconSwitch() {
+  const [notificationsEnabled, setNotificationsEnabled] = useState(false);
+
+  return (
+    <Switch
+      label="Notifications"
+      value={notificationsEnabled}
+      onValueChange={setNotificationsEnabled}
+      variant="solid-tight"
+      thumbIcons={{
+        off: <X color="#A1A1AA" size={15} strokeWidth={2.5} />,
+        on: <Check color="#5962EE" size={15} strokeWidth={2.8} />,
+      }}
+    />
+  );
+}
 ```
 
 Icons apply only to custom mode. Each state is optional, so either side can be
@@ -221,49 +240,66 @@ native `trackColor` and `thumbColor` values. Border color is used by custom
 mode only.
 
 ```tsx
+import { useState } from 'react';
 import {
   Switch,
   SwitchThemeProvider,
 } from '@/components/ui/switch';
 
-<SwitchThemeProvider
-  theme={{
-    off: {
-      borderColor: '#AAB9B1',
-      thumbColor: '#FFFFFF',
-      trackColor: '#DDE9E1',
-    },
-    on: {
-      borderColor: '#28594A',
-      thumbColor: '#FFFFFF',
-      trackColor: '#28594A',
-    },
-  }}
->
-  <Switch label="Custom" value={custom} onValueChange={setCustom} />
-  <Switch
-    label="Native"
-    mode="native"
-    value={native}
-    onValueChange={setNative}
-  />
-</SwitchThemeProvider>
+export function ThemedSwitches() {
+  const [custom, setCustom] = useState(false);
+  const [native, setNative] = useState(false);
+
+  return (
+    <SwitchThemeProvider
+      theme={{
+        off: {
+          borderColor: '#AAB9B1',
+          thumbColor: '#FFFFFF',
+          trackColor: '#DDE9E1',
+        },
+        on: {
+          borderColor: '#28594A',
+          thumbColor: '#FFFFFF',
+          trackColor: '#28594A',
+        },
+      }}
+    >
+      <Switch label="Custom" value={custom} onValueChange={setCustom} />
+      <Switch
+        label="Native"
+        mode="native"
+        value={native}
+        onValueChange={setNative}
+      />
+    </SwitchThemeProvider>
+  );
+}
 ```
 
 Override the same semantic states on one Switch without repeating its active
 variant:
 
 ```tsx
-<Switch
-  label="Private account"
-  value={isPrivate}
-  onValueChange={setIsPrivate}
-  variant="outline"
-  theme={{
-    on: { borderColor: '#8B5CF6', thumbColor: '#8B5CF6' },
-    off: { borderColor: '#D1D5DB', thumbColor: '#A1A1AA' },
-  }}
-/>
+import { useState } from 'react';
+import { Switch } from '@/components/ui/switch';
+
+export function LocallyThemedSwitch() {
+  const [isPrivate, setIsPrivate] = useState(false);
+
+  return (
+    <Switch
+      label="Private account"
+      value={isPrivate}
+      onValueChange={setIsPrivate}
+      variant="outline"
+      theme={{
+        on: { borderColor: '#8B5CF6', thumbColor: '#8B5CF6' },
+        off: { borderColor: '#D1D5DB', thumbColor: '#A1A1AA' },
+      }}
+    />
+  );
+}
 ```
 
 ## Haptics and motion

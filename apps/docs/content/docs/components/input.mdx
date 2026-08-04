@@ -170,15 +170,27 @@ Use the appearance that fits the surrounding form:
 | `external` | A conventional field with the label above the input container. |
 
 ```tsx
-<Input.Root appearance="stacked">
-  <Input.Label>Last name</Input.Label>
-  <Input.Control value={lastName} onChangeText={setLastName} />
-</Input.Root>
+import { useState } from 'react';
+import { Input } from '@/components/ui/input';
 
-<Input.Root appearance="notched">
-  <Input.Label required>First name</Input.Label>
-  <Input.Control value={firstName} onChangeText={setFirstName} />
-</Input.Root>
+export function LabeledFields() {
+  const [lastName, setLastName] = useState('Doe');
+  const [firstName, setFirstName] = useState('Trisha');
+
+  return (
+    <>
+      <Input.Root appearance="stacked">
+        <Input.Label>Last name</Input.Label>
+        <Input.Control value={lastName} onChangeText={setLastName} />
+      </Input.Root>
+
+      <Input.Root appearance="notched">
+        <Input.Label required>First name</Input.Label>
+        <Input.Control value={firstName} onChangeText={setFirstName} />
+      </Input.Root>
+    </>
+  );
+}
 ```
 
 ## Sizes
@@ -189,17 +201,25 @@ has the same height for every appearance. Labels outside the container add to
 the overall footprint of `notched` and `external` fields.
 
 ```tsx
-<Input.Root appearance="filled" size="sm">
-  <Input.Control placeholder="Small" />
-</Input.Root>
+import { Input } from '@/components/ui/input';
 
-<Input.Root appearance="filled" size="md">
-  <Input.Control placeholder="Medium" />
-</Input.Root>
+export function InputSizes() {
+  return (
+    <>
+      <Input.Root appearance="filled" size="sm">
+        <Input.Control placeholder="Small" />
+      </Input.Root>
 
-<Input.Root appearance="filled" size="lg">
-  <Input.Control placeholder="Large" />
-</Input.Root>
+      <Input.Root appearance="filled" size="md">
+        <Input.Control placeholder="Medium" />
+      </Input.Root>
+
+      <Input.Root appearance="filled" size="lg">
+        <Input.Control placeholder="Large" />
+      </Input.Root>
+    </>
+  );
+}
 ```
 
 The same sizes work with `stacked`, `notched`, and `external` without changing
@@ -211,19 +231,31 @@ Every appearance supports the same status and message composition. `error`
 changes the shell and message color, while `success` provides a positive state.
 
 ```tsx
-<Input.Root appearance="external" status="error">
-  <Input.Label required>Email</Input.Label>
-  <Input.Control value={email} onChangeText={setEmail} />
-  <Input.Message tone="error">
-    Enter a valid email address.
-  </Input.Message>
-</Input.Root>
+import { useState } from 'react';
+import { Input } from '@/components/ui/input';
 
-<Input.Root appearance="stacked" status="success">
-  <Input.Label>Username</Input.Label>
-  <Input.Control value={username} onChangeText={setUsername} />
-  <Input.Message tone="success">Username is available.</Input.Message>
-</Input.Root>
+export function ValidationStates() {
+  const [email, setEmail] = useState('not-an-email');
+  const [username, setUsername] = useState('showcase');
+
+  return (
+    <>
+      <Input.Root appearance="external" status="error">
+        <Input.Label required>Email</Input.Label>
+        <Input.Control value={email} onChangeText={setEmail} />
+        <Input.Message tone="error">
+          Enter a valid email address.
+        </Input.Message>
+      </Input.Root>
+
+      <Input.Root appearance="stacked" status="success">
+        <Input.Label>Username</Input.Label>
+        <Input.Control value={username} onChangeText={setUsername} />
+        <Input.Message tone="success">Username is available.</Input.Message>
+      </Input.Root>
+    </>
+  );
+}
 ```
 
 Use `invalid` when an error state is needed without rendering a message.
@@ -240,23 +272,29 @@ inputs, calls `onChangeText('')`, and returns focus to the control.
 
 ```tsx
 import { Search as SearchIcon } from 'lucide-react-native';
+import { useState } from 'react';
+import { Input } from '@/components/ui/input';
 
-<Input.Root appearance="filled">
-  <Input.Leading>
-    <Input.Icon>
-      {({ color, size }) => (
-        <SearchIcon color={color} size={size} />
-      )}
-    </Input.Icon>
-  </Input.Leading>
-  <Input.Control
-    accessibilityLabel="Search components"
-    clearable
-    onChangeText={setQuery}
-    placeholder="Search components"
-    value={query}
-  />
-</Input.Root>
+export function SearchField() {
+  const [query, setQuery] = useState('');
+
+  return (
+    <Input.Root appearance="filled">
+      <Input.Leading>
+        <Input.Icon>
+          {({ color, size }) => <SearchIcon color={color} size={size} />}
+        </Input.Icon>
+      </Input.Leading>
+      <Input.Control
+        accessibilityLabel="Search components"
+        clearable
+        onChangeText={setQuery}
+        placeholder="Search components"
+        value={query}
+      />
+    </Input.Root>
+  );
+}
 ```
 
 Use `Input.Action` when a custom adornment is interactive. Status changes
@@ -264,16 +302,23 @@ animate inside a fixed icon slot; pass `animationKey` when a custom icon swap
 is driven by something other than the input status.
 
 ```tsx
-<Input.Root appearance="filled">
-  <Input.Control placeholder="Search" />
-  <Input.Trailing>
-    <Input.Action accessibilityLabel="Search">
-      <Input.Icon>
-        {({ color, size }) => <SearchIcon color={color} size={size} />}
-      </Input.Icon>
-    </Input.Action>
-  </Input.Trailing>
-</Input.Root>
+import { Search as SearchIcon } from 'lucide-react-native';
+import { Input } from '@/components/ui/input';
+
+export function SearchActionField() {
+  return (
+    <Input.Root appearance="filled">
+      <Input.Control placeholder="Search" />
+      <Input.Trailing>
+        <Input.Action accessibilityLabel="Search" onPress={() => {}}>
+          <Input.Icon>
+            {({ color, size }) => <SearchIcon color={color} size={size} />}
+          </Input.Icon>
+        </Input.Action>
+      </Input.Trailing>
+    </Input.Root>
+  );
+}
 ```
 
 `clearable` is ignored when `secureEntry` or a custom `Input.Trailing` is
@@ -285,9 +330,15 @@ Use `focusColor` when one color should drive the active border, label, caret,
 and adornments for a field.
 
 ```tsx
-<Input.Root appearance="filled" focusColor="#6558D9">
-  <Input.Control clearable placeholder="Email address" />
-</Input.Root>
+import { Input } from '@/components/ui/input';
+
+export function FocusColorField() {
+  return (
+    <Input.Root appearance="filled" focusColor="#6558D9">
+      <Input.Control clearable placeholder="Email address" />
+    </Input.Root>
+  );
+}
 ```
 
 For separate active content and border colors, use the theme tokens described
@@ -300,13 +351,19 @@ Eye/EyeOff visibility action. The action is accessible and can be replaced with
 your own `Input.PasswordToggle` composition when needed.
 
 ```tsx
-<Input.Root appearance="external" secureEntry>
-  <Input.Label required>Password</Input.Label>
-  <Input.Control autoComplete="current-password" />
-  <Input.Message tone="info">
-    Use at least 8 characters.
-  </Input.Message>
-</Input.Root>
+import { Input } from '@/components/ui/input';
+
+export function PasswordField() {
+  return (
+    <Input.Root appearance="external" secureEntry>
+      <Input.Label required>Password</Input.Label>
+      <Input.Control autoComplete="current-password" />
+      <Input.Message tone="info">
+        Use at least 8 characters.
+      </Input.Message>
+    </Input.Root>
+  );
+}
 ```
 
 ## Theming
@@ -321,43 +378,53 @@ import {
   InputThemeProvider,
 } from '@/components/ui/input';
 
-<InputThemeProvider
-  theme={{
-    appearances: {
-      filled: { backgroundColor: '#E8F0EC' },
-    },
-    colors: {
-      filledFocusBorder: '#4D806E',
-      focus: '#28594A',
-    },
-  }}
->
-  <Input.Root appearance="filled">
-    <Input.Control placeholder="Provider theme" />
-  </Input.Root>
-</InputThemeProvider>;
+export function ThemedInput() {
+  return (
+    <InputThemeProvider
+      theme={{
+        appearances: {
+          filled: { backgroundColor: '#E8F0EC' },
+        },
+        colors: {
+          filledFocusBorder: '#4D806E',
+          focus: '#28594A',
+        },
+      }}
+    >
+      <Input.Root appearance="filled">
+        <Input.Control placeholder="Provider theme" />
+      </Input.Root>
+    </InputThemeProvider>
+  );
+}
 ```
 
 Use the root `theme` prop for one field without changing its surrounding
 provider defaults.
 
 ```tsx
-<Input.Root
-  appearance="filled"
-  theme={{
-    appearance: {
-      backgroundColor: '#EEE9FF',
-      borderRadius: 16,
-    },
-    colors: {
-      filledFocusBorder: '#725DB7',
-      focus: '#5138A5',
-    },
-    cornerSmoothing: 0.9,
-  }}
->
-  <Input.Control placeholder="Per-input theme" />
-</Input.Root>
+import { Input } from '@/components/ui/input';
+
+export function LocallyThemedInput() {
+  return (
+    <Input.Root
+      appearance="filled"
+      theme={{
+        appearance: {
+          backgroundColor: '#EEE9FF',
+          borderRadius: 16,
+        },
+        colors: {
+          filledFocusBorder: '#725DB7',
+          focus: '#5138A5',
+        },
+        cornerSmoothing: 0.9,
+      }}
+    >
+      <Input.Control placeholder="Per-input theme" />
+    </Input.Root>
+  );
+}
 ```
 
 ## Props

@@ -150,17 +150,34 @@ Pass `mode="native"` to turn the options into Expo UI actions. The selected
 action is marked by the platform menu.
 
 ```tsx
-<Select mode="native" title="Workspace" value={value} onValueChange={setValue}>
-  <Select.Trigger>
-    <Button variant="outline">
-      <Button.Label><Select.Value /></Button.Label>
-    </Button>
-  </Select.Trigger>
-  <Select.Content>
-    <Select.Item value="personal">Personal</Select.Item>
-    <Select.Item value="design">Design</Select.Item>
-  </Select.Content>
-</Select>
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Select } from '@/components/ui/select';
+
+export function NativeWorkspaceSelect() {
+  const [value, setValue] = useState('design');
+
+  return (
+    <Select
+      mode="native"
+      title="Workspace"
+      value={value}
+      onValueChange={setValue}
+    >
+      <Select.Trigger>
+        <Button variant="outline">
+          <Button.Label>
+            <Select.Value />
+          </Button.Label>
+        </Button>
+      </Select.Trigger>
+      <Select.Content>
+        <Select.Item value="personal">Personal</Select.Item>
+        <Select.Item value="design">Design</Select.Item>
+      </Select.Content>
+    </Select>
+  );
+}
 ```
 
 ## Density and rich options
@@ -169,11 +186,29 @@ action is marked by the platform menu.
 icon, description, disabled state, and optional light haptic feedback.
 
 ```tsx
-<Select.Content align="end" size="compact">
-  <Select.Item value="recent">Most recent</Select.Item>
-  <Select.Item value="name">Name</Select.Item>
-  <Select.Item disabled value="archived">Archived</Select.Item>
-</Select.Content>
+import { Button } from '@/components/ui/button';
+import { Select } from '@/components/ui/select';
+
+export function CompactSelect() {
+  return (
+    <Select defaultValue="recent">
+      <Select.Trigger>
+        <Button variant="outline">
+          <Button.Label>
+            <Select.Value placeholder="Sort by" />
+          </Button.Label>
+        </Button>
+      </Select.Trigger>
+      <Select.Content align="end" size="compact">
+        <Select.Item value="recent">Most recent</Select.Item>
+        <Select.Item value="name">Name</Select.Item>
+        <Select.Item disabled value="archived">
+          Archived
+        </Select.Item>
+      </Select.Content>
+    </Select>
+  );
+}
 ```
 
 ## Theming
@@ -182,18 +217,39 @@ icon, description, disabled state, and optional light haptic feedback.
 Select for a local override.
 
 ```tsx
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
 import { Select, SelectThemeProvider } from '@/components/ui/select';
 
-<SelectThemeProvider
-  theme={{
-    backgroundColor: '#EEF4FF',
-    checkmarkColor: '#205EAF',
-    iconBackgroundColor: '#DDEAFF',
-    labelColor: '#172B4D',
-  }}
->
-  <WorkspaceSelect />
-</SelectThemeProvider>
+export function ThemedSelect() {
+  const [value, setValue] = useState('design');
+
+  return (
+    <SelectThemeProvider
+      theme={{
+        backgroundColor: '#EEF4FF',
+        checkmarkColor: '#205EAF',
+        iconBackgroundColor: '#DDEAFF',
+        labelColor: '#172B4D',
+      }}
+    >
+      <Select value={value} onValueChange={setValue}>
+        <Select.Trigger>
+          <Button variant="outline">
+            <Button.Label>
+              <Select.Value placeholder="Choose workspace" />
+            </Button.Label>
+          </Button>
+        </Select.Trigger>
+        <Select.Content>
+          <Select.Item value="personal">Personal</Select.Item>
+          <Select.Item value="design">Design</Select.Item>
+          <Select.Item value="engineering">Engineering</Select.Item>
+        </Select.Content>
+      </Select>
+    </SelectThemeProvider>
+  );
+}
 ```
 
 ## Props
@@ -227,4 +283,3 @@ import { Select, SelectThemeProvider } from '@/components/ui/select';
 | `icon` | `Item` | `ReactNode` | — | Leading custom-mode icon. |
 | `haptics` | `Item` | `boolean` | `false` | Enables light selection feedback. |
 | `disabled` | `Item` | `boolean` | `false` | Prevents selection. |
-

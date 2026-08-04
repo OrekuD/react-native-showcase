@@ -134,6 +134,7 @@ import { OtpInput } from '@/components/ui/otp-input';
 
 export function VerificationCode() {
   const [code, setCode] = useState('');
+  const verifyCode = (value: string) => console.log(value);
 
   return (
     <OtpInput
@@ -162,13 +163,18 @@ into two groups with a real, styled divider rather than placing text over the
 slots.
 
 ```tsx
-<OtpInput placeholder="******" separator variant="outline" />
+import { OtpInput } from '@/components/ui/otp-input';
 
-<OtpInput placeholder="••••••" separator variant="filled" />
-
-<OtpInput placeholder="••••••" separator variant="inline" />
-
-<OtpInput variant="underline" />
+export function OtpVariants() {
+  return (
+    <>
+      <OtpInput placeholder="******" separator variant="outline" />
+      <OtpInput placeholder="••••••" separator variant="filled" />
+      <OtpInput placeholder="••••••" separator variant="inline" />
+      <OtpInput variant="underline" />
+    </>
+  );
+}
 ```
 
 ## Sizes
@@ -177,9 +183,16 @@ slots.
 space; its cells, spacing, type, and separator all scale together.
 
 ```tsx
-<OtpInput placeholder="******" size="sm" />
+import { OtpInput } from '@/components/ui/otp-input';
 
-<OtpInput placeholder="******" size="lg" />
+export function OtpSizes() {
+  return (
+    <>
+      <OtpInput placeholder="******" size="sm" />
+      <OtpInput placeholder="******" size="lg" />
+    </>
+  );
+}
 ```
 
 ## Secure entry
@@ -189,12 +202,18 @@ can use the same bullet treatment or `*` characters; it is separate from the
 entered value.
 
 ```tsx
-<OtpInput
-  placeholder="••••••"
-  secureTextEntry
-  separator
-  variant="filled"
-/>
+import { OtpInput } from '@/components/ui/otp-input';
+
+export function SecureOtpInput() {
+  return (
+    <OtpInput
+      placeholder="••••••"
+      secureTextEntry
+      separator
+      variant="filled"
+    />
+  );
+}
 ```
 
 ## Focus and theming
@@ -203,7 +222,11 @@ Use `focusColor` when one color should style the active cell and cursor for a
 single OTP input.
 
 ```tsx
-<OtpInput focusColor="#28594A" placeholder="******" />
+import { OtpInput } from '@/components/ui/otp-input';
+
+export function FocusedOtpInput() {
+  return <OtpInput focusColor="#28594A" placeholder="******" />;
+}
 ```
 
 Use `OtpInputThemeProvider` when an OTP flow needs shared tokens. `focus` and
@@ -216,20 +239,24 @@ import {
   OtpInputThemeProvider,
 } from '@/components/ui/otp-input';
 
-<OtpInputThemeProvider
-  theme={{
-    colors: {
-      cursor: '#C2410C',
-      focus: '#28594A',
-      outlineBorder: '#AAB9B1',
-      placeholder: '#8C9A91',
-      separator: '#4C655B',
-      surface: '#E8F0EC',
-    },
-  }}
->
-  <OtpInput placeholder="••••••" separator variant="filled" />
-</OtpInputThemeProvider>;
+export function ThemedOtpInput() {
+  return (
+    <OtpInputThemeProvider
+      theme={{
+        colors: {
+          cursor: '#C2410C',
+          focus: '#28594A',
+          outlineBorder: '#AAB9B1',
+          placeholder: '#8C9A91',
+          separator: '#4C655B',
+          surface: '#E8F0EC',
+        },
+      }}
+    >
+      <OtpInput placeholder="••••••" separator variant="filled" />
+    </OtpInputThemeProvider>
+  );
+}
 ```
 
 ## Props

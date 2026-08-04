@@ -48,7 +48,15 @@ const timing = {
   reduceMotion: ReduceMotion.System,
 };
 
-export function RollingCurrency({ amount, formattedValue }) {
+type RollingCurrencyProps = {
+  amount: number;
+  formattedValue: string;
+};
+
+export function RollingCurrency({
+  amount,
+  formattedValue,
+}: RollingCurrencyProps) {
   return (
     <AnimatedRollingNumber
       accessibilityLabel={formattedValue}
@@ -67,12 +75,18 @@ Format the value separately from the animation. This keeps currency rules out of
 the visual component and makes the supported currencies explicit.
 
 ```ts
-const currency = new Intl.NumberFormat(locale, {
-  currency: currencyCode,
-  maximumFractionDigits: 2,
-  minimumFractionDigits: 2,
-  style: 'currency',
-}).format(amount);
+export function formatCurrency(
+  amount: number,
+  locale: string,
+  currencyCode: string,
+) {
+  return new Intl.NumberFormat(locale, {
+    currency: currencyCode,
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 2,
+    style: 'currency',
+  }).format(amount);
+}
 ```
 
 ## Motion
