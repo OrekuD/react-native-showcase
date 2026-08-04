@@ -11,7 +11,6 @@ import {
 } from "./confirmationDialogState";
 import {
   registerConfirmationDialogListener,
-  showCustomConfirmationDialog,
   type ConfirmationDialogRequest,
 } from "./confirmationDialogStore";
 
@@ -48,16 +47,7 @@ function selectWithCallback(
   onOpenChange?.(false);
 }
 
-function showNativeConfirmationDialog(options: ConfirmationDialogOptions): void {
-  Alert.alert(
-    options.title,
-    options.description,
-    getConfirmationDialogButtons(options),
-    getConfirmationDialogAlertOptions(options)
-  );
-}
-
-function ConfirmationDialogRoot({
+export function ConfirmationDialogRoot({
   buttons,
   cancelLabel,
   cancelable,
@@ -216,39 +206,6 @@ export function ConfirmationDialogHost() {
  * controlled component form. Custom UI is used by default; choose
  * `mode="native"` for the platform alert.
  */
-export const ConfirmationDialog = Object.assign(ConfirmationDialogRoot, {
-  alert(
-    title: string,
-    message?: string,
-    buttons?: AlertButton[],
-    options?: ConfirmationDialogAlertOptions
-  ): void {
-    const request: ConfirmationDialogOptions = {
-      buttons,
-      cancelable: options?.cancelable,
-      description: message,
-      mode: options?.mode,
-      onCancel: options?.onDismiss,
-      title,
-    };
-
-    if (resolveConfirmationDialogMode(options?.mode) === "native") {
-      Alert.alert(title, message, buttons, options);
-      return;
-    }
-
-    showCustomConfirmationDialog(request);
-  },
-  show(options: ConfirmationDialogOptions): void {
-    if (resolveConfirmationDialogMode(options.mode) === "native") {
-      showNativeConfirmationDialog(options);
-      return;
-    }
-
-    showCustomConfirmationDialog(options);
-  },
-});
-
 const styles = StyleSheet.create({
   host: {
     ...StyleSheet.absoluteFill,

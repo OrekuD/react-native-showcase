@@ -136,7 +136,7 @@ dialog portals for both the controlled and imperative APIs.
 
 ```tsx
 import { View } from 'react-native';
-import { ConfirmationDialogHost } from '@/components/ui/confirmation-dialog';
+import { ConfirmationDialogHost } from '@/components/ui/confirmation-dialog/ConfirmationDialog';
 
 export function App() {
   return (
@@ -156,7 +156,7 @@ state. Custom mode is the default.
 ```tsx
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
+import { ConfirmationDialog } from '@/components/ui/confirmation-dialog/ConfirmationDialogApi';
 
 export function DeleteComment() {
   const [open, setOpen] = useState(false);
@@ -191,7 +191,8 @@ custom dialog by default; choose `mode: 'native'` to use the system alert.
 
 ```tsx
 import { Button } from '@/components/ui/button';
-import { ConfirmationDialog, ConfirmationDialogHost } from '@/components/ui/confirmation-dialog';
+import { ConfirmationDialog } from '@/components/ui/confirmation-dialog/ConfirmationDialogApi';
+import { ConfirmationDialogHost } from '@/components/ui/confirmation-dialog/ConfirmationDialog';
 
 export function ImperativeDialogs() {
   const deleteDraft = () => {};
@@ -235,7 +236,8 @@ Use `show` when you need custom variants or derived actions.
 
 ```tsx
 import { Button } from '@/components/ui/button';
-import { ConfirmationDialog, ConfirmationDialogHost } from '@/components/ui/confirmation-dialog';
+import { ConfirmationDialog } from '@/components/ui/confirmation-dialog/ConfirmationDialogApi';
+import { ConfirmationDialogHost } from '@/components/ui/confirmation-dialog/ConfirmationDialog';
 
 export function ProminentDialog() {
   return (
@@ -275,7 +277,7 @@ native squircle on both platforms.
 ```tsx
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
+import { ConfirmationDialog } from '@/components/ui/confirmation-dialog/ConfirmationDialogApi';
 
 export function ActionSheetDialog() {
   const [open, setOpen] = useState(false);

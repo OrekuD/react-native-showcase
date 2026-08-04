@@ -4,11 +4,11 @@ import { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 import { ExampleScreen } from "../components/ExampleScreen";
-import {
-  ConfirmationDialog,
-  type ConfirmationDialogMode,
-  type ConfirmationDialogVariant,
-} from "../components/ui/confirmation-dialog";
+import { ConfirmationDialog } from "../components/ui/confirmation-dialog/ConfirmationDialogApi";
+import type {
+  ConfirmationDialogMode,
+  ConfirmationDialogVariant,
+} from "../components/ui/confirmation-dialog/confirmationDialogState";
 import { Button } from "../components/ui/button";
 import type { RootStackParamList } from "../navigation/types";
 

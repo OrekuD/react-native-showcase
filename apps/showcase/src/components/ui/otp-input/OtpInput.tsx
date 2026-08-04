@@ -98,6 +98,11 @@ type OtpSlotsProps = {
   variant: OtpInputVariant;
 };
 
+type OtpSlotEntry = {
+  id: string;
+  slot: SlotProps;
+};
+
 const OTP_SIZE_METRICS: Record<OtpInputSize, OtpSizeMetrics> = {
   sm: {
     cellGap: 8,
@@ -272,8 +277,10 @@ function InlineGroup({
   colors,
   metrics,
   secureTextEntry,
-  slots,
-}: Omit<SlotViewProps, "slot" | "variant"> & { slots: SlotProps[] }) {
+  entries,
+}: Omit<SlotViewProps, "slot" | "variant"> & { entries: OtpSlotEntry[] }) {
+  let isFirstSlot = true;
+
   return (
     <FastSquircleView
       cornerSmoothing={0.7}
@@ -286,16 +293,21 @@ function InlineGroup({
         },
       ]}
     >
-      {slots.map((slot, index) => (
-        <InlineSlot
-          colors={colors}
-          hasLeadingDivider={index > 0}
-          key={index}
-          metrics={metrics}
-          secureTextEntry={secureTextEntry}
-          slot={slot}
-        />
-      ))}
+      {entries.map((entry) => {
+        const hasLeadingDivider = !isFirstSlot;
+        isFirstSlot = false;
+
+        return (
+          <InlineSlot
+            colors={colors}
+            hasLeadingDivider={hasLeadingDivider}
+            key={entry.id}
+            metrics={metrics}
+            secureTextEntry={secureTextEntry}
+            slot={entry.slot}
+          />
+        );
+      })}
     </FastSquircleView>
   );
 }
@@ -304,18 +316,18 @@ function SlotRow({
   colors,
   metrics,
   secureTextEntry,
-  slots,
+  entries,
   variant,
-}: Omit<SlotViewProps, "slot"> & { slots: SlotProps[] }) {
+}: Omit<SlotViewProps, "slot"> & { entries: OtpSlotEntry[] }) {
   return (
     <View style={[styles.slotRow, { gap: metrics.cellGap }]}>
-      {slots.map((slot, index) => (
+      {entries.map((entry) => (
         <OtpSlot
           colors={colors}
-          key={index}
+          key={entry.id}
           metrics={metrics}
           secureTextEntry={secureTextEntry}
-          slot={slot}
+          slot={entry.slot}
           variant={variant}
         />
       ))}
@@ -332,6 +344,11 @@ function OtpSlots({
   slots,
   variant,
 }: OtpSlotsProps) {
+  let slotPosition = 0;
+  const entries = slots.map((slot) => ({
+    id: `otp-slot-${slotPosition++}`,
+    slot,
+  }));
   const showSeparator = shouldRenderOtpSeparator({
     numberOfDigits,
     separator,
@@ -358,7 +375,7 @@ function OtpSlots({
               colors={colors}
               metrics={metrics}
               secureTextEntry={secureTextEntry}
-              slots={slots.slice(0, splitIndex)}
+              entries={entries.slice(0, splitIndex)}
             />
             <View
               style={[
@@ -373,7 +390,7 @@ function OtpSlots({
               colors={colors}
               metrics={metrics}
               secureTextEntry={secureTextEntry}
-              slots={slots.slice(splitIndex)}
+              entries={entries.slice(splitIndex)}
             />
           </>
         ) : (
@@ -381,7 +398,7 @@ function OtpSlots({
             colors={colors}
             metrics={metrics}
             secureTextEntry={secureTextEntry}
-            slots={slots}
+            entries={entries}
           />
         )}
       </View>
@@ -406,7 +423,7 @@ function OtpSlots({
           colors={colors}
           metrics={metrics}
           secureTextEntry={secureTextEntry}
-          slots={slots.slice(0, splitIndex)}
+          entries={entries.slice(0, splitIndex)}
           variant={variant}
         />
         <View
@@ -422,7 +439,7 @@ function OtpSlots({
           colors={colors}
           metrics={metrics}
           secureTextEntry={secureTextEntry}
-          slots={slots.slice(splitIndex)}
+          entries={entries.slice(splitIndex)}
           variant={variant}
         />
       </View>
@@ -434,7 +451,7 @@ function OtpSlots({
       colors={colors}
       metrics={metrics}
       secureTextEntry={secureTextEntry}
-      slots={slots}
+      entries={entries}
       variant={variant}
     />
   );

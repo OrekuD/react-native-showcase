@@ -6,6 +6,14 @@
       "target": "toast/Toast.tsx"
     },
     {
+      "source": "../../../../apps/showcase/src/components/ui/toast/ToastNamespace.ts",
+      "target": "toast/ToastNamespace.ts"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/toast/ToastSurface.tsx",
+      "target": "toast/ToastSurface.tsx"
+    },
+    {
       "source": "../../../../apps/showcase/src/components/ui/toast/ToastThemeProvider.tsx",
       "target": "toast/ToastThemeProvider.tsx"
     },
@@ -18,8 +26,8 @@
       "target": "toast/toastTheme.ts"
     },
     {
-      "source": "../../../../apps/showcase/src/components/ui/toast/index.ts",
-      "target": "toast/index.ts"
+      "source": "../../../../apps/showcase/src/components/ui/outsetShadow.ts",
+      "target": "outsetShadow.ts"
     }
   ],
   "expoDependencies": [

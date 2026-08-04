@@ -6,6 +6,10 @@
       "target": "confirmation-dialog/ConfirmationDialog.tsx"
     },
     {
+      "source": "../../../../apps/showcase/src/components/ui/confirmation-dialog/ConfirmationDialogApi.ts",
+      "target": "confirmation-dialog/ConfirmationDialogApi.ts"
+    },
+    {
       "source": "../../../../apps/showcase/src/components/ui/confirmation-dialog/ConfirmationDialogOverlay.tsx",
       "target": "confirmation-dialog/ConfirmationDialogOverlay.tsx"
     },
@@ -18,8 +22,8 @@
       "target": "confirmation-dialog/confirmationDialogStore.ts"
     },
     {
-      "source": "../../../../apps/showcase/src/components/ui/confirmation-dialog/index.ts",
-      "target": "confirmation-dialog/index.ts"
+      "source": "../../../../apps/showcase/src/components/ui/outsetShadow.ts",
+      "target": "outsetShadow.ts"
     }
   ],
   "expoDependencies": [

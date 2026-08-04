@@ -6,13 +6,14 @@ import { StyleSheet, Text, View } from "react-native";
 
 import { ExampleScreen } from "../components/ExampleScreen";
 import { Button } from "../components/ui/button";
-import {
-  Toast,
-  useToast,
-  type ToastPosition,
-  type ToastStack,
-  type ToastThemeOverride,
-} from "../components/ui/toast";
+import { Toast } from "../components/ui/toast/ToastNamespace";
+import { useToast } from "../components/ui/toast/Toast";
+import { ToastThemeProvider } from "../components/ui/toast/ToastThemeProvider";
+import type {
+  ToastTheme,
+  ToastThemeOverride,
+} from "../components/ui/toast/toastTheme";
+import type { ToastPosition, ToastStack } from "../components/ui/toast/toastState";
 import type { RootStackParamList } from "../navigation/types";
 
 type ToastScreenProps = NativeStackScreenProps<RootStackParamList, "Toast">;
@@ -40,25 +41,31 @@ const INVERSE_TOAST_THEME = {
   labelColor: "#FFFFFF",
 } as const satisfies ToastThemeOverride;
 
+const TOAST_PROVIDER_THEME = {
+  shadowColor: "#181A17",
+} as const satisfies ToastTheme;
+
 export function ToastScreen({ navigation }: ToastScreenProps) {
   const [position, setPosition] = useState<ToastPosition>("bottom");
   const [stack, setStack] = useState<ToastStack>("deck");
 
   return (
-    <Toast.Provider maxToasts={3} position={position} stack={stack}>
-      <View style={styles.root}>
-        <ExampleScreen onBack={navigation.goBack} title="Toast">
-          <StatusBar style="dark" />
-          <ToastExamples
-            onPositionChange={setPosition}
-            onStackChange={setStack}
-            position={position}
-            stack={stack}
-          />
-        </ExampleScreen>
-        <Toast.Viewport testID="toast-viewport" />
-      </View>
-    </Toast.Provider>
+    <ToastThemeProvider theme={TOAST_PROVIDER_THEME}>
+      <Toast.Provider maxToasts={3} position={position} stack={stack}>
+        <View style={styles.root}>
+          <ExampleScreen onBack={navigation.goBack} title="Toast">
+            <StatusBar style="dark" />
+            <ToastExamples
+              onPositionChange={setPosition}
+              onStackChange={setStack}
+              position={position}
+              stack={stack}
+            />
+          </ExampleScreen>
+          <Toast.Viewport testID="toast-viewport" />
+        </View>
+      </Toast.Provider>
+    </ToastThemeProvider>
   );
 }
 

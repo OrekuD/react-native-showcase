@@ -19,7 +19,7 @@ import { ProgressScreen } from './src/screens/ProgressScreen';
 import { SelectScreen } from './src/screens/SelectScreen';
 import { SwitchScreen } from './src/screens/SwitchScreen';
 import { ToastScreen } from './src/screens/ToastScreen';
-import { ConfirmationDialogHost } from './src/components/ui/confirmation-dialog';
+import { ConfirmationDialogHost } from './src/components/ui/confirmation-dialog/ConfirmationDialog';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 

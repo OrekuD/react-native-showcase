@@ -1,7 +1,7 @@
 import { GlassView, isGlassEffectAPIAvailable } from "expo-glass-effect";
 import { X } from "lucide-react-native";
 import { Portal } from "@rn-primitives/portal";
-import { Fragment, useCallback, useEffect } from "react";
+import { Fragment, useCallback, useEffect, useEffectEvent } from "react";
 import {
   BackHandler,
   Platform,
@@ -28,6 +28,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { createOutsetShadow } from "../outsetShadow";
 import type { ConfirmationDialogRequest } from "./confirmationDialogStore";
 import type { ConfirmationDialogVariant } from "./confirmationDialogState";
 
@@ -164,21 +165,22 @@ export function ConfirmationDialogOverlay({
     isProminent ? 480 : 368
   );
   const useGlassBackdrop = Platform.OS === "ios" && isGlassEffectAPIAvailable();
+  const handleAndroidBackPress = useEffectEvent(() => {
+    if (cancelable) onDismiss();
+
+    return true;
+  });
 
   useEffect(() => {
     if (Platform.OS !== "android") return;
 
     const subscription = BackHandler.addEventListener(
       "hardwareBackPress",
-      () => {
-        if (cancelable) onDismiss();
-
-        return true;
-      }
+      () => handleAndroidBackPress()
     );
 
     return () => subscription.remove();
-  }, [cancelable, onDismiss]);
+  }, []);
 
   const displayButtons = isProminent
     ? [
@@ -186,19 +188,26 @@ export function ConfirmationDialogOverlay({
         ...request.buttons.filter((button) => button.style === "cancel"),
       ]
     : request.buttons;
-  const actions = displayButtons.map((button, index) => (
-    <Fragment key={`${button.text ?? "OK"}-${index}`}>
-      {isActionSheet && index > 0 ? (
+  const actionOccurrences = new Map<string, number>();
+  const actions = displayButtons.map((button, index) => {
+    const actionIdentity = `${button.style ?? "default"}-${button.text ?? "OK"}`;
+    const occurrence = actionOccurrences.get(actionIdentity) ?? 0;
+    actionOccurrences.set(actionIdentity, occurrence + 1);
+
+    return (
+      <Fragment key={`${request.id}-${actionIdentity}-${occurrence}`}>
+        {isActionSheet && index > 0 ? (
         <View style={styles.actionSheetSeparator} />
-      ) : null}
-      <ConfirmationDialogAction
-        button={button}
-        containerStyle={isCompact ? styles.compactAction : undefined}
-        onPress={onSelect}
-        variant={variant}
-      />
-    </Fragment>
-  ));
+        ) : null}
+        <ConfirmationDialogAction
+          button={button}
+          containerStyle={isCompact ? styles.compactAction : undefined}
+          onPress={onSelect}
+          variant={variant}
+        />
+      </Fragment>
+    );
+  });
   const panel = (
     <FastSquircleView
       cornerSmoothing={0.82}
@@ -349,10 +358,13 @@ const styles = StyleSheet.create({
     borderRadius: 26,
     borderWidth: 1,
     overflow: "hidden",
-    shadowColor: "#1D1D1B",
-    shadowOffset: { height: 16, width: 0 },
-    shadowOpacity: 0.18,
-    shadowRadius: 30,
+    ...createOutsetShadow({
+      blurRadius: 30,
+      color: "#1D1D1B",
+      elevation: 12,
+      offsetY: 16,
+      opacity: 0.18,
+    }),
   },
   actionSheetPanel: {
     borderRadius: 22,

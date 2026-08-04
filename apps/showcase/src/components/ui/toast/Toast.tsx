@@ -9,14 +9,11 @@ import {
   type ReactNode,
 } from "react";
 import {
-  Pressable,
   StyleSheet,
-  Text,
   View,
   type StyleProp,
   type ViewStyle,
 } from "react-native";
-import FastSquircleView from "react-native-fast-squircle";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, {
   Easing,
@@ -55,6 +52,7 @@ import {
   type ToastThemeOverride,
 } from "./toastTheme";
 import { useToastTheme } from "./ToastThemeProvider";
+import { ToastSurface } from "./ToastSurface";
 
 const TOAST_EASING = Easing.bezier(0.22, 1, 0.36, 1);
 const ENTER_FROM_BOTTOM = FadeInDown.duration(220)
@@ -565,118 +563,12 @@ function ToastItem({
                 exiting={position === "top" ? EXIT_TO_TOP : EXIT_TO_BOTTOM}
                 style={styles.toastContent}
               >
-                <Pressable
-                  accessibilityLabel={
-                    onExpand ? "Show all notifications" : undefined
-                  }
-                  accessibilityRole={onExpand ? "button" : undefined}
-                  disabled={!onExpand}
-                  onPress={onExpand}
-                >
-                  <FastSquircleView
-                    cornerSmoothing={tokens.cornerSmoothing}
-                    style={[
-                      styles.surface,
-                      {
-                        backgroundColor: tokens.surface.backgroundColor,
-                        borderColor: tokens.surface.borderColor,
-                        borderRadius: tokens.borderRadius,
-                        gap: tokens.layout.gap,
-                        minHeight: tokens.layout.minHeight,
-                        paddingHorizontal: tokens.layout.paddingHorizontal,
-                        paddingVertical: tokens.layout.paddingVertical,
-                        shadowColor: tokens.shadowColor,
-                      },
-                    ]}
-                  >
-                    {toast.icon ? (
-                      <View
-                        style={[
-                          styles.icon,
-                          {
-                            backgroundColor:
-                              tokens.surface.iconBackgroundColor,
-                            borderRadius: tokens.layout.iconSize / 2,
-                            height: tokens.layout.iconSize,
-                            width: tokens.layout.iconSize,
-                          },
-                        ]}
-                      >
-                        {toast.icon}
-                      </View>
-                    ) : null}
-                    <Text
-                      style={[
-                        styles.message,
-                        {
-                          color: tokens.surface.labelColor,
-                          fontSize: tokens.label.fontSize,
-                          fontWeight: tokens.label.fontWeight,
-                          letterSpacing: tokens.label.letterSpacing,
-                          lineHeight: tokens.label.lineHeight,
-                        },
-                      ]}
-                    >
-                      {toast.message}
-                    </Text>
-                    {toast.action ? (
-                      <Pressable
-                        accessibilityRole="button"
-                        hitSlop={8}
-                        onPress={(event) => {
-                          event.stopPropagation();
-                          toast.action?.onPress();
-                          if (toast.action?.dismissOnPress ?? true) {
-                            dismiss(toast.id);
-                          }
-                        }}
-                        style={({ pressed }) => [
-                          styles.action,
-                          pressed && styles.actionPressed,
-                        ]}
-                      >
-                        <Text
-                          style={[
-                            styles.actionLabel,
-                            {
-                              color: tokens.surface.actionColor,
-                              fontSize: tokens.actionLabel.fontSize,
-                              fontWeight: tokens.actionLabel.fontWeight,
-                              letterSpacing: tokens.actionLabel.letterSpacing,
-                              lineHeight: tokens.actionLabel.lineHeight,
-                            },
-                          ]}
-                        >
-                          {toast.action.label}
-                        </Text>
-                      </Pressable>
-                    ) : null}
-                    {toast.dismissible ? (
-                      <Pressable
-                        accessibilityLabel="Dismiss notification"
-                        accessibilityRole="button"
-                        hitSlop={8}
-                        onPress={(event) => {
-                          event.stopPropagation();
-                          dismiss(toast.id);
-                        }}
-                        style={({ pressed }) => [
-                          styles.dismiss,
-                          pressed && styles.dismissPressed,
-                        ]}
-                      >
-                        <Text
-                          style={[
-                            styles.dismissLabel,
-                            { color: tokens.surface.labelColor },
-                          ]}
-                        >
-                          ×
-                        </Text>
-                      </Pressable>
-                    ) : null}
-                  </FastSquircleView>
-                </Pressable>
+                <ToastSurface
+                  dismiss={dismiss}
+                  onExpand={onExpand}
+                  toast={toast}
+                  tokens={tokens}
+                />
               </Animated.View>
             </Animated.View>
           </Animated.View>
@@ -685,12 +577,6 @@ function ToastItem({
     </Animated.View>
   );
 }
-
-/** Compound toast namespace. */
-export const Toast = {
-  Provider: ToastProvider,
-  Viewport: ToastViewport,
-};
 
 const styles = StyleSheet.create({
   viewport: {
@@ -720,48 +606,5 @@ const styles = StyleSheet.create({
   },
   deckAppearance: {
     width: "100%",
-  },
-  surface: {
-    alignItems: "center",
-    borderWidth: 1,
-    flexDirection: "row",
-    shadowOffset: { height: 12, width: 0 },
-    shadowOpacity: 0.14,
-    shadowRadius: 20,
-  },
-  icon: {
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  message: {
-    flex: 1,
-  },
-  action: {
-    minHeight: 32,
-    justifyContent: "center",
-    transform: [{ scale: 1 }],
-  },
-  actionPressed: {
-    opacity: 0.64,
-    transform: [{ scale: 0.96 }],
-  },
-  actionLabel: {
-    textDecorationLine: "underline",
-  },
-  dismiss: {
-    alignItems: "center",
-    height: 32,
-    justifyContent: "center",
-    transform: [{ scale: 1 }],
-    width: 32,
-  },
-  dismissPressed: {
-    opacity: 0.58,
-    transform: [{ scale: 0.9 }],
-  },
-  dismissLabel: {
-    fontSize: 28,
-    fontWeight: "400",
-    lineHeight: 30,
   },
 });

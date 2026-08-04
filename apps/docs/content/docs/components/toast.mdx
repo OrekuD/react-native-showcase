@@ -111,7 +111,7 @@ your application.
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Text } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { Toast } from '@/components/ui/toast';
+import { Toast } from '@/components/ui/toast/ToastNamespace';
 
 function AppContent() {
   return <Text>App content</Text>;
@@ -135,7 +135,8 @@ export function App() {
 
 ```tsx
 import { Button } from '@/components/ui/button';
-import { Toast, useToast } from '@/components/ui/toast';
+import { useToast } from '@/components/ui/toast/Toast';
+import { Toast } from '@/components/ui/toast/ToastNamespace';
 
 function SaveButton() {
   const toast = useToast();
@@ -177,7 +178,8 @@ normally again.
 
 ```tsx
 import { Button } from '@/components/ui/button';
-import { Toast, useToast } from '@/components/ui/toast';
+import { useToast } from '@/components/ui/toast/Toast';
+import { Toast } from '@/components/ui/toast/ToastNamespace';
 
 function CopyButton() {
   const toast = useToast();
@@ -224,7 +226,8 @@ tokens. Every `toast.show` call can override those tokens locally.
 
 ```tsx
 import { Button } from '@/components/ui/button';
-import { Toast, useToast } from '@/components/ui/toast';
+import { useToast } from '@/components/ui/toast/Toast';
+import { Toast } from '@/components/ui/toast/ToastNamespace';
 
 function InviteButton() {
   const toast = useToast();

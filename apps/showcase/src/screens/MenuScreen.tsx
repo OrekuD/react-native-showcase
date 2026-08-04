@@ -13,12 +13,9 @@ import { StyleSheet, Text, View } from "react-native";
 
 import { ExampleScreen } from "../components/ExampleScreen";
 import { Button } from "../components/ui/button";
-import {
-  Menu,
-  MenuThemeProvider,
-  type MenuTheme,
-  type NativeMenuAction,
-} from "../components/ui/menu";
+import { Menu, type NativeMenuAction } from "../components/ui/menu/Menu";
+import { MenuThemeProvider } from "../components/ui/menu/MenuThemeProvider";
+import type { MenuTheme } from "../components/ui/menu/menuTheme";
 import type { RootStackParamList } from "../navigation/types";
 
 type MenuScreenProps = NativeStackScreenProps<RootStackParamList, "Menu">;

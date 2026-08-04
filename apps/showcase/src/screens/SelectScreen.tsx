@@ -12,11 +12,9 @@ import { StyleSheet, Text, View } from "react-native";
 
 import { ExampleScreen } from "../components/ExampleScreen";
 import { Button } from "../components/ui/button";
-import {
-  Select,
-  SelectThemeProvider,
-  type SelectTheme,
-} from "../components/ui/select";
+import { Select } from "../components/ui/select/Select";
+import { SelectThemeProvider } from "../components/ui/select/SelectThemeProvider";
+import type { SelectTheme } from "../components/ui/select/selectTheme";
 import type { RootStackParamList } from "../navigation/types";
 
 type SelectScreenProps = NativeStackScreenProps<RootStackParamList, "Select">;
