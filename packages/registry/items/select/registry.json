@@ -56,6 +56,14 @@
     {
       "source": "../../../../apps/showcase/src/components/ui/select/index.ts",
       "target": "select/index.ts"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/popoverPosition.ts",
+      "target": "popoverPosition.ts"
+    },
+    {
+      "source": "../../../../apps/showcase/src/components/ui/outsetShadow.ts",
+      "target": "outsetShadow.ts"
     }
   ],
   "expoDependencies": [
