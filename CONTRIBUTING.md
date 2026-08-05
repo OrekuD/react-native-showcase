@@ -10,7 +10,7 @@ Use Node.js 22.13 or newer and pnpm 11.8:
 
 ```bash
 pnpm install
-pnpm prebuild
+pnpm expo:prebuild
 pnpm ios
 ```
 

@@ -29,6 +29,13 @@ export function HomeScreen({ navigation }: HomeScreenProps) {
             Button
           </ListItem>
           <ListItem
+            onPress={() => navigation.navigate("ActionSheet")}
+            testID="home-component-action-sheet"
+            trailing="›"
+          >
+            Action Sheet
+          </ListItem>
+          <ListItem
             onPress={() => navigation.navigate("Input")}
             testID="home-component-input"
             trailing="›"

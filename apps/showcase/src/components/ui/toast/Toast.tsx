@@ -8,12 +8,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import {
-  StyleSheet,
-  View,
-  type StyleProp,
-  type ViewStyle,
-} from "react-native";
+import { StyleSheet, View, type StyleProp, type ViewStyle } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, {
   Easing,
@@ -170,7 +165,7 @@ export function ToastProvider({
   const inheritedTheme = useToastTheme();
   const theme = useMemo(
     () => mergeToastTheme(inheritedTheme, themeOverride),
-    [inheritedTheme, themeOverride],
+    [inheritedTheme, themeOverride]
   );
   const [toasts, setToasts] = useState<readonly ToastRecord[]>([]);
   const nextToastNumber = useRef(0);
@@ -180,7 +175,7 @@ export function ToastProvider({
 
   const dismiss = useCallback((id: string) => {
     setToasts((currentToasts) =>
-      currentToasts.filter((toast) => toast.id !== id),
+      currentToasts.filter((toast) => toast.id !== id)
     );
   }, []);
 
@@ -202,7 +197,7 @@ export function ToastProvider({
           message: options.message,
           repeatCount: resolveToastRepeatCount(
             matchingToast?.repeatCount ?? 0,
-            matchingToast !== undefined,
+            matchingToast !== undefined
           ),
           revision: (matchingToast?.revision ?? -1) + 1,
         };
@@ -215,7 +210,7 @@ export function ToastProvider({
 
       return id;
     },
-    [maxToasts],
+    [maxToasts]
   );
 
   const value = useMemo(
@@ -240,10 +235,12 @@ export function ToastProvider({
       show,
       theme,
       toasts,
-    ],
+    ]
   );
 
-  return <ToastContext.Provider value={value}>{children}</ToastContext.Provider>;
+  return (
+    <ToastContext.Provider value={value}>{children}</ToastContext.Provider>
+  );
 }
 
 /** Reads the nearest {@link ToastProvider} API. */
@@ -277,7 +274,7 @@ export function ToastViewport({ testID }: ToastViewportProps) {
   const visibleToasts = toasts.slice(0, maxToasts);
   const presentationStack = resolveToastPresentationStack(
     stack,
-    isDeckExpanded,
+    isDeckExpanded
   );
   const edgeOffset = (position === "top" ? insets.top : insets.bottom) + 12;
 
@@ -293,9 +290,7 @@ export function ToastViewport({ testID }: ToastViewportProps) {
         pointerEvents="box-none"
         style={[
           styles.stack,
-          position === "top"
-            ? { top: edgeOffset }
-            : { bottom: edgeOffset },
+          position === "top" ? { top: edgeOffset } : { bottom: edgeOffset },
           stack === "deck" && styles.deck,
         ]}
       >
@@ -413,8 +408,8 @@ function ToastItem({
               ? supportsLeft
               : supportsRight
             : translation < 0
-              ? supportsUp
-              : supportsDown;
+            ? supportsUp
+            : supportsDown;
           const shouldDismiss =
             isAllowed &&
             (Math.abs(translation) >= SWIPE_DISMISS_DISTANCE ||
@@ -434,7 +429,7 @@ function ToastItem({
                 },
                 (finished) => {
                   if (finished) scheduleOnRN(dismiss, toast.id);
-                },
+                }
               );
               return;
             }
@@ -448,7 +443,7 @@ function ToastItem({
               },
               (finished) => {
                 if (finished) scheduleOnRN(dismiss, toast.id);
-              },
+              }
             );
             return;
           }
@@ -479,7 +474,7 @@ function ToastItem({
       toast.id,
       translateX,
       translateY,
-    ],
+    ]
   );
 
   useEffect(() => {
@@ -497,7 +492,7 @@ function ToastItem({
           duration: 130,
           easing: TOAST_EASING,
           reduceMotion: ReduceMotion.Never,
-        }),
+        })
       );
       return;
     }
@@ -513,14 +508,9 @@ function ToastItem({
         duration: 130,
         easing: TOAST_EASING,
         reduceMotion: ReduceMotion.Never,
-      }),
+      })
     );
-  }, [
-    repeatOpacity,
-    repeatScale,
-    shouldReduceMotion,
-    toast.repeatCount,
-  ]);
+  }, [repeatOpacity, repeatScale, shouldReduceMotion, toast.repeatCount]);
 
   useEffect(() => {
     if (timeoutMs === null) return;
@@ -559,7 +549,9 @@ function ToastItem({
           <Animated.View style={[styles.toastContent, swipeStyle]}>
             <Animated.View style={[styles.toastContent, repeatStyle]}>
               <Animated.View
-                entering={position === "top" ? ENTER_FROM_TOP : ENTER_FROM_BOTTOM}
+                entering={
+                  position === "top" ? ENTER_FROM_TOP : ENTER_FROM_BOTTOM
+                }
                 exiting={position === "top" ? EXIT_TO_TOP : EXIT_TO_BOTTOM}
                 style={styles.toastContent}
               >

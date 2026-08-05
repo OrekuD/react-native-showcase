@@ -21,11 +21,11 @@ Run these commands from the repository root:
 
 ```bash
 pnpm install
-pnpm prebuild
+pnpm expo:prebuild
 pnpm ios
 ```
 
-Use `pnpm android` for an Android emulator. `pnpm prebuild` creates or updates
+Use `pnpm android` for an Android emulator. `pnpm expo:prebuild` creates or updates
 the native `ios` and `android` projects after native dependencies change.
 
 ## Development

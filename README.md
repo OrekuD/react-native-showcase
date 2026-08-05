@@ -59,7 +59,7 @@ pnpm install
 Generate the native iOS and Android projects:
 
 ```bash
-pnpm prebuild
+pnpm expo:prebuild
 ```
 
 Build and install the mobile app on a simulator or connected device:
@@ -70,7 +70,7 @@ pnpm ios
 pnpm android
 ```
 
-Run `pnpm prebuild` again after adding a native dependency or changing native
+Run `pnpm expo:prebuild` again after adding a native dependency or changing native
 Expo configuration. Normal TypeScript and React changes do not require another
 prebuild.
 
@@ -102,8 +102,8 @@ pnpm dev:docs
 | `pnpm ios` | Build and launch the iOS app |
 | `pnpm android` | Build and launch the Android app |
 | `pnpm record [name] [--platform ios\|android\|all]` | Generate both platform docs videos, or one platform for a named flow |
-| `pnpm prebuild` | Regenerate native projects |
-| `pnpm prebuild:clean` | Regenerate native projects from a clean state |
+| `pnpm expo:prebuild` | Regenerate native projects |
+| `pnpm expo:prebuild:clean` | Regenerate native projects from a clean state |
 | `pnpm lint` | Lint workspace packages |
 | `pnpm typecheck` | Type-check workspace packages |
 | `pnpm test` | Run workspace tests |
