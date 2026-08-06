@@ -1,0 +1,12 @@
+appId: com.oreku.reactnativeshowcase
+---
+- tapOn:
+    id: animated-counter-randomize-button
+    waitToSettleTimeoutMs: 250
+- waitForAnimationToEnd:
+    timeout: 1000
+- tapOn:
+    id: animated-counter-randomize-button
+    waitToSettleTimeoutMs: 250
+- waitForAnimationToEnd:
+    timeout: 1000

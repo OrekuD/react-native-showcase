@@ -1,6 +1,7 @@
 export type RootStackParamList = {
   Home: undefined;
   ActionSheet: undefined;
+  AnimatedCounter: undefined;
   Button: undefined;
   CircularProgress: undefined;
   Input: undefined;
@@ -11,5 +12,4 @@ export type RootStackParamList = {
   Select: undefined;
   Switch: undefined;
   Toast: undefined;
-  CurrencyFormatting: undefined;
 };

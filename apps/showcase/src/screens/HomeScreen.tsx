@@ -92,26 +92,19 @@ export function HomeScreen({ navigation }: HomeScreenProps) {
             Progress
           </ListItem>
           <ListItem
+            onPress={() => navigation.navigate("AnimatedCounter")}
+            testID="home-component-animated-counter"
+            trailing="›"
+          >
+            Animated counter
+          </ListItem>
+          <ListItem
             onPress={() => navigation.navigate("CircularProgress")}
             testID="home-component-circular-progress"
             trailing="›"
           >
             Circular progress
           </ListItem>
-          <ExpoText
-            style={styles.sectionLabel}
-            textStyle={textStyles.sectionLabel}
-          >
-            INTERACTIONS
-          </ExpoText>
-          <ListItem
-            onPress={() => navigation.navigate("CurrencyFormatting")}
-            testID="home-interaction-rolling-currency"
-            trailing="›"
-          >
-            Rolling currency
-          </ListItem>
-
           <ExpoText
             style={styles.sectionLabel}
             textStyle={textStyles.sectionLabel}

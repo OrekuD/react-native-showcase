@@ -1,0 +1,10 @@
+appId: com.oreku.reactnativeshowcase
+---
+- launchApp
+- assertVisible: Showcase
+- tapOn: Animated counter
+- assertVisible:
+    id: progressive-blur-header
+- assertVisible: NUMBER
+- assertVisible: CURRENCY
+- assertVisible: PERCENTAGE

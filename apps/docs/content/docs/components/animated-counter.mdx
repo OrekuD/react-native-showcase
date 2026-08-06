@@ -1,0 +1,140 @@
+---
+title: Animated Counter
+description: A rolling number display powered by react-native-animated-rolling-numbers.
+---
+
+Animated Counter uses `react-native-animated-rolling-numbers` to animate each
+digit independently. It supports number grouping, compact notation, and custom
+formatted strings for values such as currency and percentages.
+
+<PlatformVideos
+  android="/videos/components/animated-counter-android.mp4"
+  ios="/videos/components/animated-counter-ios.mp4"
+  label="Animated number, currency, and percentage counters"
+/>
+
+## Installation
+
+<CodeBlockTabs className="showcase-package-tabs" defaultValue="npm" groupId="package-manager" persist>
+  <CodeBlockTabsList>
+    <CodeBlockTabsTrigger value="npm">npm</CodeBlockTabsTrigger>
+    <CodeBlockTabsTrigger value="pnpm">pnpm</CodeBlockTabsTrigger>
+    <CodeBlockTabsTrigger value="yarn">yarn</CodeBlockTabsTrigger>
+    <CodeBlockTabsTrigger value="bun">bun</CodeBlockTabsTrigger>
+  </CodeBlockTabsList>
+  <CodeBlockTab value="npm">
+    ```bash
+    npm install react-native-animated-rolling-numbers
+    ```
+  </CodeBlockTab>
+  <CodeBlockTab value="pnpm">
+    ```bash
+    pnpm add react-native-animated-rolling-numbers
+    ```
+  </CodeBlockTab>
+  <CodeBlockTab value="yarn">
+    ```bash
+    yarn add react-native-animated-rolling-numbers
+    ```
+  </CodeBlockTab>
+  <CodeBlockTab value="bun">
+    ```bash
+    bun add react-native-animated-rolling-numbers
+    ```
+  </CodeBlockTab>
+</CodeBlockTabs>
+
+`react-native-reanimated` is a peer dependency. Expo projects should install
+and configure it following the [Expo Reanimated guide](https://docs.expo.dev/versions/latest/sdk/reanimated/).
+
+## Usage
+
+```tsx
+import { AnimatedRollingNumber } from 'react-native-animated-rolling-numbers';
+
+export function BasicCounter() {
+  return <AnimatedRollingNumber useGrouping value={1248} />;
+}
+```
+
+Use `formattedText` when the visible representation needs a prefix, suffix, or
+locale-specific formatting. Keep `value` in sync with the displayed value so
+the rollers move to the matching digits.
+
+```tsx
+import { AnimatedRollingNumber } from 'react-native-animated-rolling-numbers';
+
+const formatCurrency = new Intl.NumberFormat('en-US', {
+  currency: 'USD',
+  maximumFractionDigits: 0,
+  style: 'currency',
+}).format;
+
+export function CurrencyCounter() {
+  const value = 12450;
+
+  return (
+    <AnimatedRollingNumber
+      formattedText={formatCurrency(value)}
+      value={value}
+    />
+  );
+}
+```
+
+```tsx
+import { AnimatedRollingNumber } from 'react-native-animated-rolling-numbers';
+
+const formatPercentage = new Intl.NumberFormat('en-US', {
+  maximumFractionDigits: 1,
+  style: 'percent',
+}).format;
+
+export function PercentageCounter() {
+  const ratio = 0.684;
+
+  return (
+    <AnimatedRollingNumber
+      formattedText={formatPercentage(ratio)}
+      value={ratio * 100}
+    />
+  );
+}
+```
+
+## Animation
+
+Supply a Reanimated timing configuration for a different rolling motion.
+
+```tsx
+import { AnimatedRollingNumber } from 'react-native-animated-rolling-numbers';
+import { Easing } from 'react-native-reanimated';
+
+export function CounterMotion() {
+  return (
+    <AnimatedRollingNumber
+      spinningAnimationConfig={{
+        duration: 340,
+        easing: Easing.out(Easing.cubic),
+      }}
+      value={2680}
+    />
+  );
+}
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `number` | — | Numeric value to display and animate. |
+| `formattedText` | `string` | — | Custom visible string, including currency symbols or a suffix. |
+| `useGrouping` | `boolean` | `false` | Adds locale-aware group separators to numeric values. |
+| `toFixed` | `number` | — | Number of decimal places for normal notation. |
+| `locale` | `Intl.LocalesArgument` | `'en-US'` | Locale used when formatting numeric values. |
+| `enableCompactNotation` | `boolean` | `false` | Uses compact notation such as `1K` and `1M`. |
+| `spinningAnimationConfig` | `WithTimingConfig` | Bounce, `600ms` for digits | Reanimated timing configuration for rolling digits. |
+| `textStyle` | `StyleProp<TextStyle>` | — | Typography shared by digits and punctuation. |
+
+It also accepts `Animated.View` props, plus individual styles and text props for
+digits, separators, signs, and compact notation.

@@ -20,8 +20,7 @@ and adapted rather than hidden behind a package API.
 The library is intentionally small while its component format and copy workflow
 settle.
 
-- **Components:** Button, Input, and Switch
-- **Interactions:** Rolling currency
+- **Components:** Button, Input, Switch, and Animated Counter
 - **Showcases:** larger Skia, gesture, and motion experiments will live here
 
 The Expo app is the review surface for every entry. The Fumadocs site explains

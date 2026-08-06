@@ -11,7 +11,7 @@ import { ActionSheetScreen } from './src/screens/ActionSheetScreen';
 import { ButtonScreen } from './src/screens/ButtonScreen';
 import { CircularProgressScreen } from './src/screens/CircularProgressScreen';
 import { ConfirmationDialogScreen } from './src/screens/ConfirmationDialogScreen';
-import { CurrencyFormattingScreen } from './src/screens/CurrencyFormattingScreen';
+import { AnimatedCounterScreen } from './src/screens/AnimatedCounterScreen';
 import { HomeScreen } from './src/screens/HomeScreen';
 import { InputScreen } from './src/screens/InputScreen';
 import { MenuScreen } from './src/screens/MenuScreen';
@@ -57,8 +57,8 @@ export default function App() {
                 <Stack.Screen name="Menu" component={MenuScreen} />
                 <Stack.Screen name="Select" component={SelectScreen} />
                 <Stack.Screen
-                  name="CurrencyFormatting"
-                  component={CurrencyFormattingScreen}
+                  name="AnimatedCounter"
+                  component={AnimatedCounterScreen}
                 />
               </Stack.Navigator>
             </NavigationContainer>
